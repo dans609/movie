@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/AllMatch.MediumSizeAllPad">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_image_container"
+        style="@style/CardViewImageContainer.LargeLayoutSize"
+        app:layout_constraintBottom_toBottomOf="@id/film_score"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/film_image"
+            style="@style/AllMatch"
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/splash_screen_image"
+            tools:ignore="ContentDescription" />
+
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/film_name_title"
+        style="@style/ClearXWrap.SansFontBold.StartEndBarrier.TextAppearances"
+        android:paddingBottom="@dimen/constraint_bound_small_size"
+        android:text="@string/film_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/card_image_container"
+        app:layout_constraintTop_toTopOf="@id/card_image_container" />
+
+    <TextView
+        android:id="@+id/film_rating"
+        style="@style/AllWrap.RobotoFont.TextAppearances.BorderedBackground"
+        android:text="@string/film_rating_symbol"
+        app:layout_constraintBottom_toBottomOf="@id/film_country_code"
+        app:layout_constraintStart_toStartOf="@id/film_name_title"
+        app:layout_constraintTop_toBottomOf="@id/film_name_title" />
+
+    <TextView
+        android:id="@+id/film_duration"
+        style="@style/AllWrap.SansRegFont.TextAppearances"
+        android:text="@string/film_duration"
+        app:layout_constraintBottom_toBottomOf="@id/film_country_code"
+        app:layout_constraintEnd_toStartOf="@id/film_country_code"
+        app:layout_constraintStart_toEndOf="@id/film_rating"
+        app:layout_constraintTop_toBottomOf="@id/film_name_title" />
+
+    <TextView
+        android:id="@+id/film_country_code"
+        style="@style/AllWrap.SansFontBold.TextAppearances.ElevationBorderlessBackground"
+        android:text="@string/film_country_code_iso_alpha_2"
+        app:layout_constraintEnd_toEndOf="@id/film_name_title"
+        app:layout_constraintTop_toBottomOf="@id/film_name_title" />
+
+    <TextView
+        android:id="@+id/film_genre_title"
+        style="@style/AllWrap.SansFontBold.TextAppearances.FormatSmallBlack.TopBarrier"
+        android:text="@string/film_genre_headline"
+        app:layout_constraintStart_toStartOf="@id/film_rating"
+        app:layout_constraintTop_toBottomOf="@id/film_country_code" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/film_genre"
+        android:layout_width="@dimen/clear_size"
+        android:layout_height="@dimen/border_round_radius_25"
+        android:layout_marginTop="@dimen/mini_size"
+        app:layout_constraintEnd_toEndOf="@+id/film_country_code"
+        app:layout_constraintStart_toStartOf="@id/film_genre_title"
+        app:layout_constraintTop_toBottomOf="@id/film_genre_title"
+        tools:listitem="@layout/display_film_genre" />
+
+    <TextView
+        android:id="@+id/film_release_date_title"
+        style="@style/AllWrap.SansFontBold.TextAppearances.FormatSmallBlack.TopBarrier"
+        android:layout_marginBottom="@dimen/normal_size"
+        android:lines="@integer/int_2"
+        android:text="@string/film_release_date_title"
+        app:layout_constraintStart_toStartOf="@id/film_genre"
+        app:layout_constraintTop_toBottomOf="@id/film_genre" />
+
+    <TextView
+        android:id="@+id/film_release_date"
+        style="@style/ClearXWrap.SansFontBold.StartEndBarrier.DateAppearanceFormat"
+        android:layout_marginStart="@dimen/constraint_bound_small_size"
+        app:layout_constraintBottom_toBottomOf="@id/film_release_date_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/film_release_date_title"
+        app:layout_constraintTop_toTopOf="@id/film_release_date_title"
+        tools:text="@tools:sample/date/mmddyy" />
+
+    <ProgressBar
+        android:id="@+id/film_score"
+        style="@style/MediumProgressBar.GradientBackground"
+        android:layout_marginTop="@dimen/normal_size"
+        app:layout_constraintBottom_toBottomOf="@id/card_image_container"
+        app:layout_constraintStart_toStartOf="@id/film_release_date_title"
+        tools:progress="@integer/film_sample_progress" />
+
+    <TextView
+        android:id="@+id/film_score_value"
+        style="@style/Clear.ProgressBarIndicatorText.Font"
+        android:text="@string/film_score_percent"
+        app:layout_constraintBottom_toBottomOf="@id/film_score"
+        app:layout_constraintEnd_toEndOf="@id/film_score"
+        app:layout_constraintStart_toStartOf="@id/film_score"
+        app:layout_constraintTop_toTopOf="@id/film_score"
+        tools:text="@string/film_sample_progress_in_percent" />
+
+    <TextView
+        android:id="@+id/film_score_title"
+        style="@style/AllWrap.SansFontBold.TextAppearances.FormatSmallBlack"
+        android:layout_marginStart="@dimen/constraint_bound_small_size"
+        android:lines="@integer/int_2"
+        android:text="@string/film_score_title"
+        android:textColor="@color/colorAestheticBlack"
+        app:layout_constraintBottom_toBottomOf="@id/film_score"
+        app:layout_constraintStart_toEndOf="@id/film_score"
+        app:layout_constraintTop_toTopOf="@id/film_score" />
+
+    <ImageView
+        style="@style/Clear.ImageStartEndBarrier.TheMovieDBLogo"
+        app:layout_constraintBottom_toBottomOf="@id/film_score"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/film_score_title"
+        app:layout_constraintTop_toTopOf="@id/film_score"
+        tools:ignore="ContentDescription" />
+
+    <TextView
+        android:id="@+id/film_overview_title"
+        style="@style/AllWrap.RobotoFont.TextBlackBold.Barrier"
+        android:text="@string/film_overview_headline"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/card_image_container" />
+
+    <TextView
+        android:id="@+id/film_overview"
+        style="@style/ClearXWrap.SansFontBold.StartEndBarrier.TextAppearances"
+        android:layout_marginStart="@dimen/clear_size"
+        android:fontFamily="@font/source_sans_pro_reg"
+        android:padding="@dimen/constraint_bound_small_size"
+        android:text="@string/film_overview_lorem_sample"
+        android:textSize="@dimen/medium_text_size"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/film_overview_title" />
+
+    <include
+        android:id="@+id/btn_show_overview"
+        style="@style/AllWrap"
+        layout="@layout/component_show_description"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/film_overview" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

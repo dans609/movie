@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/AllMatch"
+    android:background="@android:color/white"
+    tools:context=".view.activity.DetailFilmActivity">
+
+    <androidx.core.widget.NestedScrollView
+        style="@style/AllMatch"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <include
+            android:id="@+id/detail_film"
+            style="@style/AllMatch"
+            layout="@layout/display_detail_user_interface"
+            android:layout_marginBottom="@dimen/large_attribute_size"
+            tools:ignore="IncludeLayoutParam" />
+
+    </androidx.core.widget.NestedScrollView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/favorite_film_fab"
+        style="@style/ButtonLayout.Barrier"
+        android:backgroundTint="@color/colorAestheticBlack"
+        app:borderWidth="@dimen/constraint_bound_small_size"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:rippleColor="@color/colorAestheticBlack"
+        app:srcCompat="@drawable/ic_favorite_default" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

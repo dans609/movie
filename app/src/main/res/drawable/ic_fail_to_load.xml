@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:bottom="@dimen/mini_size"
+        android:drawable="@color/colorAccent"
+        android:left="@dimen/mini_size"
+        android:right="@dimen/mini_size"
+        android:top="@dimen/mini_size" />
+
+    <item
+        android:bottom="@dimen/large_attribute_size"
+        android:drawable="@drawable/ic_refresh"
+        android:left="@dimen/large_attribute_size"
+        android:right="@dimen/large_attribute_size"
+        android:top="@dimen/large_attribute_size" />
+
+</layer-list>

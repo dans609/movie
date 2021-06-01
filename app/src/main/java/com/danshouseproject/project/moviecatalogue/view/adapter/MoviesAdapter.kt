@@ -1,0 +1,67 @@
+package com.danshouseproject.project.moviecatalogue.view.adapter
+
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import android.widget.Toast
+import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
+import com.danshouseproject.project.moviecatalogue.R
+import com.danshouseproject.project.moviecatalogue.databinding.DisplayListFilmBinding
+import com.danshouseproject.project.moviecatalogue.model.ListFilm
+import com.danshouseproject.project.moviecatalogue.view.OnItemClickCallback
+
+class MoviesAdapter(
+    private val listFilm: ArrayList<ListFilm>,
+    private val listenerClick: OnItemClickCallback
+) :
+    RecyclerView.Adapter<MoviesAdapter.FilmViewHolder>() {
+
+    inner class FilmViewHolder(private val binding: DisplayListFilmBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+
+        fun bind(data: ListFilm, position: Int) {
+            binding.apply {
+                with(itemView) {
+                    Glide.with(context)
+                        .load(data.filmImage)
+                        .apply(
+                            RequestOptions.placeholderOf(R.color.colorAccent)
+                                .error(R.drawable.ic_fail_to_load)
+                        )
+                        .into(posterFilm)
+
+                    context.let {
+                        filmName.text = data.filmName
+                        filmOverview.text = data.filmOverview
+                    }
+
+                    this.setOnClickListener {
+                        Toast.makeText(
+                            context,
+                            filmName.text.toString(),
+                            Toast.LENGTH_SHORT
+                        ).show()
+
+                        listenerClick.onItemClicked(data, position)
+                    }
+                }
+            }
+        }
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FilmViewHolder =
+        FilmViewHolder(
+            DisplayListFilmBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+        )
+
+    override fun onBindViewHolder(holder: FilmViewHolder, position: Int) =
+        holder.bind(listFilm[position], position)
+
+    override fun getItemCount(): Int =
+        listFilm.size
+}

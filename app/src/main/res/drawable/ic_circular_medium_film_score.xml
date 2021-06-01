@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <rotate
+            android:fromDegrees="@integer/circle_degree_270"
+            android:toDegrees="@integer/circle_degree_270">
+            <shape
+                android:shape="ring"
+                android:thicknessRatio="@integer/optimal_max_thickness_ratio_size"
+                android:useLevel="false">
+                <solid android:color="@color/colorYellowTransparent" />
+            </shape>
+        </rotate>
+    </item>
+
+    <item>
+        <rotate
+            android:fromDegrees="@integer/circle_degree_270"
+            android:toDegrees="@integer/circle_degree_270">
+            <shape
+                android:shape="ring"
+                android:thicknessRatio="@integer/optimal_max_thickness_ratio_size"
+                android:useLevel="true">
+                <solid android:color="@color/colorYellow" />
+            </shape>
+        </rotate>
+    </item>
+</layer-list>
