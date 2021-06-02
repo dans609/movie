@@ -75,6 +75,8 @@
     <integer name="score_value86">86</integer>
     <integer name="score_value87">87</integer>
     <integer name="max_score_range">100</integer>
+    <integer name="int_200">200</integer>
+    <integer name="int_300">300</integer>
 
     <integer name="asib_movies_id">332562</integer>
     <integer name="alita_movies_id">399579</integer>

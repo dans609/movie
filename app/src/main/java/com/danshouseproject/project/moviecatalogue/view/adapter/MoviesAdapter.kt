@@ -12,10 +12,16 @@ import com.danshouseproject.project.moviecatalogue.model.ListFilm
 import com.danshouseproject.project.moviecatalogue.view.OnItemClickCallback
 
 class MoviesAdapter(
-    private val listFilm: ArrayList<ListFilm>,
     private val listenerClick: OnItemClickCallback
 ) :
     RecyclerView.Adapter<MoviesAdapter.FilmViewHolder>() {
+
+    private val listFilm = ArrayList<ListFilm>()
+
+    fun setList(listData: List<ListFilm>) {
+        listFilm.addAll(listData)
+        notifyDataSetChanged()
+    }
 
     inner class FilmViewHolder(private val binding: DisplayListFilmBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -28,6 +34,7 @@ class MoviesAdapter(
                         .apply(
                             RequestOptions.placeholderOf(R.color.colorAccent)
                                 .error(R.drawable.ic_fail_to_load)
+                                .override(context.resources.getInteger(R.integer.max_score_range), context.resources.getInteger(R.integer.int_200))
                         )
                         .into(posterFilm)
 

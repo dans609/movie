@@ -7,5 +7,5 @@ object ApiKey {
     const val ACCESS_TOKEN = BuildConfig.TMDB_ACCESS_TOKEN
 
     const val BASE_URL = "https://api.themoviedb.org/"
-    const val IMAGE_URL = "https://image.tmdb.org/t/p/original"
+    const val IMAGE_URL = "https://image.tmdb.org/t/p/w200"
 }

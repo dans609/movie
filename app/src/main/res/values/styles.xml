@@ -177,7 +177,6 @@
 
     <style name="ClearXWrap.SansFontReg.AllPad.TextAppearances.FormatStyle">
         <item name="android:textStyle">normal</item>
-
     </style>
 
     <style name="AllWrap.RobotoFont" parent="ClearXWrap.SansFontBold">
@@ -288,6 +287,12 @@
 
     <style name="ClearXPosterSize.ImageFitXY" parent="ImageFitXY">
         <item name="android:layout_height">@dimen/list_film_poster_size</item>
+    </style>
+
+    <style name="ProgressBar" parent="MediumProgressBar.GradientBackground">
+        <item name="android:elevation">@dimen/normal_size</item>
+        <item name="android:padding">@dimen/normal_size</item>
+        <item name="android:indeterminateOnly">true</item>
     </style>
 
 </resources>

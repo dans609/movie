@@ -1,9 +1,8 @@
 package com.danshouseproject.project.moviecatalogue.data
 
-import android.content.Context
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.danshouseproject.project.moviecatalogue.R
 import com.danshouseproject.project.moviecatalogue.api.tmdb.ApiKey
 import com.danshouseproject.project.moviecatalogue.data.remote.*
 import com.danshouseproject.project.moviecatalogue.data.remote.response.*
@@ -16,38 +15,27 @@ class MovieCatalogueRepository private constructor(private val remoteDataSource:
     FilmDataSource {
 
     companion object {
-        private lateinit var context: Context
-        private val rsc = context.resources
-
         @Volatile
         private var instance: MovieCatalogueRepository? = null
 
-        fun getInstance(remoteData: RemoteDataSource, ctx: Context): MovieCatalogueRepository =
+        fun getInstance(remoteData: RemoteDataSource): MovieCatalogueRepository =
             instance ?: synchronized(this) {
                 instance ?: MovieCatalogueRepository(remoteData).apply {
-                    context = ctx
                     instance = this
                 }
             }
 
-        fun getContext(context: Context) = context.let { ctx -> this.context = ctx }
-
         private fun handleNullMovieCertificate(): List<MovieCertificate> =
-            listOf(
-                MovieCertificate(
-                    rsc.getString(R.string.iso_alpha2_us),
-                    listOf(Certificate(rsc.getString(R.string.film_rating_symbol)))
-                )
-            )
+            listOf(MovieCertificate("US", listOf(Certificate("TV-MA"))))
 
         private fun handleNullCertificate(): List<Certificate> =
-            listOf(Certificate(rsc.getString(R.string.film_rating_symbol)))
+            listOf(Certificate("TV-MA"))
 
         private fun handleNullTvCertificate(): List<TvCertificate> =
             listOf(
                 TvCertificate(
-                    rsc.getString(R.string.value_for_null_data_fetched_from_api),
-                    rsc.getString(R.string.tv_rate_canada_kids_certificate)
+                    "N",
+                    "TV-PG"
                 )
             )
 
@@ -55,24 +43,17 @@ class MovieCatalogueRepository private constructor(private val remoteDataSource:
 
 
     private fun generateFilmDuration(duration: Int): String {
-        val hoursUnit = duration / rsc.getInteger(R.integer.score_value60)
-        val minuteUnit = duration % rsc.getInteger(R.integer.score_value60)
+        val hoursUnit = duration / 60
+        val minuteUnit = duration % 60
 
         return when (hoursUnit) {
-            rsc.getInteger(R.integer.zero_value) -> rsc.getString(
-                R.string.duration_format_minutes,
-                minuteUnit
-            )
-            else -> rsc.getString(
-                R.string.duration_format_hours_minutes,
-                hoursUnit,
-                minuteUnit
-            )
+            0 -> "${minuteUnit}m"
+            else -> "${hoursUnit}h ${minuteUnit}m"
         }
     }
 
     private fun convertFilmScore(score: Double): Int =
-        (score * rsc.getInteger(R.integer.optimal_max_thickness_ratio_size)).toInt()
+        (score * 10).toInt()
 
     private fun getPosterPathUrl(posterPath: String): String =
         ApiKey.IMAGE_URL + posterPath
@@ -80,9 +61,9 @@ class MovieCatalogueRepository private constructor(private val remoteDataSource:
 
     override fun getAllMovies(): LiveData<List<ListFilm>> {
         val filmId: List<JsonMoviesId> = remoteDataSource.fetchMoviesId()
-            ?: listOf(JsonMoviesId(rsc.getInteger(R.integer.max_score_range)))
+            ?: listOf(JsonMoviesId(100))
+        val listData = ArrayList<ListFilm>()
         val listMovies = MutableLiveData<List<ListFilm>>()
-        val moviesData = ArrayList<ListFilm>()
 
         for (idxId in filmId.indices) {
             remoteDataSource.fetchMovies(filmId[idxId].moviesId, object : LoadMoviesResponse {
@@ -101,11 +82,11 @@ class MovieCatalogueRepository private constructor(private val remoteDataSource:
                         filmImage = posterPathUrl,
                         filmScore = moviesScore,
                     )
-                    moviesData.add(instanciateFilm)
-                    listMovies.postValue(moviesData)
+                    listData.add(instanciateFilm)
                 }
             })
         }
+        listMovies.postValue(listData)
         return listMovies
     }
 
@@ -113,13 +94,11 @@ class MovieCatalogueRepository private constructor(private val remoteDataSource:
     override fun getAllTvShows(): LiveData<List<ListFilm>> {
         val filmId: List<JsonTvId> = remoteDataSource.fetchTvId() ?: listOf(
             JsonTvId(
-                rsc.getInteger(
-                    R.integer.max_score_range
-                )
+                100
             )
         )
         val listTvs = MutableLiveData<List<ListFilm>>()
-        val tvsData = ArrayList<ListFilm>()
+        val listData = ArrayList<ListFilm>()
 
         for (idxId in filmId.indices) {
             remoteDataSource.fetchTvShows(filmId[idxId].tvShowsId, object : LoadTvResponse {
@@ -127,8 +106,8 @@ class MovieCatalogueRepository private constructor(private val remoteDataSource:
                     data: ResponseTvShows,
                 ) {
                     val tvDuration = generateFilmDuration(
-                        data.tvDuration?.get(rsc.getInteger(R.integer.zero_value))
-                            ?: rsc.getInteger(R.integer.optimal_max_thickness_ratio_size)
+                        data.tvDuration?.get(0)
+                            ?: 10
                     )
                     val tvScore = convertFilmScore(data.tvScore)
                     val posterPathUrl = getPosterPathUrl(data.tvPosterPath)
@@ -141,11 +120,11 @@ class MovieCatalogueRepository private constructor(private val remoteDataSource:
                         filmImage = posterPathUrl,
                         filmScore = tvScore
                     )
-                    tvsData.add(instanciateFilm)
-                    listTvs.postValue(tvsData)
+                    listData.add(instanciateFilm)
                 }
             })
         }
+        listTvs.postValue(listData)
         return listTvs
     }
 
@@ -156,7 +135,7 @@ class MovieCatalogueRepository private constructor(private val remoteDataSource:
         remoteDataSource.fetchMovies(filmId, object : LoadMoviesResponse {
             override fun onMoviesLoaded(data: ResponseMovies) {
                 val genre = data.moviesGenres
-                    ?: listOf(FetchFilmGenres(rsc.getString(R.string.film_genre_drama)))
+                    ?: listOf(FetchFilmGenres("Drama"))
                 val listGenres = ArrayList<String>()
 
                 for (idxGenre in genre.indices)
@@ -176,7 +155,7 @@ class MovieCatalogueRepository private constructor(private val remoteDataSource:
         remoteDataSource.fetchTvShows(filmId, object : LoadTvResponse {
             override fun onTvShowsLoaded(data: ResponseTvShows) {
                 val genre = data.tvGenres
-                    ?: listOf(FetchFilmGenres(rsc.getString(R.string.film_genre_drama)))
+                    ?: listOf(FetchFilmGenres("Drama"))
                 val listGenres = ArrayList<String>()
 
                 for (idxGenre in genre.indices)
@@ -200,7 +179,7 @@ class MovieCatalogueRepository private constructor(private val remoteDataSource:
 
                 for (index in result.indices)
                     when {
-                        result[index].isoCode == rsc.getString(R.string.iso_alpha2_us) -> {
+                        result[index].isoCode == "US" -> {
                             for (itCertif in result[index].moviesCertificate
                                 ?: handleNullCertificate()) {
                                 if (itCertif.certificate.isEmpty()) continue
@@ -237,7 +216,7 @@ class MovieCatalogueRepository private constructor(private val remoteDataSource:
         remoteDataSource.fetchTvMoreInfo(filmId, object : LoadTvMoreInfo {
             override fun onTvShowsAdditionInformatonReceived(additionalData: ResponseTvCertification) {
                 val result = additionalData.result ?: handleNullTvCertificate()
-                rsc.getInteger(R.integer.zero_value).let { zeroVal ->
+                0.let { zeroVal ->
                     isoAndCertifInfo.postValue(Pair(result[zeroVal].isoCode, result[zeroVal].certificate))
                 }
             }

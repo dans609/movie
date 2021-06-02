@@ -21,6 +21,7 @@ import com.danshouseproject.project.moviecatalogue.viewmodel.factory.ViewModelFa
 class TvShowsFragment : Fragment(), OnItemClickCallback {
 
     private lateinit var binding: FragmentListsFilmBinding
+    private lateinit var adapter: MoviesAdapter
     private var list: ArrayList<ListFilm> = arrayListOf()
 
     companion object {
@@ -46,16 +47,23 @@ class TvShowsFragment : Fragment(), OnItemClickCallback {
         setOnItemClicked(this)
 
         if (activity != null) {
+            showProgressBar(true)
+            adapter = MoviesAdapter(onItemClicked)
+
             val factory = ViewModelFactory.getInstance(requireActivity())
             val viewModel = ViewModelProvider(this, factory).get(TvShowsViewModel::class.java)
             viewModel.getTvShows().observe(viewLifecycleOwner, { tv ->
-                list.addAll(tv)
+                if (tv.isNotEmpty()) {
+                    // list.add(tv)
+                    adapter.setList(tv)
+                    showProgressBar(false)
+                }
+                Log.d("Dandi Anastasa", tv.toString())
             })
 
             with(binding) {
                 rvFilm.setHasFixedSize(true)
                 rvFilm.layoutManager = StaggeredGridLayoutManager(resources.getInteger(R.integer.int_2), StaggeredGridLayoutManager.VERTICAL)
-                val adapter = MoviesAdapter(list, onItemClicked)
                 rvFilm.adapter = adapter
                 adapter.notifyDataSetChanged()
             }
@@ -69,5 +77,11 @@ class TvShowsFragment : Fragment(), OnItemClickCallback {
             intent.putExtra(DetailFilmActivity.EXTRA_TV_SHOWS_POSITION, position)
             startActivity(intent)
         }
+
+    private fun showProgressBar(state: Boolean) {
+        binding.progressBar.visibility =
+            if (state) View.VISIBLE
+            else View.INVISIBLE
+    }
 
 }

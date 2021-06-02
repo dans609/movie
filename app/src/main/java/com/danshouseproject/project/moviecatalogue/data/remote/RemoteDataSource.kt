@@ -1,5 +1,6 @@
 package com.danshouseproject.project.moviecatalogue.data.remote
 
+import com.danshouseproject.project.moviecatalogue.data.remote.response.ResponseMovies
 import com.danshouseproject.project.moviecatalogue.data.remote.response.json.JsonMoviesId
 import com.danshouseproject.project.moviecatalogue.data.remote.response.json.JsonTvId
 import com.danshouseproject.project.moviecatalogue.helper.RemoteJsonHelper
@@ -36,5 +37,10 @@ class RemoteDataSource private constructor(private val remoteJsonHelper: RemoteJ
 
     fun fetchTvMoreInfo(id: Int, callback: LoadTvMoreInfo) =
         remoteJsonHelper.fetchTvCertificate(id, callback)
+
+
+
+    fun generateFilmDuration(duration: Int) =
+        remoteJsonHelper.getStringForDuration(duration)
 
 }

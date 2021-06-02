@@ -21,7 +21,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class RemoteJsonHelper(private val context: Context) {
+class RemoteJsonHelper (private val context: Context) {
 
     companion object {
         private val TAG = RemoteJsonHelper::class.java.simpleName
@@ -131,16 +131,16 @@ class RemoteJsonHelper(private val context: Context) {
     fun fetchMovies(id: Int, callback: LoadMoviesResponse) =
         RetrofitClient.apiService()
             .getMovies(id.toString())
-            .enqueue(object : Callback<ResponseMovies> {
+            .enqueue(object : Callback<ResponseMovies?> {
                 override fun onResponse(
-                    call: Call<ResponseMovies>,
-                    response: Response<ResponseMovies>
+                    call: Call<ResponseMovies?>,
+                    response: Response<ResponseMovies?>
                 ) {
                     if (response.isSuccessful)
                         callback.onMoviesLoaded(response.body() as ResponseMovies)
                 }
 
-                override fun onFailure(call: Call<ResponseMovies>, t: Throwable) {
+                override fun onFailure(call: Call<ResponseMovies?>, t: Throwable) {
                     failResMessage(t)
                 }
             })
@@ -149,19 +149,30 @@ class RemoteJsonHelper(private val context: Context) {
     fun fetchTvShows(id: Int, callback: LoadTvResponse) =
         RetrofitClient.apiService()
             .getTvShows(id.toString())
-            .enqueue(object : Callback<ResponseTvShows> {
+            .enqueue(object : Callback<ResponseTvShows?> {
                 override fun onResponse(
-                    call: Call<ResponseTvShows>,
-                    response: Response<ResponseTvShows>
+                    call: Call<ResponseTvShows?>,
+                    response: Response<ResponseTvShows?>
                 ) {
                     if (response.isSuccessful)
                         callback.onTvShowsLoaded(response.body() as ResponseTvShows)
                 }
 
-                override fun onFailure(call: Call<ResponseTvShows>, t: Throwable) {
+                override fun onFailure(call: Call<ResponseTvShows?>, t: Throwable) {
                     failResMessage(t)
                 }
-
             })
+
+
+    fun getStringForDuration(duration: Int): String =
+        context.resources.let { rsc ->
+            val hoursUnit = duration / rsc.getInteger(R.integer.score_value60)
+            val minutesUnit = duration % rsc.getInteger(R.integer.score_value60)
+
+            return when (hoursUnit) {
+                rsc.getInteger(R.integer.zero_value) -> rsc.getString(R.string.duration_format_minutes, minutesUnit)
+                else -> rsc.getString(R.string.duration_format_hours_minutes, hoursUnit, minutesUnit)
+            }
+        }
 
 }

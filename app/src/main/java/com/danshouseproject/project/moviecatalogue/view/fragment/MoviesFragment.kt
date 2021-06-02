@@ -21,6 +21,7 @@ import com.danshouseproject.project.moviecatalogue.viewmodel.factory.ViewModelFa
 class MoviesFragment : Fragment(), OnItemClickCallback {
 
     private lateinit var binding: FragmentListsFilmBinding
+    private lateinit var adapter: MoviesAdapter
     private var list: ArrayList<ListFilm> = arrayListOf()
 
     companion object {
@@ -47,16 +48,23 @@ class MoviesFragment : Fragment(), OnItemClickCallback {
         setOnItemClicked(this)
 
         if (activity != null) {
+            showProgressBar(true)
+            adapter = MoviesAdapter(onItemClicked)
+
             val factory = ViewModelFactory.getInstance(requireActivity())
             val viewModel = ViewModelProvider(this, factory).get(MoviesViewModel::class.java)
             viewModel.getMovies().observe(viewLifecycleOwner, { movies ->
-                list.addAll(movies)
+                if (movies.isNotEmpty()) {
+                    // list.add(movies)
+                    adapter.setList(movies)
+                    showProgressBar(false)
+                }
+                Log.d("Dandi Movies", movies.toString())
             })
 
             with(binding) {
                 rvFilm.setHasFixedSize(true)
                 rvFilm.layoutManager = StaggeredGridLayoutManager(resources.getInteger(R.integer.int_2), StaggeredGridLayoutManager.VERTICAL)
-                val adapter = MoviesAdapter(list, onItemClicked)
                 rvFilm.adapter = adapter
                 adapter.notifyDataSetChanged()
             }
@@ -70,5 +78,11 @@ class MoviesFragment : Fragment(), OnItemClickCallback {
             intent.putExtra(DetailFilmActivity.EXTRA_MOVIES_POSITION, position)
             startActivity(intent)
         }
+
+    private fun showProgressBar(state: Boolean) {
+        binding.progressBar.visibility =
+            if (state) View.VISIBLE
+            else View.INVISIBLE
+    }
 
 }

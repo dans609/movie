@@ -63,8 +63,9 @@ class DetailFilmActivity : AppCompatActivity(), View.OnClickListener {
         val condition = intent.getIntExtra(EXTRA_FLAG, resources.getInteger(R.integer.zero_value))
 
         Glide.with(this)
+            .asBitmap()
             .load(getIntent.filmImage.toInt())
-            .apply(RequestOptions().placeholder(R.drawable.splash_screen_image))
+            .apply(RequestOptions().placeholder(R.drawable.splash_screen_image).override(resources.getInteger(R.integer.int_200), resources.getInteger(R.integer.int_300)))
             .into(bindingDisplay.filmImage)
 
         with(bindingDisplay) {

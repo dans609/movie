@@ -8,6 +8,7 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.danshouseproject.project.moviecatalogue.R
 import com.danshouseproject.project.moviecatalogue.databinding.ActivityHomeBinding
+import com.danshouseproject.project.moviecatalogue.di.Injection
 import com.danshouseproject.project.moviecatalogue.view.fragment.viewpager.SectionsViewPager
 
 class HomeActivity : AppCompatActivity() {

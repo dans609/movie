@@ -9,7 +9,7 @@ object Injection {
 
     fun provideRepository(context: Context): MovieCatalogueRepository {
         val remote = RemoteDataSource.getInstance(RemoteJsonHelper(context))
-        return MovieCatalogueRepository.getInstance(remote, context)
+        return MovieCatalogueRepository.getInstance(remote)
     }
 
 }
