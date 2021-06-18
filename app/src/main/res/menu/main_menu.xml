@@ -3,8 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/filter_film"
+        android:icon="@drawable/ic_filter"
+        android:title="@string/filter_film"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/see_film_favorite"
+        android:icon="@drawable/ic_favorite"
+        android:title="@string/film_favorite"
+        app:showAsAction="always" />
+
+    <item
         android:id="@+id/language_preferences"
+        android:icon="@drawable/ic_language"
         android:title="@string/language_preferences"
-        app:showAsAction="never" />
+        app:showAsAction="always" />
 
 </menu>

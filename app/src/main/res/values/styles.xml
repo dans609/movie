@@ -86,7 +86,6 @@
 
     <style name="Clear.ImageStartEndBarrier">
         <item name="android:layout_marginStart">@dimen/normal_size</item>
-        <item name="android:layout_marginEnd">@dimen/normal_size</item>
     </style>
 
     <style name="Clear.ImageStartEndBarrier.TheMovieDBLogo">
@@ -139,12 +138,11 @@
         <item name="android:fontFamily">@font/source_sans_pro_semi_bold</item>
     </style>
 
-    <style name="ClearXWrap.SansFontBold.StartEndBarrier">
+    <style name="ClearXWrap.SansFontBold.StartBarrier">
         <item name="android:layout_marginStart">@dimen/normal_size</item>
-        <item name="android:layout_marginEnd">@dimen/normal_size</item>
     </style>
 
-    <style name="ClearXWrap.SansFontBold.StartEndBarrier.DateAppearanceFormat">
+    <style name="ClearXWrap.SansFontBold.StartBarrier.DateAppearanceFormat">
         <item name="android:fontFamily">@font/source_sans_pro_reg</item>
         <item name="android:background">@drawable/ic_border_round</item>
         <item name="android:gravity">center</item>
@@ -153,7 +151,7 @@
         <item name="android:letterSpacing">0.02</item>
     </style>
 
-    <style name="ClearXWrap.SansFontBold.StartEndBarrier.TextAppearances">
+    <style name="ClearXWrap.SansFontBold.StartBarrier.TextAppearances">
         <item name="android:textColor">@color/colorAestheticBlack</item>
         <item name="android:textSize">@dimen/text_title_size</item>
         <item name="android:letterSpacing">0.05</item>
@@ -162,7 +160,7 @@
         <item name="android:maxLines">@integer/int_5</item>
     </style>
 
-    <style name="ClearXWrap.SansFontReg.AllPad" parent="ClearXWrap.SansFontBold.StartEndBarrier.TextAppearances">
+    <style name="ClearXWrap.SansFontReg.AllPad" parent="ClearXWrap.SansFontBold.StartBarrier.TextAppearances">
         <item name="android:fontFamily">@font/source_sans_pro_reg</item>
         <item name="android:layout_marginStart">@dimen/clear_size</item>
         <item name="android:layout_marginEnd">@dimen/clear_size</item>
@@ -179,6 +177,10 @@
         <item name="android:textStyle">normal</item>
     </style>
 
+    <style name="ClearXWrap.SansFontReg.AllPad.TextAppearances.FormatStyle.GrayColor">
+        <item name="android:textColor">@color/colorSemiBlack</item>
+    </style>
+
     <style name="AllWrap.RobotoFont" parent="ClearXWrap.SansFontBold">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:fontFamily">@font/roboto_condensed_reg</item>
@@ -192,7 +194,7 @@
 
     <style name="TextAppearance" parent="AllWrap.RobotoFont.TextAppearances" />
 
-    <style name="AllWrap.RobotoFont.TextBlackBold" parent="ClearXWrap.SansFontBold.StartEndBarrier.TextAppearances">
+    <style name="AllWrap.RobotoFont.TextBlackBold" parent="ClearXWrap.SansFontBold.StartBarrier.TextAppearances">
         <item name="android:layout_marginStart">@dimen/clear_size</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:fontFamily">@font/roboto_condensed_reg</item>
@@ -279,6 +281,7 @@
 
     <style name="MatchWrap.Gravity">
         <item name="android:gravity">center</item>
+        <item name="android:layout_gravity">center</item>
     </style>
 
     <style name="MatchWrap.Gravity.PaddBot">
@@ -293,6 +296,15 @@
         <item name="android:elevation">@dimen/normal_size</item>
         <item name="android:padding">@dimen/normal_size</item>
         <item name="android:indeterminateOnly">true</item>
+    </style>
+
+    <style name="AllMatch.WhiteBackground">
+        <item name="android:background">@android:color/white</item>
+    </style>
+
+    <style name="ResourceImageSize">
+        <item name="android:layout_width">@dimen/large_layout_size</item>
+        <item name="android:layout_height">@dimen/large_layout_size</item>
     </style>
 
 </resources>

@@ -6,6 +6,7 @@
     <TextView
         android:id="@+id/genre"
         style="@style/AllWrap.RobotoFont.TextAppearances.ColoredBackground"
+        android:contentDescription="@string/cd_genre_container"
         android:letterSpacing="0.02"
         android:text="@string/film_genre"
         app:layout_constraintStart_toStartOf="parent"

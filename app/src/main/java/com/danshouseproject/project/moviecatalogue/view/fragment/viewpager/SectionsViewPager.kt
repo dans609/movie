@@ -8,23 +8,39 @@ import androidx.fragment.app.FragmentPagerAdapter
 import com.danshouseproject.project.moviecatalogue.R
 import com.danshouseproject.project.moviecatalogue.view.fragment.MoviesFragment
 import com.danshouseproject.project.moviecatalogue.view.fragment.TvShowsFragment
+import com.danshouseproject.project.moviecatalogue.view.fragment.favfrag.FavoriteMoviesFragment
+import com.danshouseproject.project.moviecatalogue.view.fragment.favfrag.FavoriteTvFragment
 
 class SectionsViewPager(private val context: Context, fm: FragmentManager) :
     FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+
+    private var owner: Int = 0
 
     companion object {
         @StringRes
         private val TAB_TITLES = intArrayOf(R.string.movies_title, R.string.tv_shows_title)
     }
 
-    override fun getCount(): Int = context.resources.getInteger(R.integer.int_2)
+    fun setOwner(owner: Int) {
+        this.owner = owner
+    }
+
+    override fun getCount(): Int = TAB_TITLES.size
 
     override fun getItem(position: Int): Fragment =
         context.resources.let { rsc ->
-            when (position) {
-                rsc.getInteger(R.integer.zero_value) -> MoviesFragment()
-                rsc.getInteger(R.integer.int_1) -> TvShowsFragment()
-                else -> Fragment()
+            return if (owner == 1) {
+                when (position) {
+                    rsc.getInteger(R.integer.zero_value) -> FavoriteMoviesFragment()
+                    TAB_TITLES.lastIndex -> FavoriteTvFragment()
+                    else -> Fragment()
+                }
+            } else {
+                when (position) {
+                    rsc.getInteger(R.integer.zero_value) -> MoviesFragment()
+                    TAB_TITLES.lastIndex -> TvShowsFragment()
+                    else -> Fragment()
+                }
             }
         }
 

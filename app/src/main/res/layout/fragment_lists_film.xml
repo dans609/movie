@@ -18,6 +18,16 @@
     <ProgressBar
         android:id="@+id/progress_bar"
         style="@style/ProgressBar"
+        android:contentDescription="@string/cd_progress_bar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <include
+        android:id="@+id/data_not_found_layout"
+        layout="@layout/display_data_not_found"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

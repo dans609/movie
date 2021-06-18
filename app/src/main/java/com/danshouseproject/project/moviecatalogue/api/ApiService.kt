@@ -1,7 +1,10 @@
 package com.danshouseproject.project.moviecatalogue.api
 
 import com.danshouseproject.project.moviecatalogue.api.tmdb.ApiKey
-import com.danshouseproject.project.moviecatalogue.data.remote.response.*
+import com.danshouseproject.project.moviecatalogue.data.remote.response.ResponseMovies
+import com.danshouseproject.project.moviecatalogue.data.remote.response.ResponseMoviesCertification
+import com.danshouseproject.project.moviecatalogue.data.remote.response.ResponseTvCertification
+import com.danshouseproject.project.moviecatalogue.data.remote.response.ResponseTvShows
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Headers

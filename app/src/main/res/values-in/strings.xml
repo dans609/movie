@@ -204,4 +204,25 @@
     <string name="value_for_null_data_fetched_from_api">N</string>
     <string name="duration_format_hours_minutes">%1$dj %2$dm</string>
     <string name="duration_format_minutes">%dm</string>
+    <string name="splash_screen_image">Gambar Splash Screen</string>
+    <string name="cd_fab_favorite">Button untuk menambahkan user ke list favorite</string>
+    <string name="cd_btn_show_more">Button untuk menampilkan deskripsi film lebih banyak</string>
+    <string name="cd_btn_show_less">Button untuk menampilkan deskripsi film lebih sedikit</string>
+    <string name="cd_movies_poster">Poster film</string>
+    <string name="cd_movies_title">Nama film</string>
+    <string name="cd_movies_certificate">Sertifikat rating film</string>
+    <string name="cd_movies_duration">Durasi film</string>
+    <string name="cd_movies_iso">Kode ISO untuk negara tempat perilisan film</string>
+    <string name="cd_rv_movies_genres">List genre film —Kamu bisa menggeser layarmu ke kanan jika dalam kondisi ini, genre tidak terlihat di layar</string>
+    <string name="cd_movies_release_date">Tanggal perilisan film di negara yang memiliki ISO Code seperti di atas</string>
+    <string name="cd_movies_score">Skor film</string>
+    <string name="cd_tmdb_logos">Logo The Movies DB</string>
+    <string name="cd_movies_overview">Ringkasan Film</string>
+    <string name="cd_genre_container">Wadah untuk menampung film genre</string>
+    <string name="cd_progress_bar">The progressbar icon or icon to indicate the data still in process or there is no internet</string>
+    <string name="film_favorite">Film Favorit</string>
+    <string name="filter_film">Filter Film</string>
+    <string name="cd_data_404">Gambar — Data tidak ditemukan</string>
+    <string name="text_oops">Uups!</string>
+    <string name="entry_not_found">Entri tidak ditemukan</string>
 </resources>

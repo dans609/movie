@@ -21,6 +21,7 @@
     <dimen name="small_text_size">16sp</dimen>
     <dimen name="medium_text_size">18sp</dimen>
     <dimen name="text_title_size">20sp</dimen>
+    <dimen name="large_text_size">25sp</dimen>
 
     <integer name="zero_value">0</integer>
     <integer name="int_1">1</integer>

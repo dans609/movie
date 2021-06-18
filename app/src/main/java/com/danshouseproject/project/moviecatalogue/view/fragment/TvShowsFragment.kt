@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.danshouseproject.project.moviecatalogue.R
 import com.danshouseproject.project.moviecatalogue.databinding.FragmentListsFilmBinding
+import com.danshouseproject.project.moviecatalogue.`object`.json.GetFilmId
 import com.danshouseproject.project.moviecatalogue.model.ListFilm
 import com.danshouseproject.project.moviecatalogue.view.OnItemClickCallback
 import com.danshouseproject.project.moviecatalogue.view.activity.DetailFilmActivity
@@ -20,51 +21,42 @@ import com.danshouseproject.project.moviecatalogue.viewmodel.factory.ViewModelFa
 
 class TvShowsFragment : Fragment(), OnItemClickCallback {
 
-    private lateinit var binding: FragmentListsFilmBinding
+    private var _binding: FragmentListsFilmBinding? = null
+    private val binding
+        get() = _binding
     private lateinit var adapter: MoviesAdapter
-    private var list: ArrayList<ListFilm> = arrayListOf()
-
-    companion object {
-        private const val FILM_FLAG = 101
-        private lateinit var onItemClicked: OnItemClickCallback
-        private val TAG = TvShowsFragment::class.java.simpleName
-        private fun setOnItemClicked(onClicked: OnItemClickCallback) {
-            onItemClicked = onClicked
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
-        binding = FragmentListsFilmBinding.inflate(layoutInflater, container, false)
-        return binding.root
+    ): View? {
+        _binding = FragmentListsFilmBinding.inflate(layoutInflater, container, false)
+        return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setOnItemClicked(this)
 
         if (activity != null) {
+            adapter = MoviesAdapter(this)
             showProgressBar(true)
-            adapter = MoviesAdapter(onItemClicked)
 
+            val id = GetFilmId(requireActivity()).fetchTvShowsId() ?: listOf(resources.getInteger(R.integer.max_score_range))
             val factory = ViewModelFactory.getInstance(requireActivity())
             val viewModel = ViewModelProvider(this, factory).get(TvShowsViewModel::class.java)
-            viewModel.getTvShows().observe(viewLifecycleOwner, { tv ->
-                if (tv.isNotEmpty()) {
-                    // list.add(tv)
+
+            for (idxId in id.indices) {
+                viewModel.getTvShows(id[idxId]).observe(viewLifecycleOwner, { tv ->
                     adapter.setList(tv)
                     showProgressBar(false)
-                }
-                Log.d("Dandi Anastasa", tv.toString())
-            })
+                })
+            }
 
-            with(binding) {
-                rvFilm.setHasFixedSize(true)
-                rvFilm.layoutManager = StaggeredGridLayoutManager(resources.getInteger(R.integer.int_2), StaggeredGridLayoutManager.VERTICAL)
-                rvFilm.adapter = adapter
+            binding?.let {
+                it.rvFilm.setHasFixedSize(true)
+                it.rvFilm.layoutManager = StaggeredGridLayoutManager(resources.getInteger(R.integer.int_2), StaggeredGridLayoutManager.VERTICAL)
+                it.rvFilm.adapter = adapter
                 adapter.notifyDataSetChanged()
             }
         } else Log.d(TAG, getString(R.string.activity_null))
@@ -74,14 +66,22 @@ class TvShowsFragment : Fragment(), OnItemClickCallback {
         Intent(activity, DetailFilmActivity::class.java).let { intent ->
             intent.putExtra(DetailFilmActivity.EXTRA_FILM, data)
             intent.putExtra(DetailFilmActivity.EXTRA_FLAG, FILM_FLAG)
-            intent.putExtra(DetailFilmActivity.EXTRA_TV_SHOWS_POSITION, position)
             startActivity(intent)
         }
 
     private fun showProgressBar(state: Boolean) {
-        binding.progressBar.visibility =
+        binding?.progressBar?.visibility =
             if (state) View.VISIBLE
             else View.INVISIBLE
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    companion object {
+        private const val FILM_FLAG = 101
+        private val TAG = TvShowsFragment::class.java.simpleName
+    }
 }

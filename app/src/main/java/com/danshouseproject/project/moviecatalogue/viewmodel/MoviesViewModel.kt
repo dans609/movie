@@ -8,7 +8,7 @@ import com.danshouseproject.project.moviecatalogue.model.ListFilm
 class MoviesViewModel(private val movieCatalogueRepository: MovieCatalogueRepository) :
     ViewModel() {
 
-    fun getMovies(): LiveData<List<ListFilm>> =
-        movieCatalogueRepository.getAllMovies()
+    fun getMovies(id: Int): LiveData<ListFilm> =
+        movieCatalogueRepository.getAllMovies(id)
 
 }

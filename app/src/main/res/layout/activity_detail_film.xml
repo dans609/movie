@@ -27,6 +27,7 @@
         android:id="@+id/favorite_film_fab"
         style="@style/ButtonLayout.Barrier"
         android:backgroundTint="@color/colorAestheticBlack"
+        android:contentDescription="@string/cd_fab_favorite"
         app:borderWidth="@dimen/constraint_bound_small_size"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

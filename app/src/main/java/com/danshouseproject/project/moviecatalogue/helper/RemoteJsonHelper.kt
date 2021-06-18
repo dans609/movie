@@ -1,8 +1,6 @@
 package com.danshouseproject.project.moviecatalogue.helper
 
-import android.content.Context
 import android.util.Log
-import com.danshouseproject.project.moviecatalogue.R
 import com.danshouseproject.project.moviecatalogue.data.remote.LoadMoviesMoreInfo
 import com.danshouseproject.project.moviecatalogue.data.remote.LoadMoviesResponse
 import com.danshouseproject.project.moviecatalogue.data.remote.LoadTvMoreInfo
@@ -12,82 +10,18 @@ import com.danshouseproject.project.moviecatalogue.data.remote.response.Response
 import com.danshouseproject.project.moviecatalogue.data.remote.response.ResponseMoviesCertification
 import com.danshouseproject.project.moviecatalogue.data.remote.response.ResponseTvCertification
 import com.danshouseproject.project.moviecatalogue.data.remote.response.ResponseTvShows
-import com.danshouseproject.project.moviecatalogue.data.remote.response.json.JsonMoviesId
-import com.danshouseproject.project.moviecatalogue.data.remote.response.json.JsonTvId
-import okio.IOException
-import org.json.JSONException
-import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class RemoteJsonHelper (private val context: Context) {
+class RemoteJsonHelper {
 
     companion object {
         private val TAG = RemoteJsonHelper::class.java.simpleName
     }
 
-
     private fun failResMessage(respThrow: Throwable) =
         Log.d(TAG, respThrow.message.toString())
-
-
-    private fun parseFileToString(fileName: String): String? =
-        context.assets.open(fileName).let { `is` ->
-            try {
-                val buffer = ByteArray(`is`.available())
-                `is`.read(buffer)
-                `is`.close()
-                String(buffer)
-            } catch (exception: IOException) {
-                exception.printStackTrace()
-                null
-            }
-        }
-
-
-    fun fetchMoviesId(): List<JsonMoviesId>? {
-        val moviesId = ArrayList<JsonMoviesId>()
-
-        return try {
-            val responseObject = JSONObject(parseFileToString("filmid.json").toString())
-            val responseArray = responseObject.getJSONArray("movies_id")
-
-            for (index in context.resources.getInteger(R.integer.zero_value) until responseArray.length()) {
-                val responseMovie = responseArray.getJSONObject(index)
-                val id = responseMovie.getInt("id")
-
-                moviesId.add(JsonMoviesId(id))
-            }
-
-            moviesId
-        } catch (exception: JSONException) {
-            exception.printStackTrace()
-            null
-        }
-    }
-
-
-    fun fetchTvId(): List<JsonTvId>? {
-        val tvsId = ArrayList<JsonTvId>()
-
-        return try {
-            val responseObject = JSONObject(parseFileToString("filmid.json").toString())
-            val responseArray = responseObject.getJSONArray("tv_shows_id")
-
-            for (index in context.resources.getInteger(R.integer.zero_value) until responseArray.length()) {
-                val responseTv = responseArray.getJSONObject(index)
-                val id = responseTv.getInt("id")
-
-                tvsId.add(JsonTvId(id))
-            }
-
-            tvsId
-        } catch (exception: JSONException) {
-            exception.printStackTrace()
-            null
-        }
-    }
 
 
     fun fetchMoviesCertificate(id: Int, callback: LoadMoviesMoreInfo) {
@@ -106,11 +40,10 @@ class RemoteJsonHelper (private val context: Context) {
                     failResMessage(t)
                 }
             })
-
     }
 
 
-    fun fetchTvCertificate(id: Int, callback: LoadTvMoreInfo) =
+    fun fetchTvCertificate(id: Int, callback: LoadTvMoreInfo) {
         RetrofitClient.apiService()
             .getTvCertificate(id.toString())
             .enqueue(object : Callback<ResponseTvCertification> {
@@ -126,9 +59,10 @@ class RemoteJsonHelper (private val context: Context) {
                     failResMessage(t)
                 }
             })
+    }
 
 
-    fun fetchMovies(id: Int, callback: LoadMoviesResponse) =
+    fun fetchMovies(id: Int, callback: LoadMoviesResponse) {
         RetrofitClient.apiService()
             .getMovies(id.toString())
             .enqueue(object : Callback<ResponseMovies?> {
@@ -144,9 +78,10 @@ class RemoteJsonHelper (private val context: Context) {
                     failResMessage(t)
                 }
             })
+    }
 
 
-    fun fetchTvShows(id: Int, callback: LoadTvResponse) =
+    fun fetchTvShows(id: Int, callback: LoadTvResponse) {
         RetrofitClient.apiService()
             .getTvShows(id.toString())
             .enqueue(object : Callback<ResponseTvShows?> {
@@ -162,17 +97,6 @@ class RemoteJsonHelper (private val context: Context) {
                     failResMessage(t)
                 }
             })
-
-
-    fun getStringForDuration(duration: Int): String =
-        context.resources.let { rsc ->
-            val hoursUnit = duration / rsc.getInteger(R.integer.score_value60)
-            val minutesUnit = duration % rsc.getInteger(R.integer.score_value60)
-
-            return when (hoursUnit) {
-                rsc.getInteger(R.integer.zero_value) -> rsc.getString(R.string.duration_format_minutes, minutesUnit)
-                else -> rsc.getString(R.string.duration_format_hours_minutes, hoursUnit, minutesUnit)
-            }
-        }
+    }
 
 }

@@ -11,37 +11,32 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             style="@style/MatchWrap.Gravity.PaddBot"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            android:orientation="vertical">
 
             <ImageView
                 android:id="@+id/poster_film"
                 style="@style/ClearXPosterSize.ImageFitXY"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+                android:layout_width="match_parent"
+                android:contentDescription="@string/cd_movies_poster"
                 tools:ignore="ContentDescription"
                 tools:src="@drawable/poster_alita" />
 
             <TextView
                 android:id="@+id/film_name"
                 style="@style/ClearXWrap.SansFontReg.AllPad.TextAppearances"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/poster_film"
+                android:layout_width="match_parent"
+                android:contentDescription="@string/cd_movies_title"
                 tools:text="@string/movies_name2" />
 
             <TextView
                 android:id="@+id/film_overview"
                 style="@style/ClearXWrap.SansFontReg.AllPad.TextAppearances.FormatStyle"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/film_name"
+                android:layout_width="match_parent"
+                android:contentDescription="@string/cd_movies_overview"
                 tools:text="@string/movies2_overview" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
+        </LinearLayout>
     </androidx.cardview.widget.CardView>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

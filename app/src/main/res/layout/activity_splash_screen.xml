@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/AllMatch"
     tools:context=".view.activity.SplashScreenActivity">
 
     <ImageView
         style="@style/ImageFitXY"
+        android:contentDescription="@string/splash_screen_image"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/splash_screen_image"
-        tools:ignore="ContentDescription" />
+        app:srcCompat="@drawable/splash_screen_image" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

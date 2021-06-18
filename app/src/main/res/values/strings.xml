@@ -205,4 +205,25 @@
     <string name="value_for_null_data_fetched_from_api">N</string>
     <string name="duration_format_hours_minutes">%1$dh %2$dm</string>
     <string name="duration_format_minutes">%dm</string>
+    <string name="splash_screen_image">Splash Screen Image</string>
+    <string name="cd_fab_favorite">Button to add user into favorite</string>
+    <string name="cd_btn_show_more">Button to show more movies description</string>
+    <string name="cd_btn_show_less">Button to show less movies description</string>
+    <string name="cd_movies_poster">Movies poster</string>
+    <string name="cd_movies_title">Movies name</string>
+    <string name="cd_movies_certificate">Movies Rating Certificate</string>
+    <string name="cd_movies_duration">Movies Duration</string>
+    <string name="cd_movies_iso">ISO Country Code from movies releases place</string>
+    <string name="cd_rv_movies_genres">List genre of movies —you can swipe screen to right to see more genre in case movies have a lots of genre which cannot displayed in screen</string>
+    <string name="cd_movies_release_date">The release date of movies from country that has an ISO Code as above</string>
+    <string name="cd_movies_score">Movies Score</string>
+    <string name="cd_tmdb_logos">The Movie DB Logos</string>
+    <string name="cd_movies_overview">Movies Overview</string>
+    <string name="cd_genre_container">Container of genre movies</string>
+    <string name="cd_progress_bar">The progressbar icon or icon to indicate the data still in process or there is no internet</string>
+    <string name="film_favorite">Film Favorite</string>
+    <string name="filter_film">Filter Film</string>
+    <string name="cd_data_404">Data not found image</string>
+    <string name="text_oops">Oops!</string>
+    <string name="entry_not_found">Entry not found</string>
 </resources>

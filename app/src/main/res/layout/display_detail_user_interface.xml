@@ -14,15 +14,16 @@
         <ImageView
             android:id="@+id/film_image"
             style="@style/AllMatch"
+            android:contentDescription="@string/cd_movies_poster"
             android:scaleType="fitXY"
-            app:srcCompat="@drawable/splash_screen_image"
-            tools:ignore="ContentDescription" />
+            app:srcCompat="@drawable/splash_screen_image" />
 
     </androidx.cardview.widget.CardView>
 
     <TextView
         android:id="@+id/film_name_title"
-        style="@style/ClearXWrap.SansFontBold.StartEndBarrier.TextAppearances"
+        style="@style/ClearXWrap.SansFontBold.StartBarrier.TextAppearances"
+        android:contentDescription="@string/cd_movies_title"
         android:paddingBottom="@dimen/constraint_bound_small_size"
         android:text="@string/film_name"
         app:layout_constraintEnd_toEndOf="parent"
@@ -32,6 +33,7 @@
     <TextView
         android:id="@+id/film_rating"
         style="@style/AllWrap.RobotoFont.TextAppearances.BorderedBackground"
+        android:contentDescription="@string/cd_movies_certificate"
         android:text="@string/film_rating_symbol"
         app:layout_constraintBottom_toBottomOf="@id/film_country_code"
         app:layout_constraintStart_toStartOf="@id/film_name_title"
@@ -40,6 +42,7 @@
     <TextView
         android:id="@+id/film_duration"
         style="@style/AllWrap.SansRegFont.TextAppearances"
+        android:contentDescription="@string/cd_movies_duration"
         android:text="@string/film_duration"
         app:layout_constraintBottom_toBottomOf="@id/film_country_code"
         app:layout_constraintEnd_toStartOf="@id/film_country_code"
@@ -49,6 +52,7 @@
     <TextView
         android:id="@+id/film_country_code"
         style="@style/AllWrap.SansFontBold.TextAppearances.ElevationBorderlessBackground"
+        android:contentDescription="@string/cd_movies_iso"
         android:text="@string/film_country_code_iso_alpha_2"
         app:layout_constraintEnd_toEndOf="@id/film_name_title"
         app:layout_constraintTop_toBottomOf="@id/film_name_title" />
@@ -63,11 +67,13 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/film_genre"
         android:layout_width="@dimen/clear_size"
-        android:layout_height="@dimen/border_round_radius_25"
+        android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/mini_size"
+        android:contentDescription="@string/cd_rv_movies_genres"
         app:layout_constraintEnd_toEndOf="@+id/film_country_code"
         app:layout_constraintStart_toStartOf="@id/film_genre_title"
         app:layout_constraintTop_toBottomOf="@id/film_genre_title"
+        tools:layout_height="@dimen/border_round_radius_25"
         tools:listitem="@layout/display_film_genre" />
 
     <TextView
@@ -81,8 +87,9 @@
 
     <TextView
         android:id="@+id/film_release_date"
-        style="@style/ClearXWrap.SansFontBold.StartEndBarrier.DateAppearanceFormat"
+        style="@style/ClearXWrap.SansFontBold.StartBarrier.DateAppearanceFormat"
         android:layout_marginStart="@dimen/constraint_bound_small_size"
+        android:contentDescription="@string/cd_movies_release_date"
         app:layout_constraintBottom_toBottomOf="@id/film_release_date_title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/film_release_date_title"
@@ -100,6 +107,7 @@
     <TextView
         android:id="@+id/film_score_value"
         style="@style/Clear.ProgressBarIndicatorText.Font"
+        android:contentDescription="@string/cd_movies_score"
         android:text="@string/film_score_percent"
         app:layout_constraintBottom_toBottomOf="@id/film_score"
         app:layout_constraintEnd_toEndOf="@id/film_score"
@@ -120,11 +128,11 @@
 
     <ImageView
         style="@style/Clear.ImageStartEndBarrier.TheMovieDBLogo"
+        android:contentDescription="@string/cd_tmdb_logos"
         app:layout_constraintBottom_toBottomOf="@id/film_score"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/film_score_title"
-        app:layout_constraintTop_toTopOf="@id/film_score"
-        tools:ignore="ContentDescription" />
+        app:layout_constraintTop_toTopOf="@id/film_score" />
 
     <TextView
         android:id="@+id/film_overview_title"
@@ -135,8 +143,9 @@
 
     <TextView
         android:id="@+id/film_overview"
-        style="@style/ClearXWrap.SansFontBold.StartEndBarrier.TextAppearances"
+        style="@style/ClearXWrap.SansFontBold.StartBarrier.TextAppearances"
         android:layout_marginStart="@dimen/clear_size"
+        android:contentDescription="@string/cd_movies_overview"
         android:fontFamily="@font/source_sans_pro_reg"
         android:padding="@dimen/constraint_bound_small_size"
         android:text="@string/film_overview_lorem_sample"

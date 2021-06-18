@@ -4,13 +4,11 @@ import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
-
 @Parcelize
 data class ResponseTvCertification(
     @field:SerializedName("results")
     var result: List<TvCertificate>? = null
 ) : Parcelable
-
 
 @Parcelize
 data class TvCertificate(
@@ -28,7 +26,6 @@ data class ResponseMoviesCertification(
     var result: List<MovieCertificate>? = null
 ) : Parcelable
 
-
 @Parcelize
 data class MovieCertificate(
     @field:SerializedName("iso_3166_1")
@@ -37,7 +34,6 @@ data class MovieCertificate(
     @field:SerializedName("release_dates")
     var moviesCertificate: List<Certificate>? = null
 ) : Parcelable
-
 
 @Parcelize
 data class Certificate(

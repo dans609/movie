@@ -7,9 +7,9 @@ import com.danshouseproject.project.moviecatalogue.helper.RemoteJsonHelper
 
 object Injection {
 
-    fun provideRepository(context: Context): MovieCatalogueRepository {
-        val remote = RemoteDataSource.getInstance(RemoteJsonHelper(context))
-        return MovieCatalogueRepository.getInstance(remote)
-    }
+    fun provideRepository(context: Context): MovieCatalogueRepository =
+        RemoteDataSource.getInstance(RemoteJsonHelper()).let { remote ->
+            MovieCatalogueRepository.getInstance(remote, context)
+        }
 
 }

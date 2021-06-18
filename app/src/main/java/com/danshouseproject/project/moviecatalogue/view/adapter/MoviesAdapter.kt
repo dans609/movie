@@ -11,15 +11,11 @@ import com.danshouseproject.project.moviecatalogue.databinding.DisplayListFilmBi
 import com.danshouseproject.project.moviecatalogue.model.ListFilm
 import com.danshouseproject.project.moviecatalogue.view.OnItemClickCallback
 
-class MoviesAdapter(
-    private val listenerClick: OnItemClickCallback
-) :
-    RecyclerView.Adapter<MoviesAdapter.FilmViewHolder>() {
-
+class MoviesAdapter(private val listenerClick: OnItemClickCallback) : RecyclerView.Adapter<MoviesAdapter.FilmViewHolder>() {
     private val listFilm = ArrayList<ListFilm>()
 
-    fun setList(listData: List<ListFilm>) {
-        listFilm.addAll(listData)
+    fun setList(data: ListFilm) {
+        listFilm.add(data)
         notifyDataSetChanged()
     }
 
@@ -30,6 +26,7 @@ class MoviesAdapter(
             binding.apply {
                 with(itemView) {
                     Glide.with(context)
+                        .asBitmap()
                         .load(data.filmImage)
                         .apply(
                             RequestOptions.placeholderOf(R.color.colorAccent)

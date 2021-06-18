@@ -24,7 +24,6 @@ object RetrofitClient {
             .client(setInterceptor())
             .build()
 
-
     fun apiService(): ApiService =
         setUpClient().create(ApiService::class.java)
 

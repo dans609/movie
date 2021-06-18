@@ -6,9 +6,9 @@ import com.danshouseproject.project.moviecatalogue.model.ListFilm
 
 interface FilmDataSource {
 
-    fun getAllMovies(): LiveData<List<ListFilm>>
+    fun getAllMovies(filmId: Int): LiveData<ListFilm>
 
-    fun getAllTvShows(): LiveData<List<ListFilm>>
+    fun getAllTvShows(filmId: Int): LiveData<ListFilm>
 
     fun getMoviesMoreInfo(filmId: Int): LiveData<Pair<String, String>>
 

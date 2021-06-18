@@ -8,6 +8,7 @@ import com.danshouseproject.project.moviecatalogue.R
 import com.danshouseproject.project.moviecatalogue.databinding.ActivitySplashScreenBinding
 
 class SplashScreenActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = ActivitySplashScreenBinding.inflate(layoutInflater)
