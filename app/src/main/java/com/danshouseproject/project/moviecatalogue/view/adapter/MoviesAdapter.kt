@@ -35,12 +35,10 @@ class MoviesAdapter(private val listenerClick: OnItemClickCallback) : RecyclerVi
                         )
                         .into(posterFilm)
 
-                    context.let {
-                        filmName.text = data.filmName
-                        filmOverview.text = data.filmOverview
-                    }
+                    filmName.text = data.filmName
+                    filmOverview.text = data.filmOverview
 
-                    this.setOnClickListener {
+                    setOnClickListener {
                         Toast.makeText(
                             context,
                             filmName.text.toString(),

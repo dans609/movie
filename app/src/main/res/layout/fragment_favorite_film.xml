@@ -3,22 +3,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/AllMatch"
-    tools:context=".view.fragment.MoviesFragment">
+    tools:context=".view.fragment.favfrag.FavoriteMoviesFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_film"
+        android:id="@+id/rv_favorite_film"
         style="@style/Clear"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:listitem="@layout/display_list_film" />
+        tools:listitem="@layout/display_favorite_film" />
 
-    <ProgressBar
-        android:id="@+id/progress_bar"
-        style="@style/ProgressBar"
-        android:contentDescription="@string/cd_progress_bar"
+    <include
+        android:id="@+id/data_not_found_layout"
+        layout="@layout/display_data_not_found"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

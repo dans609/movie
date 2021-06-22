@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.danshouseproject.project.moviecatalogue.R
 import com.danshouseproject.project.moviecatalogue.databinding.ActivityFilmFavoriteBinding
 import com.danshouseproject.project.moviecatalogue.databinding.ActivityHomeBinding
-import com.danshouseproject.project.moviecatalogue.view.fragment.viewpager.SectionsViewPager
+import com.danshouseproject.project.moviecatalogue.view.fragment.viewpager.FavoriteViewPager
 
 class FilmFavoriteActivity : AppCompatActivity() {
     private var _binding: ActivityFilmFavoriteBinding? = null
@@ -19,8 +19,11 @@ class FilmFavoriteActivity : AppCompatActivity() {
         setContentView(binding?.root)
         actionBarPref { supportActionBar }
 
-        val favoriteViewPager = SectionsViewPager(this, supportFragmentManager)
-        favoriteViewPager.setOwner(1)
+        configViewPager()
+    }
+
+    private fun configViewPager() {
+        val favoriteViewPager = FavoriteViewPager(this, supportFragmentManager)
 
         val viewPager = getHomeBinding { binding }?.viewPager
         viewPager?.adapter = favoriteViewPager
@@ -29,9 +32,7 @@ class FilmFavoriteActivity : AppCompatActivity() {
         tabs?.setupWithViewPager(viewPager)
     }
 
-
     private inline fun getHomeBinding(
-        noData: Boolean = false,
         view: () -> ActivityFilmFavoriteBinding?
     ): ActivityHomeBinding? =
         view()?.favoriteFilmLayout

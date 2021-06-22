@@ -221,8 +221,20 @@
     <string name="cd_genre_container">Wadah untuk menampung film genre</string>
     <string name="cd_progress_bar">The progressbar icon or icon to indicate the data still in process or there is no internet</string>
     <string name="film_favorite">Film Favorit</string>
-    <string name="filter_film">Filter Film</string>
     <string name="cd_data_404">Gambar — Data tidak ditemukan</string>
     <string name="text_oops">Uups!</string>
     <string name="entry_not_found">Entri tidak ditemukan</string>
+
+    <string name="loading_text">Tunggu sebentar, sedang di proses</string>
+    <string name="error_text">Terjadi kesalahan</string>
+    <string name="cd_poster_favorite">poster film favorit</string>
+    <string name="film_rating">Skor: 70</string>
+    <string name="film_rating_responsive">Skor: %d</string>
+    <string name="btn_see_detail_text">Lihat detailnya</string>
+    <string name="cd_line">Garis pembatas</string>
+    <string name="cd_btn_favorite_to_detail">Tombol untuk melihat detail dari film</string>
+    <string name="cd_overview_favorite">Deskripsi film dan ikon yang ada di kanan adalah pertanda bahwa film telah di favorit kan</string>
+
+    <string name="success_add_to_favorite">Berhasil menambahkan film ke daftar favorit</string>
+    <string name="remove_from_favorite">Film dihapus dari daftar favorit</string>
 </resources>

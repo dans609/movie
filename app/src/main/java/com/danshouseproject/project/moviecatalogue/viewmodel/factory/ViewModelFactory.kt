@@ -5,10 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.danshouseproject.project.moviecatalogue.data.MovieCatalogueRepository
 import com.danshouseproject.project.moviecatalogue.di.Injection
-import com.danshouseproject.project.moviecatalogue.viewmodel.AdditionalDataViewModel
-import com.danshouseproject.project.moviecatalogue.viewmodel.GenreViewModel
-import com.danshouseproject.project.moviecatalogue.viewmodel.MoviesViewModel
-import com.danshouseproject.project.moviecatalogue.viewmodel.TvShowsViewModel
+import com.danshouseproject.project.moviecatalogue.viewmodel.*
 
 class ViewModelFactory private constructor(private val mMovieCatalogueRepository: MovieCatalogueRepository) :
     ViewModelProvider.NewInstanceFactory() {

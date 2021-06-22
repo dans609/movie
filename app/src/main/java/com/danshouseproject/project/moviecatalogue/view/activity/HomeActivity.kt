@@ -47,19 +47,16 @@ class HomeActivity : AppCompatActivity() {
         menuInflater.inflate(R.menu.main_menu, menu)
 
         val menuFavoriteIcon = menu.findMenuIco(R.id.see_film_favorite)
-        val menuFilterIcon = menu.findMenuIco(R.id.filter_film)
         val getRedColor = ContextCompat.getColor(this, R.color.colorRed)
 
-        drawableTint(menuFavoriteIcon, menuFilterIcon) { getRedColor }
+        drawableTint(menuFavoriteIcon) { getRedColor }
         return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.language_preferences -> startActivity(Intent(Settings.ACTION_LOCALE_SETTINGS))
-            R.id.see_film_favorite -> {
-                startActivity(Intent(this, FilmFavoriteActivity::class.java))
-            }
+            R.id.see_film_favorite -> startActivity(Intent(this, FilmFavoriteActivity::class.java))
         }
         return super.onOptionsItemSelected(item)
     }

@@ -18,11 +18,14 @@ import com.danshouseproject.project.moviecatalogue.R
 import com.danshouseproject.project.moviecatalogue.databinding.ActivityDetailFilmBinding
 import com.danshouseproject.project.moviecatalogue.databinding.DisplayDetailUserInterfaceBinding
 import com.danshouseproject.project.moviecatalogue.model.FilmGenre
+import com.danshouseproject.project.moviecatalogue.model.FilmInfo
 import com.danshouseproject.project.moviecatalogue.model.ListFilm
 import com.danshouseproject.project.moviecatalogue.view.adapter.GenreAdapter
 import com.danshouseproject.project.moviecatalogue.viewmodel.AdditionalDataViewModel
 import com.danshouseproject.project.moviecatalogue.viewmodel.GenreViewModel
 import com.danshouseproject.project.moviecatalogue.viewmodel.factory.ViewModelFactory
+import com.danshouseproject.project.moviecatalogue.vo.Resource
+import com.danshouseproject.project.moviecatalogue.vo.Status
 import kotlinx.android.synthetic.main.activity_detail_film.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -32,11 +35,13 @@ import kotlinx.coroutines.withContext
 class DetailFilmActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var genreAdapter: GenreAdapter
     private lateinit var bindingDisplay: DisplayDetailUserInterfaceBinding
+    private lateinit var additionalDataViewModel: AdditionalDataViewModel
 
     private var _activityDetailFilmBinding: ActivityDetailFilmBinding? = null
     private var statusFavorite: Boolean = false
     private var detailPageTitle: String? = null
     private var filmId: Int = 0
+    private var getIntent: ListFilm? = null
 
     private val binding
         get() = _activityDetailFilmBinding
@@ -53,11 +58,11 @@ class DetailFilmActivity : AppCompatActivity(), View.OnClickListener {
 
         genreAdapter = GenreAdapter()
         val filmFlag = intent.getIntExtra(EXTRA_FLAG, toInt(R.integer.zero_value))
-        val getIntent = intent.getParcelableExtra<ListFilm>(EXTRA_FILM) as ListFilm
+        getIntent = intent.getParcelableExtra<ListFilm>(EXTRA_FILM) as ListFilm
 
         Glide.with(this)
             .asBitmap()
-            .load(getIntent.filmImage)
+            .load(getIntent?.filmImage)
             .apply(
                 RequestOptions()
                     .placeholder(R.drawable.splash_screen_image)
@@ -66,7 +71,7 @@ class DetailFilmActivity : AppCompatActivity(), View.OnClickListener {
             .into(bindingDisplay.filmImage)
 
         with(bindingDisplay) {
-            getIntent.let {
+            getIntent?.let {
                 filmId = it.filmId
                 filmNameTitle.text = it.filmName
                 filmOverview.text = it.filmOverview
@@ -79,9 +84,22 @@ class DetailFilmActivity : AppCompatActivity(), View.OnClickListener {
         getViewModel(filmFlag)
         recyclerConfig()
         countOverviewLines()
+        checkFavorite()
 
         binding?.favoriteFilmFab?.setOnClickListener(this)
         bindingDisplay.filmScore.setOnClickListener(this)
+    }
+
+    private fun checkFavorite() {
+        additionalDataViewModel.checkIsFavorite(filmId).observe(context, { count ->
+            statusFavorite = if (count > resources.getInteger(R.integer.zero_value)) {
+                favoriteDrawable(true)
+                true
+            } else {
+                favoriteDrawable(false)
+                false
+            }
+        })
     }
 
     private inline fun actionBarPreference(actionBar: () -> ActionBar?) =
@@ -99,8 +117,9 @@ class DetailFilmActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun getViewModel(flag: Int) {
         val factory = ViewModelFactory.getInstance(this)
-        val genreViewModel = ViewModelProvider(this, factory).get(GenreViewModel::class.java)
-        val additionalDataViewModel =
+        val genreViewModel =
+            ViewModelProvider(this, factory).get(GenreViewModel::class.java)
+        additionalDataViewModel =
             ViewModelProvider(this, factory).get(AdditionalDataViewModel::class.java)
 
         when (flag) {
@@ -115,22 +134,49 @@ class DetailFilmActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-    private val LiveData<FilmGenre>.observeGenres
+
+    private val LiveData<Resource<FilmGenre>>.observeGenres
         get() = this.observe(context, { listGenre ->
-            if (listGenre != null)
-                genreAdapter.setListGenre(listGenre.genre)
-            else return@observe
+            if (listGenre != null) {
+                when (listGenre.status) {
+                    Status.LOADING -> getString(R.string.loading_text).callToast
+                    Status.SUCCESS -> {
+                        val listFilmGenre = ArrayList<String>()
+                        for (index in listGenre.data?.genre?.indices ?: return@observe) {
+                            if (listGenre.data.genre!![index].filmId == filmId) {
+                                listFilmGenre.add(listGenre.data.genre?.get(index)?.genre.toString())
+                                continue
+                            }
+                        }
+                        genreAdapter.setListGenre(listFilmGenre)
+                    }
+                    Status.ERROR -> getString(R.string.error_text).callToast
+                }
+            } else return@observe
         })
 
-    private val LiveData<Pair<String, String>>.observeFilmMoreInfo
+    private val LiveData<Resource<FilmInfo>>.observeFilmMoreInfo
         get() = this.observe(context, {
-            if (it != null)
-                with(bindingDisplay) {
-                    filmCountryCode.text = it.first
-                    filmRating.text = it.second
+            if (it != null) {
+                when (it.status) {
+                    Status.LOADING -> getString(R.string.loading_text).callToast
+                    Status.SUCCESS -> {
+                        with(bindingDisplay) {
+                            if (filmId == it.data?.filmId) {
+                                filmCountryCode.text = it.data.isoCode
+                                filmRating.text = it.data.filmRating
+                            }
+                        }
+                    }
+                    Status.ERROR -> getString(R.string.error_text).callToast
                 }
-            else return@observe
+            } else return@observe
         })
+
+
+    private val String.callToast
+        get() = Toast.makeText(context, this, Toast.LENGTH_SHORT).show()
+
 
     private fun progressBarAnimation(scores: Int) =
         bindingDisplay.let {
@@ -213,21 +259,28 @@ class DetailFilmActivity : AppCompatActivity(), View.OnClickListener {
             R.id.btn_show_more -> setBtnShowVisibility(true)
             R.id.btn_show_less -> setBtnShowVisibility(false)
             R.id.favorite_film_fab -> setFavorite(!statusFavorite)
-            R.id.film_score -> Toast.makeText(
-                this,
-                bindingDisplay.filmScoreValue.text.toString(),
-                Toast.LENGTH_SHORT
-            ).show()
+            R.id.film_score -> bindingDisplay.filmScoreValue.text.toString().callToast
         }
     }
 
     private fun setFavorite(stateFav: Boolean) {
-        statusFavorite = if (stateFav) {
-            favorite_film_fab.setImageDrawable(drawable { R.drawable.ic_favorite })
-            true
+        if (stateFav) {
+            additionalDataViewModel.addToFavorite(getIntent as ListFilm)
+            getString(R.string.success_add_to_favorite).callToast
+            favoriteDrawable(true)
         } else {
-            favorite_film_fab.setImageDrawable(drawable { R.drawable.ic_favorite_default })
-            false
+            additionalDataViewModel.removeFromFavorite(filmId)
+            getString(R.string.remove_from_favorite).callToast
+            favoriteDrawable(false)
+        }
+    }
+
+    private fun favoriteDrawable(state: Boolean) {
+        lifecycleScope.launch {
+            withContext(Dispatchers.Main) {
+                if (state) binding?.favoriteFilmFab?.setImageDrawable(drawable { R.drawable.ic_favorite })
+                else binding?.favoriteFilmFab?.setImageDrawable(drawable { R.drawable.ic_favorite_default })
+            }
         }
     }
 
@@ -264,6 +317,6 @@ class DetailFilmActivity : AppCompatActivity(), View.OnClickListener {
             context.resources.getInteger(id)
 
         private inline fun drawable(drawable: () -> Int): Drawable =
-            ContextCompat.getDrawable(context, drawable()) as Drawable
+            ContextCompat.getDrawable(context.applicationContext, drawable()) as Drawable
     }
 }

@@ -10,7 +10,9 @@
     <dimen name="minimum_icon_size">24dp</dimen>
     <dimen name="border_round_radius_25">25dp</dimen>
     <dimen name="progressbar_medium_size">50dp</dimen>
+    <dimen name="poster_favorite_width">70dp</dimen>
     <dimen name="film_card_view_size">160dp</dimen>
+    <dimen name="poster_favorite_height">100dp</dimen>
     <dimen name="app_icon_size">108dp</dimen>
     <dimen name="list_film_poster_size">185dp</dimen>
     <dimen name="large_layout_size">200dp</dimen>

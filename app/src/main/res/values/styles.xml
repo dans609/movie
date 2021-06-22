@@ -307,4 +307,51 @@
         <item name="android:layout_height">@dimen/large_layout_size</item>
     </style>
 
+    <style name="ImageFavoriteSize">
+        <item name="android:layout_width">@dimen/poster_favorite_width</item>
+        <item name="android:layout_height">@dimen/poster_favorite_height</item>
+        <item name="android:scaleType">fitXY</item>
+    </style>
+
+    <style name="ClearXWrap.StartBarrier">
+        <item name="android:layout_marginStart">@dimen/large_attribute_size</item>
+    </style>
+
+    <style name="ClearXWrap.StartBarrier.TextAppearances">
+        <item name="android:ellipsize">end</item>
+        <item name="android:fontFamily">@font/source_sans_pro_semi_bold</item>
+        <item name="android:letterSpacing">0.05</item>
+        <item name="android:lineSpacingMultiplier">1.1</item>
+        <item name="android:maxLength">@integer/minimum_viewport_size</item>
+        <item name="maxLines">@integer/int_1</item>
+        <item name="android:textColor">@color/colorSemiBlack</item>
+        <item name="android:textSize">@dimen/medium_text_size</item>
+    </style>
+
+    <style name="ClearXWrap.StartBarrier.TextAppearances.Format">
+        <item name="android:layout_marginStart">@dimen/clear_size</item>
+        <item name="android:fontFamily">@font/source_sans_pro_reg</item>
+    </style>
+
+    <style name="ClearXWrap.StartBarrier.TextAppearances.Format.Drawable">
+        <item name="android:drawableEnd">@drawable/ic_favorite</item>
+        <item name="android:drawablePadding">@dimen/normal_size</item>
+    </style>
+
+    <style name="Button.Borderless" parent="Widget.AppCompat.Button.Borderless">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="Button.Borderless.Size">
+        <item name="android:minWidth">@dimen/clear_size</item>
+        <item name="android:minHeight">@dimen/clear_size</item>
+        <item name="android:padding">@dimen/clear_size</item>
+        <item name="android:letterSpacing">0.05</item>
+    </style>
+
+    <style name="Clear.Stroke">
+        <item name="android:layout_height">@dimen/extra_small_size</item>
+        <item name="android:background">@drawable/ic_dashed_stroke</item>
+    </style>
 </resources>

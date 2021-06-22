@@ -222,8 +222,20 @@
     <string name="cd_genre_container">Container of genre movies</string>
     <string name="cd_progress_bar">The progressbar icon or icon to indicate the data still in process or there is no internet</string>
     <string name="film_favorite">Film Favorite</string>
-    <string name="filter_film">Filter Film</string>
     <string name="cd_data_404">Data not found image</string>
     <string name="text_oops">Oops!</string>
     <string name="entry_not_found">Entry not found</string>
+
+    <string name="loading_text">Wait, loading…</string>
+    <string name="error_text">There is something error</string>
+    <string name="cd_poster_favorite">poster film favorite</string>
+    <string name="film_rating">Rating: 70</string>
+    <string name="film_rating_responsive">Rating: %d</string>
+    <string name="btn_see_detail_text">See Detail</string>
+    <string name="cd_line">Line separated</string>
+    <string name="cd_btn_favorite_to_detail">Button for see detail about film</string>
+    <string name="cd_overview_favorite">Overview of film and icon in the right as a mark of film is already favorited</string>
+
+    <string name="success_add_to_favorite">Success add film to favorite</string>
+    <string name="remove_from_favorite">Removed from list of favorite</string>
 </resources>

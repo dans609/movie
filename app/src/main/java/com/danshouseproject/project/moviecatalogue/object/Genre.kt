@@ -193,7 +193,7 @@ object Genre {
 
         for (index in moviesGenreList.indices) {
             val filmGenre = FilmGenre()
-            filmGenre.genre = moviesGenreList[index]
+            // filmGenre.genre = moviesGenreList[index]
             filmGenre.filmId = moviesId[index]
             listGenre.add(filmGenre)
         }
@@ -206,7 +206,7 @@ object Genre {
 
         for (index in tvShowsGenreList.indices) {
             val filmGenre = FilmGenre()
-            filmGenre.genre = tvShowsGenreList[index]
+            // filmGenre.genre = tvShowsGenreList[index]
             filmGenre.filmId = moviesId[index]
             listGenre.add(filmGenre)
         }
