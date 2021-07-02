@@ -33,7 +33,7 @@ class MovieCatalogueRepository private constructor(
         listOf(MovieCertificate(rsc.getString(R.string.iso_alpha2_us), listOf(Certificate(rsc.getString(R.string.tv_rate_canada_adult_certificate)))))
 
     private fun handleNullCertificate(): List<Certificate> =
-        listOf(Certificate(rsc.getString(R.string.tv_rate_canada_adult_certificate)))
+        listOf(Certificate(rsc.getString(R.string.tv_rate_canada_kids_certificate)))
 
     private fun handleNullTvCertificate(): List<TvCertificate> =
         listOf(
