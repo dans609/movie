@@ -29,10 +29,6 @@ class MovieCatalogueRepository private constructor(
 
     private val rsc = context.resources
 
-    fun getContext(context: Context) {
-        this.context = context
-    }
-
     private fun handleNullMovieCertificate(): List<MovieCertificate> =
         listOf(MovieCertificate(rsc.getString(R.string.iso_alpha2_us), listOf(Certificate(rsc.getString(R.string.tv_rate_canada_adult_certificate)))))
 
