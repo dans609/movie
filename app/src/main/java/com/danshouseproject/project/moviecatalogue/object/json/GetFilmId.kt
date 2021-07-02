@@ -17,6 +17,8 @@ class GetFilmId(private val context: Context) {
             } catch (e: JSONException) {
                 e.printStackTrace()
                 null
+            } finally {
+                `is`.close()
             }
         }
 

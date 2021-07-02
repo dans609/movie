@@ -1,13 +1,20 @@
 package com.danshouseproject.project.moviecatalogue.data.local
 
 import androidx.lifecycle.LiveData
+import androidx.paging.DataSource
 import com.danshouseproject.project.moviecatalogue.db.movie.MovieDao
+import com.danshouseproject.project.moviecatalogue.helper.utils.SortUtils
 import com.danshouseproject.project.moviecatalogue.model.FavoriteFilm
 import com.danshouseproject.project.moviecatalogue.model.FilmGenre
 import com.danshouseproject.project.moviecatalogue.model.FilmInfo
 import com.danshouseproject.project.moviecatalogue.model.ListFilm
 
 class LocalDataSource private constructor(private val mMovieDao: MovieDao) {
+
+    fun getOrderedFilm(sort: String): DataSource.Factory<Int, FavoriteFilm> =
+        SortUtils.getSortedQuery(sort).let { query ->
+            mMovieDao.getOrderedFilm(query)
+        }
 
     fun getFilm(filmId: Int, isMovies: Boolean): LiveData<ListFilm> =
         mMovieDao.getFilm(filmId, isMovies)
@@ -36,7 +43,7 @@ class LocalDataSource private constructor(private val mMovieDao: MovieDao) {
     fun checkIsFavorite(filmId: Int): Int =
         mMovieDao.checkIsFavorite(filmId)
 
-    fun getAllFavoriteFilm(isMovies: Boolean): LiveData<List<FavoriteFilm>> =
+    fun getAllFavoriteFilm(isMovies: Boolean): DataSource.Factory<Int, FavoriteFilm> =
         mMovieDao.getAllFavoriteFilm(isMovies)
 
     companion object {

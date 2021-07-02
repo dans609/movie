@@ -38,5 +38,4 @@ class ViewModelFactory private constructor(private val mMovieCatalogueRepository
                 else -> throw Throwable("$UNKNOWN_VIEWMODEL ${modelClass.name}")
             }
         }
-
 }

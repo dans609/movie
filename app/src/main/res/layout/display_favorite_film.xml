@@ -24,13 +24,26 @@
 
     <TextView
         android:id="@+id/tv_description"
-        style="@style/ClearXWrap.StartBarrier.TextAppearances.Format.Drawable"
+        style="@style/ClearXWrap.StartBarrier.TextAppearances.Format"
         android:layout_marginTop="@dimen/constraint_bound_small_size"
         android:contentDescription="@string/cd_overview_favorite"
-        app:layout_constraintEnd_toEndOf="@id/film_name"
+        app:layout_constraintEnd_toStartOf="@id/btn_favorite"
+        app:layout_constraintHorizontal_weight="0.9"
         app:layout_constraintStart_toStartOf="@id/film_name"
         app:layout_constraintTop_toBottomOf="@id/film_name"
         tools:text="@tools:sample/lorem/random" />
+
+    <ImageView
+        android:id="@+id/btn_favorite"
+        style="@style/Clear"
+        android:contentDescription="@string/cd_btn_favorite"
+        android:src="@drawable/ic_favorite"
+        android:tint="@color/colorRed"
+        app:layout_constraintBottom_toBottomOf="@id/tv_description"
+        app:layout_constraintEnd_toEndOf="@id/film_name"
+        app:layout_constraintHorizontal_weight="0.1"
+        app:layout_constraintStart_toEndOf="@id/tv_description"
+        app:layout_constraintTop_toTopOf="@id/tv_description" />
 
     <TextView
         android:id="@+id/film_rating"

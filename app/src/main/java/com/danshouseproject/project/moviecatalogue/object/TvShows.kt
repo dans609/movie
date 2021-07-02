@@ -1,10 +1,14 @@
 package com.danshouseproject.project.moviecatalogue.`object`
 
 import com.danshouseproject.project.moviecatalogue.R
+import com.danshouseproject.project.moviecatalogue.`object`.test.RemoteTvShows
 import com.danshouseproject.project.moviecatalogue.helper.ConvertTypeHelper.convertListIntToListString
 import com.danshouseproject.project.moviecatalogue.model.ListFilm
 
 object TvShows {
+
+    private val tvsId: List<Int>
+        get() = RemoteTvShows.responseTvShowsId
 
     private val tvShowsImage: List<String> = convertListIntToListString(
         R.drawable.poster_arrow, R.drawable.poster_doom_patrol, R.drawable.poster_dragon_ball,
@@ -26,25 +30,25 @@ object TvShows {
         R.string.tv_shows_name19
     )
 
-    private val tvShowsRating: List<String> = convertListIntToListString(
-        R.string.tv_rate_canada_teens_certificate,
+    val tvShowsRating: List<String> = convertListIntToListString(
+        R.string.tv_rate_16_old_and_over,
         R.string.tv_rate_canada_adult_certificate,
         R.string.tv_rate_canada_kids_certificate,
-        R.string.tv_rate_canada_teens_certificate,
-        R.string.tv_rate_canada_teens_certificate,
-        R.string.tv_rate_canada_kids_certificate,
+        R.string.film_rate_12_only_age_or_older,
+        R.string.tv_rate_15_old_and_over,
+        R.string.film_rate_12_only_age_or_older,
+        R.string.tv_rate_16_old_and_over,
+        R.string.tv_rate_16_old_and_over,
+        R.string.tv_rate_16_old_and_over,
         R.string.tv_rate_canada_adult_certificate,
-        R.string.tv_rate_canada_teens_certificate,
-        R.string.tv_rate_canada_teens_certificate,
         R.string.tv_rate_canada_adult_certificate,
-        R.string.tv_rate_canada_adult_certificate,
-        R.string.tv_rate_canada_teens_certificate,
-        R.string.tv_rate_canada_teens_certificate,
+        R.string.film_rate_12_only_age_or_older,
+        R.string.tv_rate_16_old_and_over,
         R.string.tv_rate_canada_teens_certificate,
         R.string.tv_rate_18_old_and_over,
-        R.string.tv_rate_canada_teens_certificate,
-        R.string.tv_rate_canada_teens_certificate,
-        R.string.tv_rate_canada_kids_certificate,
+        R.string.film_rate_12_only_age_or_older,
+        R.string.tv_rate_16_old_and_over,
+        R.string.film_rate_12_only_age_or_older,
         R.string.tv_rate_canada_adult_certificate
     )
 
@@ -58,13 +62,13 @@ object TvShows {
         R.string.fivtyfive_minutes
     )
 
-    private val tvShowsCountryCode: List<String> = convertListIntToListString(
-        R.string.iso_alpha2_us, R.string.iso_alpha2_us, R.string.iso_alpha2_jp,
-        R.string.iso_alpha2_jp, R.string.iso_alpha2_us, R.string.iso_alpha2_us,
-        R.string.iso_alpha2_us, R.string.iso_alpha2_us, R.string.iso_alpha2_us,
-        R.string.iso_alpha2_us, R.string.iso_alpha2_us, R.string.iso_alpha2_jp,
-        R.string.iso_alpha2_us, R.string.iso_alpha2_us, R.string.iso_alpha2_uk,
-        R.string.iso_alpha2_us, R.string.iso_alpha2_us, R.string.iso_alpha2_us,
+    val tvShowsCountryCode: List<String> = convertListIntToListString(
+        R.string.iso_alpha2_de, R.string.iso_alpha2_us, R.string.iso_alpha2_us,
+        R.string.iso_alpha2_gb, R.string.iso_alpha2_gb, R.string.iso_alpha2_de,
+        R.string.iso_alpha2_de, R.string.iso_alpha2_de, R.string.iso_alpha2_de,
+        R.string.iso_alpha2_us, R.string.iso_alpha2_us, R.string.iso_alpha2_gb,
+        R.string.iso_alpha2_de, R.string.iso_alpha2_us, R.string.iso_alpha2_gb,
+        R.string.iso_alpha2_de, R.string.iso_alpha2_de, R.string.iso_alpha2_de,
         R.string.iso_alpha2_us
     )
 
@@ -116,6 +120,7 @@ object TvShows {
         for (index in tvShowsName.indices) {
             val tvShows = ListFilm()
             with(tvShows) {
+                filmId = tvsId[index]
                 filmName = tvShowsName[index]
                 filmRatingSymbol = tvShowsRating[index]
                 filmDuration = tvShowsDuration[index]

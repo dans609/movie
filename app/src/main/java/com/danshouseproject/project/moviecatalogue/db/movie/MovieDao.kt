@@ -1,7 +1,9 @@
 package com.danshouseproject.project.moviecatalogue.db.movie
 
 import androidx.lifecycle.LiveData
+import androidx.paging.DataSource
 import androidx.room.*
+import androidx.sqlite.db.SupportSQLiteQuery
 import com.danshouseproject.project.moviecatalogue.model.FavoriteFilm
 import com.danshouseproject.project.moviecatalogue.model.FilmGenre
 import com.danshouseproject.project.moviecatalogue.model.FilmInfo
@@ -9,6 +11,9 @@ import com.danshouseproject.project.moviecatalogue.model.ListFilm
 
 @Dao
 interface MovieDao {
+
+    @RawQuery(observedEntities = [FavoriteFilm::class])
+    fun getOrderedFilm(query: SupportSQLiteQuery): DataSource.Factory<Int, FavoriteFilm>
 
     @Query("SELECT * FROM filmentities WHERE isMovies = :isMovies AND filmId = :filmId")
     fun getFilm(filmId: Int, isMovies: Boolean): LiveData<ListFilm>
@@ -20,7 +25,7 @@ interface MovieDao {
     fun getFilmInfo(filmId: Int, isMovies: Boolean): LiveData<FilmInfo>
 
     @Query("SELECT * FROM favorite_film WHERE isMovies = :isMovies")
-    fun getAllFavoriteFilm(isMovies: Boolean): LiveData<List<FavoriteFilm>>
+    fun getAllFavoriteFilm(isMovies: Boolean): DataSource.Factory<Int, FavoriteFilm>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertFilm(film: ListFilm)

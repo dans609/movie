@@ -1,286 +1,388 @@
 package com.danshouseproject.project.moviecatalogue.data
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.lifecycle.MutableLiveData
+import androidx.paging.DataSource
+import androidx.paging.PagedList
+import com.danshouseproject.project.moviecatalogue.`object`.Genre
+import com.danshouseproject.project.moviecatalogue.`object`.Info
+import com.danshouseproject.project.moviecatalogue.`object`.Movies
 import com.danshouseproject.project.moviecatalogue.`object`.test.LiveDataTestUtils
-import com.danshouseproject.project.moviecatalogue.`object`.test.RemoteAdditionalData
 import com.danshouseproject.project.moviecatalogue.`object`.test.RemoteMovies
 import com.danshouseproject.project.moviecatalogue.`object`.test.RemoteTvShows
-import com.danshouseproject.project.moviecatalogue.data.remote.*
+import com.danshouseproject.project.moviecatalogue.`object`.test.constant.Constant
+import com.danshouseproject.project.moviecatalogue.data.local.LocalDataSource
+import com.danshouseproject.project.moviecatalogue.data.remote.RemoteDataSource
+import com.danshouseproject.project.moviecatalogue.data.remote.response.ResponseMovies
+import com.danshouseproject.project.moviecatalogue.data.remote.response.ResponseTvShows
+import com.danshouseproject.project.moviecatalogue.helper.utils.AppExecutors
+import com.danshouseproject.project.moviecatalogue.helper.utils.PagedListUtil
+import com.danshouseproject.project.moviecatalogue.model.FavoriteFilm
 import com.danshouseproject.project.moviecatalogue.model.FilmGenre
+import com.danshouseproject.project.moviecatalogue.model.FilmInfo
 import com.danshouseproject.project.moviecatalogue.model.ListFilm
-import com.nhaarman.mockitokotlin2.any
-import com.nhaarman.mockitokotlin2.doAnswer
-import com.nhaarman.mockitokotlin2.eq
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertNotNull
+import com.danshouseproject.project.moviecatalogue.vo.Resource
+import org.junit.Assert.*
 import org.junit.Rule
 import org.junit.Test
-import org.mockito.Mockito.mock
-import org.mockito.Mockito.verify
+import org.mockito.Mockito.*
 
 class MovieCatalogueRepositoryTest {
-
-    companion object {
-        private const val ZERO_VALUE = 0
-        private const val ONE_VALUE = 1
-        private const val VALUE_FOR_REPLACE_FIRST_31CHAR = 31
-        private const val NO_VALUE = ""
-    }
 
     @get:Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()
 
     private val remote = mock(RemoteDataSource::class.java)
-    private val fakeMovieCatalogueRepository = FakeMovieCatalogueRepository(remote)
-
-    private val moviesResponse = RemoteMovies.generateMoviesResponse()
-    private val moviesASIBIdResponse = moviesResponse[0].moviesId
-
-    private val tvShowsResponse = RemoteTvShows.generateTvShowsResponse()
-    private val tvShowsFTIdResponse = tvShowsResponse[3].tvId
-
-    private val moviesAdditinoalData =
-        RemoteAdditionalData.generateMoviesAdditionalDataResponse(moviesASIBIdResponse)
-    private val tvAdditionalData =
-        RemoteAdditionalData.generateTvsAdditionalDataResponse(tvShowsFTIdResponse)
+    private val local = mock(LocalDataSource::class.java)
+    private val appExecutors = mock(AppExecutors::class.java)
+    private val fakeRepository = FakeMovieCatalogueRepository(remote, local, appExecutors)
 
 
     @Test
     fun getAllMovies() {
-        val data = ArrayList<ListFilm>()
+        val dummyMovies = castResponseMovieToModel(remoteMovies)
+        val listMovies = ArrayList<ListFilm>()
+        val listResponseMovies = MutableLiveData<List<ListFilm>>()
+        listResponseMovies.value = dummyMovies
 
-        for (index in moviesResponse.indices) {
-            val movieRsp = moviesResponse[index]
-            doAnswer { invocation ->
-                (invocation.arguments[ONE_VALUE] as LoadMoviesResponse)
-                    .onMoviesLoaded(movieRsp)
-                null
-            }.`when`(remote).fetchMovies(eq(movieRsp.moviesId), any())
+        for (index in dummyMovies.indices) {
+            val modelObject = dummyMovies[index]
+            val responseMovies = MutableLiveData<ListFilm>()
+            responseMovies.value = modelObject
 
+            `when`(local.getFilm(modelObject.filmId, true)).thenReturn(responseMovies)
             val moviesEntity =
-                LiveDataTestUtils.getValue(fakeMovieCatalogueRepository.getAllMovies(movieRsp.moviesId))
-            verify(remote).fetchMovies(eq(movieRsp.moviesId), any())
+                LiveDataTestUtils.getValue(fakeRepository.getAllMovies(modelObject.filmId))
+            verify(local).getFilm(modelObject.filmId, true)
 
-            val removeDuplicatePath = moviesEntity.filmImage.take(VALUE_FOR_REPLACE_FIRST_31CHAR)
-            val moviesPath = moviesEntity.filmImage.replaceFirst(removeDuplicatePath, NO_VALUE)
-            data.add(moviesEntity)
-
-            assertNotNull(moviesEntity)
-            assertEquals(movieRsp.moviesPosterPath, moviesPath)
-            assertEquals(movieRsp.moviesTitle, moviesEntity.filmName)
-
-            printValue(movieRsp.moviesTitle, moviesEntity.filmName)
+            moviesEntity.let {
+                modelObject.also { expected ->
+                    assertNotNull(it)
+                    assertNotNull(it.data)
+                    assertNotNull(it.data?.filmName)
+                    assertNull(it.message)
+                    assertTrue(it.data?.isMovies ?: false)
+                    assertFalse(it.data?.isOnFavorite ?: false)
+                    assertEquals(expected.filmId, it.data?.filmId)
+                    assertEquals(expected.filmScore, it.data?.filmScore)
+                    assertEquals(expected.isMovies, it.data?.isMovies)
+                    assertEquals(expected.filmName, it.data?.filmName)
+                    assertEquals(expected.filmImage, it.data?.filmImage)
+                    listMovies.add(it.data as ListFilm)
+                }
+            }
         }
-        assertEquals(moviesResponse.size, data.size)
+        assertEquals(listResponseMovies.value?.size, listMovies.size)
     }
 
 
     @Test
     fun getAllTvShows() {
-        val data = ArrayList<ListFilm>()
+        val dummyTv = castResponseTvToModel(remoteTvShows)
+        val listTv = ArrayList<ListFilm>()
+        val listResponseTv = MutableLiveData<List<ListFilm>>()
+        listResponseTv.value = dummyTv
 
-        for (index in tvShowsResponse.indices) {
-            val tvResponse = tvShowsResponse[index]
+        for (index in dummyTv.indices) {
+            val modelObject = dummyTv[index]
+            val responseTv = MutableLiveData<ListFilm>()
+            responseTv.value = modelObject
 
-            doAnswer { invocation ->
-                (invocation.arguments[ONE_VALUE] as LoadTvResponse)
-                    .onTvShowsLoaded(tvResponse)
-                null
-            }.`when`(remote).fetchTvShows(eq(tvResponse.tvId), any())
+            `when`(local.getFilm(modelObject.filmId, false)).thenReturn(responseTv)
+            val tvEntity =
+                LiveDataTestUtils.getValue(fakeRepository.getAllTvShows(modelObject.filmId))
+            verify(local).getFilm(modelObject.filmId, false)
 
-            val tvEntity = LiveDataTestUtils.getValue(
-                fakeMovieCatalogueRepository.getAllTvShows(tvResponse.tvId)
-            )
-            verify(remote).fetchTvShows(eq(tvResponse.tvId), any())
-
-            val removeDuplicatePath = tvEntity.filmImage.take(VALUE_FOR_REPLACE_FIRST_31CHAR)
-            val tvPath = tvEntity.filmImage.replaceFirst(removeDuplicatePath, NO_VALUE)
-            data.add(tvEntity)
-
-            assertNotNull(tvEntity)
-            assertEquals(tvResponse.tvPosterPath, tvPath)
-            assertEquals(tvResponse.tvTitle, tvEntity.filmName)
-
-            printValue(tvResponse.tvTitle, tvEntity.filmName)
+            tvEntity.let {
+                modelObject.also { expected ->
+                    assertNotNull(it)
+                    assertNotNull(it.data)
+                    assertNotNull(it.data?.filmName)
+                    assertNull(it.message)
+                    assertFalse(it.data?.isMovies ?: false)
+                    assertFalse(it.data?.isOnFavorite ?: false)
+                    assertEquals(expected.filmId, it.data?.filmId)
+                    assertEquals(expected.filmScore, it.data?.filmScore)
+                    assertEquals(expected.isMovies, it.data?.isMovies)
+                    assertEquals(expected.filmName, it.data?.filmName)
+                    assertEquals(expected.filmImage, it.data?.filmImage)
+                    listTv.add(it.data as ListFilm)
+                }
+            }
         }
-        assertEquals(data.size, tvShowsResponse.size)
+        assertEquals(listResponseTv.value?.size, listTv.size)
     }
 
 
     @Test
     fun getMoviesGenres() {
-        val listMoviesGenre = ArrayList<FilmGenre>()
+        val dummyRemoteMovies = castResponseMovieToModel(remoteMovies)
+        val dummyGenre = dummyMoviesGenres
+        val arrayGenre = ArrayList<FilmGenre>()
 
-        for (index in moviesResponse.indices) {
-            val responseMovies = moviesResponse[index]
+        for (index in dummyRemoteMovies.indices) {
+            for (idxGenre in dummyGenre.indices) {
+                if (dummyRemoteMovies[index].filmId == dummyGenre[idxGenre].filmId) {
+                    val modelObject = dummyGenre[idxGenre]
+                    val responseGenre = MutableLiveData<FilmGenre>()
+                    responseGenre.value = modelObject
+                    arrayGenre.add(modelObject)
 
-            doAnswer { invocation ->
-                (invocation.arguments[ONE_VALUE] as LoadMoviesResponse)
-                    .onMoviesLoaded(responseMovies)
-                null
-            }.`when`(remote).fetchMovies(eq(responseMovies.moviesId), any())
+                    `when`(local.getFilmGenre(modelObject.filmId, true)).thenReturn(responseGenre)
+                    val genreEntity =
+                        LiveDataTestUtils.getValue(fakeRepository.getMoviesGenres(modelObject.filmId))
+                    verify(local).getFilmGenre(modelObject.filmId, true)
 
-            val movieEntity = LiveDataTestUtils.getValue(
-                fakeMovieCatalogueRepository.getMoviesGenres(responseMovies.moviesId)
-            )
-            verify(remote).fetchMovies(eq(responseMovies.moviesId), any())
+                    genreEntity.let {
+                        modelObject.also { expected ->
+                            assertNotNull(it)
+                            assertNotNull(it.data)
+                            assertNotNull(it.data?.genre)
+                            assertNull(it.message)
 
-            assertNotNull(movieEntity)
-            assertNotNull(movieEntity.genre)
-            assertNotNull(movieEntity.filmId)
+                            assertTrue(it.data?.isMovies ?: false)
+                            assertNotEquals(ZERO_VALUE, it.data?.filmId)
+                            assertNotEquals(ZERO_VALUE, it.data?.genre?.size)
 
-            val movieEntityGenre = movieEntity.genre
-            val movieEntityId = movieEntity.filmId
-            val instanceGenre = FilmGenre(movieEntityGenre, movieEntityId)
-            listMoviesGenre.add(instanceGenre)
+                            val actualGenreList = it.data?.genre ?: return
+                            val listGenre = ArrayList<String?>()
 
-            val listMovieEntityGenre = ArrayList<String>()
+                            for (idx in actualGenreList.indices) {
+                                listGenre.add(getGenreValue(actualGenreList[idx].genre))
+                                val expString = getGenreValue(expected.genre?.get(idx)?.genre)
+                                val actString = getGenreValue(actualGenreList[idx].genre)
+                                assertEquals(expString, actString)
+                            }
 
-            printHeader(responseMovies.moviesTitle, responseMovies.moviesGenres?.size as Int)
-            for (genreIdx in movieEntityGenre?.indices ?: return) {
-                printValue(
-                    responseMovies.moviesGenres?.get(genreIdx)?.genre,
-                    movieEntityGenre[genreIdx]
-                )
-                listMovieEntityGenre.add(movieEntityGenre[genreIdx])
-
-                assertEquals(
-                    responseMovies.moviesGenres?.get(genreIdx)?.genre,
-                    movieEntityGenre[genreIdx]
-                )
+                            assertEquals(expected.filmId, it.data?.filmId)
+                            assertEquals(expected.isMovies, it.data?.isMovies)
+                            assertEquals(expected.genre, actualGenreList)
+                            assertEquals(expected.genre?.size, actualGenreList.size)
+                        }
+                    }
+                    break
+                } else continue
             }
-
-            printDashes()
-            assertEquals(responseMovies.moviesGenres?.size, listMovieEntityGenre.size)
         }
-
-        assertEquals(moviesResponse.size, listMoviesGenre.size)
+        assertEquals(expectedDataSize, arrayGenre.size)
     }
 
 
     @Test
     fun getTvGenres() {
-        val numbertOfActualFilm = ArrayList<FilmGenre>()
+        val dummyRemoteTv = castResponseTvToModel(remoteTvShows)
+        val dummyGenre = dummyTvShowsGenres
+        val arrayGenre = ArrayList<FilmGenre>()
+        arrayGenre.addAll(dummyGenre)
 
-        for (index in tvShowsResponse.indices) {
-            val response = tvShowsResponse[index]
+        for (index in dummyRemoteTv.indices) {
+            for (idxGenre in dummyGenre.indices) {
+                if (dummyRemoteTv[index].filmId == dummyGenre[idxGenre].filmId) {
+                    val modelObject = dummyGenre[idxGenre]
+                    val responseGenre = MutableLiveData<FilmGenre>()
+                    responseGenre.value = modelObject
 
-            doAnswer { invocation ->
-                (invocation.arguments[ONE_VALUE] as LoadTvResponse)
-                    .onTvShowsLoaded(response)
-                null
-            }.`when`(remote).fetchTvShows(eq(response.tvId), any())
+                    `when`(local.getFilmGenre(modelObject.filmId, false)).thenReturn(responseGenre)
+                    val genreEntity =
+                        LiveDataTestUtils.getValue(fakeRepository.getTvGenres(modelObject.filmId))
+                    verify(local).getFilmGenre(modelObject.filmId, false)
 
-            val resultTvEntity =
-                LiveDataTestUtils.getValue(fakeMovieCatalogueRepository.getTvGenres(response.tvId))
-            verify(remote).fetchTvShows(eq(response.tvId), any())
+                    genreEntity.let {
+                        modelObject.also { expected ->
+                            assertNotNull(it)
+                            assertNotNull(it.data)
+                            assertNotNull(it.data?.genre)
+                            assertNull(it.message)
 
-            resultTvEntity.let { actualEn ->
-                assertNotNull(actualEn)
-                assertNotNull(actualEn.genre)
-                assertNotNull(actualEn.filmId)
+                            assertFalse(it.data?.isMovies ?: false)
+                            assertNotEquals(ZERO_VALUE, it.data?.filmId)
+                            assertNotEquals(ZERO_VALUE, it.data?.genre?.size)
 
-                val tvEntityGenre = actualEn.genre
-                val tvEntityId = actualEn.filmId
-                val instanceGenre = FilmGenre(tvEntityGenre, tvEntityId)
-                numbertOfActualFilm.add(instanceGenre)
+                            val actualGenreList = it.data?.genre ?: return
+                            val listGenre = ArrayList<String?>()
 
-                val numberOfTvGenres = ArrayList<String>()
-                printHeader(response.tvTitle, response.tvGenres?.size as Int)
+                            for (idx in actualGenreList.indices) {
+                                listGenre.add(getGenreValue(actualGenreList[idx].genre))
+                                val expString = getGenreValue(expected.genre?.get(idx)?.genre)
+                                val actString = getGenreValue(actualGenreList[idx].genre)
+                                assertEquals(expString, actString)
+                            }
 
-                for (idxGenre in tvEntityGenre?.indices ?: return)
-                    response.tvGenres?.also { tvGenre ->
-                        numberOfTvGenres.add(tvEntityGenre[idxGenre])
-                        printValue(tvGenre[idxGenre].genre, tvEntityGenre[idxGenre])
-                        assertEquals(tvGenre[idxGenre].genre, tvEntityGenre[idxGenre])
+                            assertEquals(expected.filmId, it.data?.filmId)
+                            assertEquals(expected.isMovies, it.data?.isMovies)
+                            assertEquals(expected.genre, actualGenreList)
+                            assertEquals(expected.genre?.size, actualGenreList.size)
+                        }
                     }
-
-                printDashes()
-                assertEquals(response.tvGenres?.size, numberOfTvGenres.size)
+                    break
+                } else continue
             }
         }
-        assertEquals(tvShowsResponse.size, numbertOfActualFilm.size)
+        assertEquals(expectedDataSize, arrayGenre.size)
     }
 
 
     @Test
     fun getMoviesMoreInfo() {
+        val dummyMoviesInfo = getMoviesInfo
+        val arrayMoviesInfo = ArrayList<FilmInfo>()
+        arrayMoviesInfo.addAll(dummyMoviesInfo)
 
-        doAnswer { invocation ->
-            (invocation.arguments[ONE_VALUE] as LoadMoviesMoreInfo)
-                .onMoviesAdditionInformationReceived(moviesAdditinoalData)
-            null
-        }.`when`(remote).fetchMoviesMoreInfo(eq(moviesASIBIdResponse), any())
+        for (index in dummyMoviesInfo.indices) {
+            val iterateObject = dummyMoviesInfo[index]
+            val responseFilmInfo = MutableLiveData<FilmInfo>()
+            responseFilmInfo.value = iterateObject
 
-        val moviesMoreInfoEntity =
-            LiveDataTestUtils.getValue(
-                fakeMovieCatalogueRepository.getMoviesMoreInfo(
-                    moviesASIBIdResponse
-                )
-            )
-        verify(remote).fetchMoviesMoreInfo(eq(moviesASIBIdResponse), any())
+            `when`(local.getFilmInfo(iterateObject.filmId, true)).thenReturn(responseFilmInfo)
+            val filmInfoEntity =
+                LiveDataTestUtils.getValue(fakeRepository.getMoviesMoreInfo(iterateObject.filmId))
+            verify(local).getFilmInfo(iterateObject.filmId, true)
 
-        moviesAdditinoalData.result?.get(ZERO_VALUE)?.let { expectRes ->
-            assertNotNull(moviesMoreInfoEntity)
-            assertEquals(expectRes.isoCode, moviesMoreInfoEntity.first)
-            assertEquals(
-                expectRes.moviesCertificate?.get(ZERO_VALUE)?.certificate,
-                moviesMoreInfoEntity.second
-            )
-
-            printValue(expectRes.isoCode, moviesMoreInfoEntity.first)
-            printValue(
-                expectRes.moviesCertificate?.get(ZERO_VALUE)?.certificate,
-                moviesMoreInfoEntity.second
-            )
+            filmInfoEntity.let { actualData ->
+                iterateObject.also { expectedData ->
+                    assertNull(actualData.message)
+                    assertNotNull(actualData.data)
+                    assert(!(actualData.data?.filmRating?.trimIndent().isNullOrEmpty()))
+                    assert(!(actualData.data?.isoCode?.trimIndent().isNullOrEmpty()))
+                    assertTrue(actualData.data?.isMovies ?: false)
+                    assertNotEquals(ZERO_VALUE, actualData.data?.filmId)
+                    assertEquals(index, actualData.data?.id)
+                    assertEquals(expectedData.filmId, actualData.data?.filmId)
+                    assertEquals(expectedData.isMovies, actualData.data?.isMovies ?: false)
+                    assertEquals(expectedData.filmRating, actualData.data?.filmRating)
+                    assertEquals(expectedData.isoCode, actualData.data?.isoCode)
+                }
+            }
         }
-        printDashes()
+        assertEquals(expectedDataSize, arrayMoviesInfo.size)
     }
+
 
     @Test
     fun getTvMoreInfo() {
-        doAnswer { invocation ->
-            (invocation.arguments[ONE_VALUE] as LoadTvMoreInfo)
-                .onTvShowsAdditionInformatonReceived(tvAdditionalData)
-            null
-        }.`when`(remote).fetchTvMoreInfo(eq(tvShowsFTIdResponse), any())
+        val dummyTvShowsInfo = getTvShowsInfo
+        val arrayTvShowsInfo = ArrayList<FilmInfo>()
+        arrayTvShowsInfo.addAll(dummyTvShowsInfo)
 
-        val tvMoreInfoEntity =
-            LiveDataTestUtils.getValue(
-                fakeMovieCatalogueRepository.getTvMoreInfo(
-                    tvShowsFTIdResponse
-                )
-            )
-        verify(remote).fetchTvMoreInfo(eq(tvShowsFTIdResponse), any())
+        for (index in dummyTvShowsInfo.indices) {
+            val iterateObject = dummyTvShowsInfo[index]
+            val responseFilmInfo = MutableLiveData<FilmInfo>()
+            responseFilmInfo.value = iterateObject
 
-        tvAdditionalData.result?.get(ZERO_VALUE)?.let { expectRes ->
-            tvMoreInfoEntity.also { actualRes ->
-                assertNotNull(tvMoreInfoEntity)
-                assertEquals(expectRes.isoCode, actualRes.first)
-                assertEquals(expectRes.certificate, actualRes.second)
+            `when`(local.getFilmInfo(iterateObject.filmId, false)).thenReturn(responseFilmInfo)
+            val filmInfoEntity =
+                LiveDataTestUtils.getValue(fakeRepository.getTvMoreInfo(iterateObject.filmId))
+            verify(local).getFilmInfo(iterateObject.filmId, false)
 
-                printValue(expectRes.isoCode, actualRes.first)
-                printValue(expectRes.certificate, actualRes.second)
+            filmInfoEntity.let { actualData ->
+                iterateObject.also { expectedData ->
+                    assertNull(actualData.message)
+                    assertNotNull(actualData.data)
+                    assert(!(actualData.data?.filmRating?.trimIndent().isNullOrEmpty()))
+                    assert(!(actualData.data?.isoCode?.trimIndent().isNullOrEmpty()))
+                    assertFalse(actualData.data?.isMovies ?: false)
+                    assertNotEquals(ZERO_VALUE, actualData.data?.filmId)
+                    assertEquals(index, actualData.data?.id)
+                    assertEquals(expectedData.filmId, actualData.data?.filmId)
+                    assertEquals(expectedData.isMovies, actualData.data?.isMovies ?: false)
+                    assertEquals(expectedData.filmRating, actualData.data?.filmRating)
+                    assertEquals(expectedData.isoCode, actualData.data?.isoCode)
+                }
             }
         }
-        printDashes()
+        assertEquals(expectedDataSize, arrayTvShowsInfo.size)
     }
 
-    private fun <T> printValue(expectedValue: T, actualValue: T) =
-        println(
-            """
-            >> $expectedValue (Expected)
-            >> $actualValue (Actual)
-            
-        """.trimIndent()
-        )
 
-    private fun printDashes() =
-        println("---------------------------")
+    @Suppress("UNCHECKED_CAST")
+    @Test
+    fun getAllFavoriteFilm() {
+        val dataSourceFactory =
+            mock(DataSource.Factory::class.java) as DataSource.Factory<Int, FavoriteFilm>
 
-    private fun <T> printHeader(headText: T, size: Int = ZERO_VALUE) =
-        when (size) {
-            ZERO_VALUE -> println("$headText")
-            else -> println("$headText [Result: $size]")
+        val listBool = listOf(true, false)
+        for (boolVal in listBool) {
+            `when`(local.getAllFavoriteFilm(boolVal)).thenReturn(dataSourceFactory)
+            fakeRepository.getAllFavoriteFilm(boolVal)
+
+            val listEntity = listOf(remoteMovies, remoteTvShows)
+            val condition = if (boolVal) listEntity[ZERO_VALUE] else listEntity[ONE_VALUE]
+
+            if (boolVal) {
+                val favoriteEntity = Resource.success(PagedListUtil.mockPagedList(condition))
+                verify(local).getAllFavoriteFilm(boolVal)
+
+                assertNotNull(favoriteEntity)
+                assertEquals(condition.size, favoriteEntity.data?.size)
+            }
         }
+    }
+
+    private fun generateFilmDuration(duration: Int) =
+        fakeRepository.generateFilmDuration(duration)
+
+    private fun convertFilmScore(score: Double): Int =
+        fakeRepository.convertFilmScore(score)
+
+    private fun castResponseMovieToModel(response: List<ResponseMovies>): List<ListFilm> {
+        val containerList = ArrayList<ListFilm>()
+        response.indices.forEach { idx ->
+            response[idx].let { data ->
+                val getDuration = data.moviesDuration
+                val instance = ListFilm(
+                    filmId = data.moviesId,
+                    filmName = data.moviesTitle,
+                    filmDuration = generateFilmDuration(getDuration),
+                    filmReleaseDate = data.moviesReleaseDate,
+                    filmOverview = data.moviesOverView,
+                    filmImage = data.moviesPosterPath,
+                    filmScore = convertFilmScore(data.moviesScore),
+                    isMovies = true
+                )
+                containerList.add(instance)
+            }
+        }
+        return containerList
+    }
+
+
+    private fun castResponseTvToModel(response: List<ResponseTvShows>): List<ListFilm> {
+        val containerList = ArrayList<ListFilm>()
+        response.indices.forEach { idx ->
+            response[idx].let { data ->
+                val getDuration = data.tvDuration?.get(ZERO_VALUE) ?: ZERO_VALUE
+                val instance = ListFilm(
+                    filmId = data.tvId,
+                    filmName = data.tvTitle,
+                    filmDuration = generateFilmDuration(getDuration),
+                    filmReleaseDate = data.tvReleaseDate,
+                    filmOverview = data.tvOverview,
+                    filmImage = data.tvPosterPath,
+                    filmScore = convertFilmScore(data.tvScore),
+                    isMovies = false
+                )
+                containerList.add(instance)
+            }
+        }
+        return containerList
+    }
+
+
+    companion object {
+        private const val ZERO_VALUE = 0
+        private const val ONE_VALUE = 1
+        private const val expectedDataSize = 19
+
+        private val remoteMovies get() = RemoteMovies.generateMoviesResponse()
+        private val remoteTvShows get() = RemoteTvShows.generateTvShowsResponse()
+        private val dummyMoviesGenres get() = Genre.generateMoviesGenre()
+        private val dummyTvShowsGenres get() = Genre.generateTvShowsGenre()
+        private val getAllGenres get() = Constant.getAllGenre
+        private val getMoviesInfo get() = Info.generateMoviesInfo()
+        private val getTvShowsInfo get() = Info.generatetvShowsInfo()
+
+        @Suppress("TYPE_INFERENCE_ONLY_INPUT_TYPES_WARNING")
+        private fun getGenreValue(genreId: String?): String? =
+            getAllGenres[genreId ?: "0".toInt()]
+    }
 }

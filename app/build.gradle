@@ -58,8 +58,9 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesCoreVersion"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesAndroidVersion"
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleRuntimeVersion"
-    implementation "androidx.paging:paging-runtime:$pagingVersion"
+    implementation "androidx.paging:paging-runtime:2.1.2"
     implementation "androidx.room:room-runtime:$roomVersion"
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     kapt "androidx.room:room-compiler:$roomVersion"
 
     implementation "com.squareup.okhttp3:logging-interceptor:$retrofitLogInterceptVersion"

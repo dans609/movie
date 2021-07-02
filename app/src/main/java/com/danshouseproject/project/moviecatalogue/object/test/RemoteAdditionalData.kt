@@ -2,6 +2,7 @@ package com.danshouseproject.project.moviecatalogue.`object`.test
 
 import com.danshouseproject.project.moviecatalogue.`object`.test.RemoteMovies.responseMoviesId
 import com.danshouseproject.project.moviecatalogue.`object`.test.RemoteTvShows.responseTvShowsId
+import com.danshouseproject.project.moviecatalogue.`object`.test.constant.Constant.CN_ISO_CODE
 import com.danshouseproject.project.moviecatalogue.`object`.test.constant.Constant.DE_ISO_CODE
 import com.danshouseproject.project.moviecatalogue.`object`.test.constant.Constant.EQUALS_OR_OLDER_T12
 import com.danshouseproject.project.moviecatalogue.`object`.test.constant.Constant.EQUALS_OR_OLDER_T16
@@ -11,7 +12,6 @@ import com.danshouseproject.project.moviecatalogue.`object`.test.constant.Consta
 import com.danshouseproject.project.moviecatalogue.`object`.test.constant.Constant.MORE_THAN_TWELVE
 import com.danshouseproject.project.moviecatalogue.`object`.test.constant.Constant.PG13_MOVIE_CERTIFICATE
 import com.danshouseproject.project.moviecatalogue.`object`.test.constant.Constant.PG_MOVIE_CERTIFICATE
-import com.danshouseproject.project.moviecatalogue.`object`.test.constant.Constant.RU_ISO_CODE
 import com.danshouseproject.project.moviecatalogue.`object`.test.constant.Constant.R_MOVIE_CERTIFICATE
 import com.danshouseproject.project.moviecatalogue.`object`.test.constant.Constant.TV14_TV_CERTIFICATE
 import com.danshouseproject.project.moviecatalogue.`object`.test.constant.Constant.TVMA_TV_CERTIFICATE
@@ -29,7 +29,7 @@ object RemoteAdditionalData {
         US_ISO_CODE, US_ISO_CODE, US_ISO_CODE, US_ISO_CODE,
         US_ISO_CODE, US_ISO_CODE, US_ISO_CODE, US_ISO_CODE,
         US_ISO_CODE, US_ISO_CODE, US_ISO_CODE, US_ISO_CODE,
-        US_ISO_CODE, US_ISO_CODE, RU_ISO_CODE
+        US_ISO_CODE, US_ISO_CODE, CN_ISO_CODE
     )
 
     private val moviesCertificate: List<String> = listOf(
@@ -85,5 +85,4 @@ object RemoteAdditionalData {
 
         return instanciateResponse
     }
-
 }

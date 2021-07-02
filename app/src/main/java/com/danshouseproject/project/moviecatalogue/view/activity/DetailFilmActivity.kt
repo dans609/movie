@@ -17,6 +17,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.danshouseproject.project.moviecatalogue.R
 import com.danshouseproject.project.moviecatalogue.databinding.ActivityDetailFilmBinding
 import com.danshouseproject.project.moviecatalogue.databinding.DisplayDetailUserInterfaceBinding
+import com.danshouseproject.project.moviecatalogue.helper.EspressoIdlingResource
 import com.danshouseproject.project.moviecatalogue.model.FilmGenre
 import com.danshouseproject.project.moviecatalogue.model.FilmInfo
 import com.danshouseproject.project.moviecatalogue.model.ListFilm
@@ -52,6 +53,7 @@ class DetailFilmActivity : AppCompatActivity(), View.OnClickListener {
         setContentView(binding?.root)
         setContext(this)
         actionBarPreference { supportActionBar }
+        showProgressBar(false)
 
         bindingDisplay = binding?.detailFilm as DisplayDetailUserInterfaceBinding
         detailPageTitle = getString(R.string.detail_film_page_title)
@@ -135,12 +137,20 @@ class DetailFilmActivity : AppCompatActivity(), View.OnClickListener {
     }
 
 
+    private fun showProgressBar(state: Boolean) =
+        binding?.progressBar?.let {
+            if (state) it.visibility = View.VISIBLE
+            else it.visibility = View.GONE
+        }
+
+
     private val LiveData<Resource<FilmGenre>>.observeGenres
         get() = this.observe(context, { listGenre ->
             if (listGenre != null) {
                 when (listGenre.status) {
-                    Status.LOADING -> getString(R.string.loading_text).callToast
+                    Status.LOADING -> showProgressBar(true)
                     Status.SUCCESS -> {
+                        showProgressBar(false)
                         val listFilmGenre = ArrayList<String>()
                         for (index in listGenre.data?.genre?.indices ?: return@observe) {
                             if (listGenre.data.genre!![index].filmId == filmId) {
@@ -150,7 +160,10 @@ class DetailFilmActivity : AppCompatActivity(), View.OnClickListener {
                         }
                         genreAdapter.setListGenre(listFilmGenre)
                     }
-                    Status.ERROR -> getString(R.string.error_text).callToast
+                    Status.ERROR -> {
+                        showProgressBar(false)
+                        getString(R.string.error_text).callToast
+                    }
                 }
             } else return@observe
         })
@@ -159,8 +172,9 @@ class DetailFilmActivity : AppCompatActivity(), View.OnClickListener {
         get() = this.observe(context, {
             if (it != null) {
                 when (it.status) {
-                    Status.LOADING -> getString(R.string.loading_text).callToast
+                    Status.LOADING -> showProgressBar(true)
                     Status.SUCCESS -> {
+                        showProgressBar(false)
                         with(bindingDisplay) {
                             if (filmId == it.data?.filmId) {
                                 filmCountryCode.text = it.data.isoCode
@@ -168,7 +182,10 @@ class DetailFilmActivity : AppCompatActivity(), View.OnClickListener {
                             }
                         }
                     }
-                    Status.ERROR -> getString(R.string.error_text).callToast
+                    Status.ERROR -> {
+                        showProgressBar(false)
+                        getString(R.string.error_text).callToast
+                    }
                 }
             } else return@observe
         })
@@ -180,10 +197,17 @@ class DetailFilmActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun progressBarAnimation(scores: Int) =
         bindingDisplay.let {
+            EspressoIdlingResource.increment()
             lifecycleScope.launch(Dispatchers.Default) {
+                var delay = toInt(R.integer.int_5)
                 for (score in toInt(R.integer.zero_value)..scores) {
+                    if (score % toInt(R.integer.optimal_max_thickness_ratio_size) == toInt(R.integer.zero_value)) delay -= toInt(
+                        R.integer.int_1
+                    )
+                    if (delay == toInt(R.integer.zero_value)) delay = toInt(R.integer.int_1)
                     var breakTheLoops = false
-                    delay(toInt(R.integer.int_5).toLong())
+
+                    delay(delay.toLong())
                     withContext(Dispatchers.Main) {
                         it.filmScore.progressDrawable = when (score) {
                             in toInt(R.integer.score_value70)..toInt(R.integer.max_score_range) ->
@@ -201,6 +225,7 @@ class DetailFilmActivity : AppCompatActivity(), View.OnClickListener {
                     }
                     if (breakTheLoops) break
                 }
+            EspressoIdlingResource.decrement()
             }
         }
 

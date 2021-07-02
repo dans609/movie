@@ -6,6 +6,7 @@ import androidx.lifecycle.Observer
 import com.danshouseproject.project.moviecatalogue.`object`.Genre
 import com.danshouseproject.project.moviecatalogue.data.MovieCatalogueRepository
 import com.danshouseproject.project.moviecatalogue.model.FilmGenre
+import com.danshouseproject.project.moviecatalogue.vo.Resource
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Before
@@ -19,7 +20,6 @@ import org.mockito.junit.MockitoJUnitRunner
 
 @RunWith(MockitoJUnitRunner::class)
 class GenreViewModelTest {
-
     private lateinit var viewModel: GenreViewModel
 
     @get:Rule
@@ -29,42 +29,11 @@ class GenreViewModelTest {
     private lateinit var movieCatalogueRepository: MovieCatalogueRepository
 
     @Mock
-    private lateinit var observer: Observer<FilmGenre>
+    private lateinit var observer: Observer<Resource<FilmGenre>>
 
     @Before
     fun setUp() {
         viewModel = GenreViewModel(movieCatalogueRepository)
-    }
-
-    companion object {
-        private const val VALUE_ZERO = 0
-        private const val VALUE_ONE = 1
-        private const val VALUE_DRAMA_FROM_R = 2131755091
-        private const val VALUE_ROMANCE_FROM_R = 2131755099
-        private const val VALUE_MUSIC_FROM_R = 2131755097
-
-        private const val VALUE_ACTION_ADVENTURE_FROM_R = 2131755086
-        private const val VALUE_ANIMATION_FROM_R = 2131755088
-        private const val VALUE_COMEDY_FROM_R = 2131755089
-        private const val VALUE_SCIFI_FANTASY_FROM_R = 2131755101
-        private const val VALUE_MYSTERY_ADVENTURE_FROM_R = 2131755098
-
-        private val dummyASIBMoviesGenres = Genre.generateMoviesGenre()[0]
-        private const val LIST_GENRE_OF_A_STAR_IS_BORN_MOVIE = 3
-        const val A_STAR_IS_BORN_ID = 332562
-
-        private val dummyFTTvGenres = Genre.generateTvShowsGenre()[3]
-        private const val LIST_GENRE_OF_FAIRY_TAIL_TVS = 5
-        const val FAIRY_TAIL_TV_ID = 46261
-
-        private const val genreDrama = "Drama"
-        private const val genreMusic = "Music"
-        private const val genreRomance = "Romance"
-        private const val genreActionAdventure = "Action & Adventure"
-        private const val genreAnimation = "Animation"
-        private const val genreComedy = "Comedy"
-        private const val genreSciFiFantasy = "Sci-Fi & Fantasy"
-        private const val genreMystery = "Mystery"
     }
 
     private fun convertRIdToStringGenre(r_id: Int): String? =
@@ -77,90 +46,198 @@ class GenreViewModelTest {
             VALUE_COMEDY_FROM_R -> genreComedy
             VALUE_SCIFI_FANTASY_FROM_R -> genreSciFiFantasy
             VALUE_MYSTERY_ADVENTURE_FROM_R -> genreMystery
-            else -> null
+            else -> {
+                printIfResourceIdIsNull()
+                null
+            }
         }
 
 
     @Test
     fun getMoviesGenres() {
-        val movieGenre = MutableLiveData<FilmGenre>()
+        val expectedASIBGenreSize = 3
         val movieId = A_STAR_IS_BORN_ID
-        movieGenre.value = dummyASIBMoviesGenres
+        val dummyGenre = Genre.generateMoviesGenre()
+        val movieGenre = MutableLiveData<Resource<FilmGenre>>()
+
+        for (idxGenre in dummyGenre.indices) {
+            if (dummyGenre[idxGenre].filmId == movieId) {
+                movieGenre.value = Resource.success(dummyGenre[idxGenre])
+                break
+            } else continue
+        }
 
         `when`(movieCatalogueRepository.getMoviesGenres(movieId)).thenReturn(movieGenre)
-        val getGenre = viewModel.getMoviesGenres(movieId).value
+        val genreEntity = viewModel.getMoviesGenres(movieId).value?.data as FilmGenre
         verify(movieCatalogueRepository).getMoviesGenres(movieId)
 
-        assertNotNull(getGenre)
-        assertEquals(LIST_GENRE_OF_A_STAR_IS_BORN_MOVIE, getGenre?.genre?.size)
+        assertNotNull(genreEntity)
+        assertNotNull(genreEntity.genre)
 
+        val listGenre = ArrayList<String>()
+        for (idxGenre in genreEntity.genre!!.indices) {
+            if (genreEntity.genre!![idxGenre].filmId == movieId)
+                listGenre.add(genreEntity.genre!![idxGenre].genre)
+            else continue
+        }
+
+        assertEquals(expectedASIBGenreSize, listGenre.size)
         viewModel.getMoviesGenres(movieId).observeForever(observer)
-        verify(observer).onChanged(dummyASIBMoviesGenres)
+        verify(observer).onChanged(movieGenre.value)
     }
+
 
     @Test
     fun getTvShowsGenres() {
-        val tvGenre = MutableLiveData<FilmGenre>()
+        val expectedFTTVGenreSize = 5
         val tvId = FAIRY_TAIL_TV_ID
-        tvGenre.value = dummyFTTvGenres
+        val dummyGenre = Genre.generateTvShowsGenre()
+        val tvGenre = MutableLiveData<Resource<FilmGenre>>()
+
+        for (idxGenre in dummyGenre.indices) {
+            if (dummyGenre[idxGenre].filmId == tvId) {
+                tvGenre.value = Resource.success(dummyGenre[idxGenre])
+                break
+            } else continue
+        }
 
         `when`(movieCatalogueRepository.getTvGenres(tvId)).thenReturn(tvGenre)
-        val getGenre = viewModel.getTvShowsGenres(tvId).value
+        val genreEntity = viewModel.getTvShowsGenres(tvId).value?.data as FilmGenre
+        verify(movieCatalogueRepository).getTvGenres(tvId)
 
-        assertNotNull(getGenre)
-        assertEquals(LIST_GENRE_OF_FAIRY_TAIL_TVS, getGenre?.genre?.size)
+        assertNotNull(genreEntity)
+        assertNotNull(genreEntity.genre)
 
+        val listGenre = ArrayList<String>()
+        for (idxGenre in genreEntity.genre!!.indices) {
+            if (genreEntity.genre!![idxGenre].filmId == tvId)
+                listGenre.add(genreEntity.genre!![idxGenre].genre)
+            else continue
+        }
+
+        assertEquals(expectedFTTVGenreSize, listGenre.size)
         viewModel.getTvShowsGenres(tvId).observeForever(observer)
-        verify(observer).onChanged(dummyFTTvGenres)
+        verify(observer).onChanged(tvGenre.value)
     }
 
 
     @Test
     fun getMoviesGenreValue() {
-        val moviesGenre = MutableLiveData<FilmGenre>()
         val movieId = A_STAR_IS_BORN_ID
-        moviesGenre.value = dummyASIBMoviesGenres
+        val dummyGenre = Genre.generateMoviesGenre()
+        val movieGenre = MutableLiveData<Resource<FilmGenre>>()
 
-        `when`(movieCatalogueRepository.getMoviesGenres(movieId)).thenReturn(moviesGenre)
-        val getGenre = viewModel.getMoviesGenres(movieId).value
-        val orderedGenre = listOf(genreDrama, genreRomance, genreMusic)
+        for (idxGenre in dummyGenre.indices) {
+            if (dummyGenre[idxGenre].filmId == movieId) {
+                movieGenre.value = Resource.success(dummyGenre[idxGenre])
+                break
+            } else continue
+        }
 
-        for (index in orderedGenre.indices)
-            assertEquals(orderedGenre[index], convertRIdToStringGenre(getGenre?.genre?.get(index)?.toInt() as Int))
+        `when`(movieCatalogueRepository.getMoviesGenres(movieId)).thenReturn(movieGenre)
+        val genreEntity = viewModel.getMoviesGenres(movieId).value?.data as FilmGenre
+        verify(movieCatalogueRepository).getMoviesGenres(movieId)
+
+        assertNotNull(genreEntity)
+        assertNotNull(genreEntity.genre)
+
+        val orderedExpectedGenre = listOf(genreDrama, genreRomance, genreMusic)
+        val listGenre = ArrayList<String>()
+
+        for (idxGenre in genreEntity.genre!!.indices) {
+            if (genreEntity.genre!![idxGenre].filmId == movieId)
+                listGenre.add(genreEntity.genre!![idxGenre].genre)
+            else continue
+        }
+
+        for (index in orderedExpectedGenre.indices)
+            assertEquals(
+                orderedExpectedGenre[index],
+                convertRIdToStringGenre(listGenre[index].toInt())
+            )
 
         viewModel.getMoviesGenres(movieId).observeForever(observer)
-        verify(observer).onChanged(dummyASIBMoviesGenres)
+        verify(observer).onChanged(movieGenre.value)
     }
 
     @Test
     fun getTvShowsGenreValue() {
-        val tvGenre = MutableLiveData<FilmGenre>()
         val tvId = FAIRY_TAIL_TV_ID
-        tvGenre.value = dummyFTTvGenres
+        val dummyGenre = Genre.generateTvShowsGenre()
+        val tvGenre = MutableLiveData<Resource<FilmGenre>>()
+
+        for (idxGenre in dummyGenre.indices) {
+            if (dummyGenre[idxGenre].filmId == tvId) {
+                tvGenre.value = Resource.success(dummyGenre[idxGenre])
+                break
+            } else continue
+        }
 
         `when`(movieCatalogueRepository.getTvGenres(tvId)).thenReturn(tvGenre)
-        val getGenre = viewModel.getTvShowsGenres(tvId).value
-        val orderedGenre = listOf(genreAnimation, genreMystery, genreComedy, genreActionAdventure, genreSciFiFantasy)
+        val genreEntity = viewModel.getTvShowsGenres(tvId).value?.data as FilmGenre
+        verify(movieCatalogueRepository).getTvGenres(tvId)
 
-        var countGenre = VALUE_ZERO
-        for (predictGenre in orderedGenre)
-            for (genre in getGenre?.genre ?: break)
-                if (predictGenre == convertRIdToStringGenre(genre.toInt())) {
-                    countGenre += VALUE_ONE
-                    assertEquals(predictGenre, convertRIdToStringGenre(genre.toInt()))
-                    println("""
-                        >> $predictGenre (Expected) 
-                        >> ${convertRIdToStringGenre(genre.toInt())} (Actual)
-                        -----------------------
-                    """.trimIndent())
+        assertNotNull(genreEntity)
+        assertNotNull(genreEntity.genre)
+
+        val unOrderedExpectedGenre = listOf(
+            genreAnimation,
+            genreMystery,
+            genreComedy,
+            genreActionAdventure,
+            genreSciFiFantasy
+        )
+        val listGenre = ArrayList<String>()
+        for (idxGenre in genreEntity.genre!!.indices) {
+            if (genreEntity.genre!![idxGenre].filmId == tvId)
+                listGenre.add(genreEntity.genre!![idxGenre].genre)
+            else continue
+        }
+
+        for (index in unOrderedExpectedGenre.indices) {
+            for (idxGenre in listGenre.indices) {
+                val actualGenre = convertRIdToStringGenre(listGenre[index].toInt())
+                if (unOrderedExpectedGenre[index] == actualGenre) {
+                    assertEquals(unOrderedExpectedGenre[index], actualGenre)
                     break
                 } else continue
-
-        if (countGenre != getGenre?.genre?.size)
-            println("${orderedGenre.size} <-/-> ${getGenre?.genre?.size}")
+            }
+        }
 
         viewModel.getTvShowsGenres(tvId).observeForever(observer)
-        verify(observer).onChanged(dummyFTTvGenres)
+        verify(observer).onChanged(tvGenre.value)
     }
 
+
+    companion object {
+        private const val VALUE_DRAMA_FROM_R = 2131755115
+        private const val VALUE_ROMANCE_FROM_R = 2131755123
+        private const val VALUE_MUSIC_FROM_R = 2131755121
+
+        private const val VALUE_ACTION_ADVENTURE_FROM_R = 2131755110
+        private const val VALUE_ANIMATION_FROM_R = 2131755112
+        private const val VALUE_COMEDY_FROM_R = 2131755113
+        private const val VALUE_SCIFI_FANTASY_FROM_R = 2131755125
+        private const val VALUE_MYSTERY_ADVENTURE_FROM_R = 2131755122
+
+        const val A_STAR_IS_BORN_ID = 332562
+        const val FAIRY_TAIL_TV_ID = 46261
+
+        private const val genreDrama = "Drama"
+        private const val genreMusic = "Music"
+        private const val genreRomance = "Romance"
+        private const val genreActionAdventure = "Action & Adventure"
+        private const val genreAnimation = "Animation"
+        private const val genreComedy = "Comedy"
+        private const val genreSciFiFantasy = "Sci-Fi & Fantasy"
+        private const val genreMystery = "Mystery"
+
+        private fun printIfResourceIdIsNull() =
+            println(
+                """
+                Error: NullPointerExeption, data is not exists
+                cause: the layout id is already changed, maybe because you add a new resource in above of your expected resource id
+            """.trimIndent()
+            )
+    }
 }

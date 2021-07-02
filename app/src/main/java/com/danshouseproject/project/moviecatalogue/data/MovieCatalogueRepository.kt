@@ -3,6 +3,8 @@ package com.danshouseproject.project.moviecatalogue.data
 import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.paging.LivePagedListBuilder
+import androidx.paging.PagedList
 import com.danshouseproject.project.moviecatalogue.R
 import com.danshouseproject.project.moviecatalogue.api.tmdb.ApiKey
 import com.danshouseproject.project.moviecatalogue.data.local.LocalDataSource
@@ -27,13 +29,12 @@ class MovieCatalogueRepository private constructor(
 
     private val rsc = context.resources
 
+    fun getContext(context: Context) {
+        this.context = context
+    }
+
     private fun handleNullMovieCertificate(): List<MovieCertificate> =
-        listOf(
-            MovieCertificate(
-                rsc.getString(R.string.iso_alpha2_us),
-                listOf(Certificate(rsc.getString(R.string.tv_rate_canada_adult_certificate)))
-            )
-        )
+        listOf(MovieCertificate(rsc.getString(R.string.iso_alpha2_us), listOf(Certificate(rsc.getString(R.string.tv_rate_canada_adult_certificate)))))
 
     private fun handleNullCertificate(): List<Certificate> =
         listOf(Certificate(rsc.getString(R.string.tv_rate_canada_adult_certificate)))
@@ -325,8 +326,25 @@ class MovieCatalogueRepository private constructor(
         return id
     }
 
-    override fun getAllFavoriteFilm(isMovies: Boolean): LiveData<List<FavoriteFilm>> =
-        localDataSource.getAllFavoriteFilm(isMovies)
+    override fun getAllFavoriteFilm(isMovies: Boolean): LiveData<PagedList<FavoriteFilm>> {
+        val config = PagedList.Config.Builder()
+            .setEnablePlaceholders(false)
+            .setInitialLoadSizeHint(4)
+            .setPageSize(4)
+            .build()
+
+        return LivePagedListBuilder(localDataSource.getAllFavoriteFilm(isMovies), config).build()
+    }
+
+    override fun getOrderedFilm(sort: String): LiveData<PagedList<FavoriteFilm>> {
+        val config = PagedList.Config.Builder()
+            .setEnablePlaceholders(false)
+            .setInitialLoadSizeHint(4)
+            .setPageSize(4)
+            .build()
+
+        return LivePagedListBuilder(localDataSource.getOrderedFilm(sort), config).build()
+    }
 
 
     companion object {

@@ -25,6 +25,10 @@
     <string name="iso_alpha2_ru">RU</string>
     <string name="iso_alpha2_jp">JP</string>
     <string name="iso_alpha2_uk">UK</string>
+    <string name="iso_alpha2_fr">FR</string>
+    <string name="iso_alpha2_gb">GB</string>
+    <string name="iso_alpha2_de">DE</string>
+    <string name="iso_alpha2_cn">CN</string>
 
     <string name="mpaa_general_audiences">G</string>
     <string name="mpaa_parental_guidance_suggested">PG</string>
@@ -35,6 +39,8 @@
     <string name="tv_rate_canada_teens_certificate">TV-14</string>
     <string name="tv_rate_canada_adult_certificate">TV-MA</string>
     <string name="tv_rate_canada_kids_certificate">TV-PG</string>
+    <string name="tv_rate_15_old_and_over">15</string>
+    <string name="tv_rate_16_old_and_over">16</string>
     <string name="tv_rate_18_old_and_over">18</string>
 
     <string name="movies1_overview">Seasoned musician Jackson Maine discovers — and falls in love with — struggling artist Ally. She has just about given up on her dream to make it big as a singer — until Jack coaxes her into the spotlight. But even as Ally\'s career takes off, the personal side of their relationship is breaking down, as Jack fights an ongoing battle with his own internal demons.</string>
@@ -235,7 +241,21 @@
     <string name="cd_line">Line separated</string>
     <string name="cd_btn_favorite_to_detail">Button for see detail about film</string>
     <string name="cd_overview_favorite">Overview of film and icon in the right as a mark of film is already favorited</string>
+    <string name="cd_btn_favorite">Icon Favorite</string>
 
     <string name="success_add_to_favorite">Success add film to favorite</string>
     <string name="remove_from_favorite">Removed from list of favorite</string>
+    <string name="cd_text_select_btn">Select</string>
+    <string name="cd_text_close_btn">Close</string>
+    <string name="text_radio_long_duration">Longest duration</string>
+    <string name="text_radio_fast_duration">Fastest duration</string>
+    <string name="text_radio_low_score">Lowest score</string>
+    <string name="text_radio_high_score">Highest score</string>
+    <string name="text_radio_newest_film">Newest</string>
+    <string name="text_radio_oldest_film">Oldest</string>
+    <string name="text_radio_random_film">Randomly</string>
+    <string name="date_modified_label">Based on date modified</string>
+    <string name="duration_label">Based on duration</string>
+    <string name="score_label">Based on score</string>
+    <string name="sort_film_title">Sort Film</string>
 </resources>

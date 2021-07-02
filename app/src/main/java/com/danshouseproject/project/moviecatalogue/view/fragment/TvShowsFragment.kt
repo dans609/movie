@@ -11,8 +11,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.danshouseproject.project.moviecatalogue.R
-import com.danshouseproject.project.moviecatalogue.databinding.FragmentListsFilmBinding
 import com.danshouseproject.project.moviecatalogue.`object`.json.GetFilmId
+import com.danshouseproject.project.moviecatalogue.databinding.FragmentListsFilmBinding
 import com.danshouseproject.project.moviecatalogue.model.ListFilm
 import com.danshouseproject.project.moviecatalogue.view.OnItemClickCallback
 import com.danshouseproject.project.moviecatalogue.view.activity.DetailFilmActivity

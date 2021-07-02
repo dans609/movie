@@ -8,8 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import androidx.recyclerview.widget.StaggeredGridLayoutManager.VERTICAL
 import com.danshouseproject.project.moviecatalogue.R
 import com.danshouseproject.project.moviecatalogue.`object`.json.GetFilmId
 import com.danshouseproject.project.moviecatalogue.databinding.FragmentListsFilmBinding
@@ -19,6 +21,7 @@ import com.danshouseproject.project.moviecatalogue.view.activity.DetailFilmActiv
 import com.danshouseproject.project.moviecatalogue.view.adapter.MoviesAdapter
 import com.danshouseproject.project.moviecatalogue.viewmodel.MoviesViewModel
 import com.danshouseproject.project.moviecatalogue.viewmodel.factory.ViewModelFactory
+import com.danshouseproject.project.moviecatalogue.vo.Resource
 import com.danshouseproject.project.moviecatalogue.vo.Status
 
 class MoviesFragment : Fragment(), OnItemClickCallback {
@@ -48,39 +51,41 @@ class MoviesFragment : Fragment(), OnItemClickCallback {
             val factory = ViewModelFactory.getInstance(requireActivity())
             val viewModel = ViewModelProvider(this, factory).get(MoviesViewModel::class.java)
 
-            for (idxId in id?.indices ?: return) {
-                viewModel.getMovies(id[idxId]).observe(viewLifecycleOwner, { movies ->
-                    if (movies != null)
-                        when (movies.status) {
-                            Status.LOADING -> showProgressBar(true)
-                            Status.SUCCESS -> {
-                                showProgressBar(false)
-                                adapter.setList(movies.data ?: return@observe)
-                                adapter.notifyDataSetChanged()
-                            }
-                            Status.ERROR -> {
-                                showProgressBar(false)
-                                Toast.makeText(
-                                    context,
-                                    "There is something error",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                            }
-                        }
-                })
-            }
+            for (idxId in id?.indices ?: return)
+                viewModel.getMovies(id[idxId]).observeMovies
 
             binding?.let { bind ->
+                val twoItems = resources.getInteger(R.integer.int_2)
+                val layoutManager = StaggeredGridLayoutManager(twoItems, VERTICAL)
+
                 bind.rvFilm.setHasFixedSize(true)
-                bind.rvFilm.layoutManager = StaggeredGridLayoutManager(
-                    resources.getInteger(R.integer.int_2),
-                    StaggeredGridLayoutManager.VERTICAL
-                )
+                bind.rvFilm.layoutManager = layoutManager
                 bind.rvFilm.adapter = adapter
                 adapter.notifyDataSetChanged()
             }
         } else Log.d(TAG, getString(R.string.activity_null))
     }
+
+    private val LiveData<Resource<ListFilm>>.observeMovies
+        get() = this.observe(viewLifecycleOwner, { movies ->
+            if (movies != null)
+                when (movies.status) {
+                    Status.LOADING -> showProgressBar(true)
+                    Status.SUCCESS -> {
+                        showProgressBar(false)
+                        adapter.setList(movies.data ?: return@observe)
+                        adapter.notifyDataSetChanged()
+                    }
+                    Status.ERROR -> {
+                        showProgressBar(false)
+                        Toast.makeText(
+                            context,
+                            "There is something error",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+        })
 
     override fun onItemClicked(data: ListFilm, position: Int) =
         Intent(activity, DetailFilmActivity::class.java).let { intent ->

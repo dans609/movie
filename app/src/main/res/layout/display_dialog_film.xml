@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/AllMatch.WhiteBackground"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/constraint_bound_medium_size">
+
+    <TextView
+        android:id="@+id/dia_title"
+        style="@style/ClearXWrap.RadioButtonTitle"
+        android:layout_width="match_parent"
+        android:text="@string/sort_film_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <RadioGroup
+        android:id="@+id/rg_options"
+        style="@style/ClearXWrap"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_below="@id/dia_title"
+        app:layout_constraintEnd_toEndOf="@id/dia_title"
+        app:layout_constraintStart_toStartOf="@id/dia_title"
+        app:layout_constraintTop_toBottomOf="@id/dia_title">
+
+        <androidx.appcompat.widget.AppCompatRadioButton
+            android:id="@+id/rb_sort_random"
+            style="@style/ClearXWrap.RadioButtonAppearances.BotBarrier"
+            android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/normal_size"
+            android:text="@string/text_radio_random_film" />
+
+        <TextView
+            style="@style/MatchWrap"
+            android:padding="@dimen/constraint_bound_small_size"
+            android:text="@string/date_modified_label"
+            android:textColor="@color/colorBorderSemiGray" />
+
+        <androidx.appcompat.widget.AppCompatRadioButton
+            android:id="@+id/rb_sort_id_asc"
+            style="@style/ClearXWrap.RadioButtonAppearances"
+            android:layout_width="match_parent"
+            android:checked="true"
+            android:text="@string/text_radio_oldest_film" />
+
+        <androidx.appcompat.widget.AppCompatRadioButton
+            android:id="@+id/rb_sort_id_desc"
+            style="@style/ClearXWrap.RadioButtonAppearances.BotBarrier"
+            android:layout_width="match_parent"
+            android:text="@string/text_radio_newest_film" />
+
+        <TextView
+            style="@style/MatchWrap"
+            android:padding="@dimen/constraint_bound_small_size"
+            android:text="@string/score_label"
+            android:textColor="@color/colorBorderSemiGray" />
+
+        <androidx.appcompat.widget.AppCompatRadioButton
+            android:id="@+id/rb_sort_high_score"
+            style="@style/ClearXWrap.RadioButtonAppearances"
+            android:layout_width="match_parent"
+            android:text="@string/text_radio_high_score" />
+
+        <androidx.appcompat.widget.AppCompatRadioButton
+            android:id="@+id/rb_sort_low_score"
+            style="@style/ClearXWrap.RadioButtonAppearances.BotBarrier"
+            android:layout_width="match_parent"
+            android:text="@string/text_radio_low_score" />
+
+        <TextView
+            style="@style/MatchWrap"
+            android:padding="@dimen/constraint_bound_small_size"
+            android:text="@string/duration_label"
+            android:textColor="@color/colorBorderSemiGray" />
+
+        <androidx.appcompat.widget.AppCompatRadioButton
+            android:id="@+id/rb_sort_fast_runtime"
+            style="@style/ClearXWrap.RadioButtonAppearances"
+            android:layout_width="match_parent"
+            android:text="@string/text_radio_fast_duration" />
+
+        <androidx.appcompat.widget.AppCompatRadioButton
+            android:id="@+id/rb_sort_long_runtime"
+            style="@style/ClearXWrap.RadioButtonAppearances"
+            android:layout_width="match_parent"
+            android:layout_marginBottom="@dimen/large_attribute_size"
+            android:text="@string/text_radio_long_duration" />
+
+    </RadioGroup>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rg_options">
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/btn_close"
+            style="@style/ClearXWrap.ImageView.Close"
+            android:layout_marginEnd="@dimen/large_attribute_size"
+            android:contentDescription="@string/cd_text_close_btn"
+            app:layout_constraintEnd_toStartOf="@id/btn_choose"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/btn_choose"
+            style="@style/ClearXWrap.ImageView.Accept"
+            android:layout_marginStart="@dimen/large_attribute_size"
+            android:contentDescription="@string/cd_text_select_btn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/btn_close"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

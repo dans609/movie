@@ -34,4 +34,13 @@
         app:rippleColor="@color/colorAestheticBlack"
         app:srcCompat="@drawable/ic_favorite_default" />
 
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        style="@style/ProgressBar"
+        android:contentDescription="@string/cd_progress_bar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

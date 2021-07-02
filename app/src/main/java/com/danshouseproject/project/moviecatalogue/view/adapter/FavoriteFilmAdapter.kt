@@ -1,8 +1,12 @@
 package com.danshouseproject.project.moviecatalogue.view.adapter
 
+import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.paging.PagedListAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -10,25 +14,13 @@ import com.danshouseproject.project.moviecatalogue.R
 import com.danshouseproject.project.moviecatalogue.databinding.DisplayFavoriteFilmBinding
 import com.danshouseproject.project.moviecatalogue.model.FavoriteFilm
 import com.danshouseproject.project.moviecatalogue.view.OnFavoriteItemClicked
-import com.danshouseproject.project.moviecatalogue.view.OnItemClickCallback
 
-class FavoriteFilmAdapter : RecyclerView.Adapter<FavoriteFilmAdapter.FavoriteViewHolder>() {
+class FavoriteFilmAdapter :
+    PagedListAdapter<FavoriteFilm, FavoriteFilmAdapter.FavoriteViewHolder>(DIFF_CALLBACK) {
     private lateinit var onFavoriteItemClicked: OnFavoriteItemClicked
-    private val listFavoriteFilm = ArrayList<FavoriteFilm>()
-
-    fun setList(listFilm: List<FavoriteFilm>) {
-        listFavoriteFilm.clear()
-        listFavoriteFilm.addAll(listFilm)
-        notifyDataSetChanged()
-    }
-
-    fun setFavoriteItemClickCallback(onFavoriteItemClicked: OnFavoriteItemClicked) {
-        this.onFavoriteItemClicked = onFavoriteItemClicked
-    }
 
     inner class FavoriteViewHolder(private val binding: DisplayFavoriteFilmBinding) :
         RecyclerView.ViewHolder(binding.root) {
-
         fun bind(data: FavoriteFilm) {
             with(itemView) {
                 context.resources.let { res ->
@@ -50,15 +42,26 @@ class FavoriteFilmAdapter : RecyclerView.Adapter<FavoriteFilmAdapter.FavoriteVie
                     binding.filmRating.text =
                         context.getString(R.string.film_rating_responsive, data.filmScore)
 
-                    setOnClickListener { onFavoriteItemClicked.onFavoriteItemClick(data) }
-                    binding.btnDetail.setOnClickListener {
-                        Toast.makeText(context, data.filmName, Toast.LENGTH_SHORT).show()
-                        onFavoriteItemClicked.onFavoriteItemClick(data)
-                    }
+                    binding.btnFavorite.onClicked(context, data)
+                    binding.btnDetail.onClicked(context, data)
                 }
             }
         }
     }
+
+    private fun View.onClicked(context: Context, data: FavoriteFilm) {
+        this.setOnClickListener {
+            onFavoriteItemClicked.onFavoriteItemClick(data, this.id)
+            data.filmName.callToast(context)
+        }
+    }
+
+    private fun <T> T.callToast(context: Context) {
+        Toast.makeText(context, this.toString(), Toast.LENGTH_SHORT).show()
+    }
+
+    fun setFavoriteItemClickCallback(onFavoriteItemClicked: OnFavoriteItemClicked) =
+        onFavoriteItemClicked.let { this.onFavoriteItemClicked = it }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoriteViewHolder =
         FavoriteViewHolder(
@@ -69,9 +72,19 @@ class FavoriteFilmAdapter : RecyclerView.Adapter<FavoriteFilmAdapter.FavoriteVie
             )
         )
 
-    override fun onBindViewHolder(holder: FavoriteViewHolder, position: Int) =
-        holder.bind(listFavoriteFilm[position])
+    override fun onBindViewHolder(holder: FavoriteViewHolder, position: Int) {
+        val filmFavorite = getItem(position)
+        if (filmFavorite != null) holder.bind(filmFavorite)
+    }
 
-    override fun getItemCount(): Int = listFavoriteFilm.size
 
+    companion object {
+        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<FavoriteFilm>() {
+            override fun areItemsTheSame(oldItem: FavoriteFilm, newItem: FavoriteFilm): Boolean =
+                oldItem.filmId == newItem.filmId
+
+            override fun areContentsTheSame(oldItem: FavoriteFilm, newItem: FavoriteFilm): Boolean =
+                oldItem == newItem
+        }
+    }
 }

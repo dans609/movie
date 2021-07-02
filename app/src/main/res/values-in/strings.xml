@@ -25,6 +25,10 @@
     <string name="iso_alpha2_ru">RU</string>
     <string name="iso_alpha2_jp">JP</string>
     <string name="iso_alpha2_uk">UK</string>
+    <string name="iso_alpha2_fr">FR</string>
+    <string name="iso_alpha2_gb">GB</string>
+    <string name="iso_alpha2_de">DE</string>
+    <string name="iso_alpha2_cn">CN</string>
 
     <string name="mpaa_general_audiences">G</string>
     <string name="mpaa_parental_guidance_suggested">PG</string>
@@ -35,6 +39,8 @@
     <string name="tv_rate_canada_teens_certificate">TV-14</string>
     <string name="tv_rate_canada_adult_certificate">TV-MA</string>
     <string name="tv_rate_canada_kids_certificate">TV-PG</string>
+    <string name="tv_rate_15_old_and_over">15</string>
+    <string name="tv_rate_16_old_and_over">16</string>
     <string name="tv_rate_18_old_and_over">18</string>
 
     <string name="movies1_overview">Musisi berpengalaman Jackson Maine menemukan - dan jatuh cinta - artis Ally yang sedang berjuang. Dia baru saja akan menyerah pada mimpinya untuk menjadi besar sebagai penyanyi - sampai Jack membujuknya menjadi sorotan. Tetapi bahkan saat karier Ally lepas landas, sisi pribadi dari hubungan mereka runtuh, saat Jack bertempur melawan iblis internalnya sendiri.</string>
@@ -234,7 +240,21 @@
     <string name="cd_line">Garis pembatas</string>
     <string name="cd_btn_favorite_to_detail">Tombol untuk melihat detail dari film</string>
     <string name="cd_overview_favorite">Deskripsi film dan ikon yang ada di kanan adalah pertanda bahwa film telah di favorit kan</string>
+    <string name="cd_btn_favorite">Ikon Favorit</string>
 
     <string name="success_add_to_favorite">Berhasil menambahkan film ke daftar favorit</string>
     <string name="remove_from_favorite">Film dihapus dari daftar favorit</string>
+    <string name="cd_text_select_btn">Pilih</string>
+    <string name="cd_text_close_btn">Tutup</string>
+    <string name="text_radio_long_duration">Durasi terlama</string>
+    <string name="text_radio_fast_duration">Durasi tercepat</string>
+    <string name="text_radio_low_score">Skor terendah</string>
+    <string name="text_radio_high_score">Skor tertinggi</string>
+    <string name="text_radio_newest_film">Terbaru</string>
+    <string name="text_radio_oldest_film">Terlama</string>
+    <string name="text_radio_random_film">Secara random</string>
+    <string name="date_modified_label">Berdasarkan tanggal diubah</string>
+    <string name="duration_label">Berdasarkan durasi</string>
+    <string name="score_label">Berdasarkan skor</string>
+    <string name="sort_film_title">Urutkan Film</string>
 </resources>

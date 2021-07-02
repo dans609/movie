@@ -322,8 +322,7 @@
         <item name="android:fontFamily">@font/source_sans_pro_semi_bold</item>
         <item name="android:letterSpacing">0.05</item>
         <item name="android:lineSpacingMultiplier">1.1</item>
-        <item name="android:maxLength">@integer/minimum_viewport_size</item>
-        <item name="maxLines">@integer/int_1</item>
+        <item name="android:maxLines">@integer/int_1</item>
         <item name="android:textColor">@color/colorSemiBlack</item>
         <item name="android:textSize">@dimen/medium_text_size</item>
     </style>
@@ -353,5 +352,39 @@
     <style name="Clear.Stroke">
         <item name="android:layout_height">@dimen/extra_small_size</item>
         <item name="android:background">@drawable/ic_dashed_stroke</item>
+    </style>
+
+    <style name="ClearXWrap.RadioButtonAppearances">
+        <item name="android:letterSpacing">0.04</item>
+        <item name="android:button">@drawable/br_button</item>
+        <item name="android:background">@drawable/ic_radio_button</item>
+        <item name="android:buttonTint">@color/colorRed</item>
+        <item name="android:textColor">@color/colorRed</item>
+    </style>
+
+    <style name="ClearXWrap.RadioButtonAppearances.BotBarrier">
+        <item name="android:layout_marginBottom">@dimen/normal_size</item>
+    </style>
+
+    <style name="ClearXWrap.RadioButtonTitle">
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/text_title_size</item>
+        <item name="android:letterSpacing">0.03</item>
+        <item name="android:textColor">@color/colorAestheticBlack</item>
+    </style>
+
+    <style name="ClearXWrap.ImageView">
+        <item name="android:background">@drawable/ic_round_button</item>
+        <item name="layout_constraintHorizontal_weight">0.04</item>
+    </style>
+
+    <style name="ClearXWrap.ImageView.Close">
+        <item name="android:backgroundTint">#FF4646</item>
+        <item name="android:src">@drawable/ic_close</item>
+    </style>
+
+    <style name="ClearXWrap.ImageView.Accept">
+        <item name="android:src">@drawable/ic_checklist</item>
     </style>
 </resources>

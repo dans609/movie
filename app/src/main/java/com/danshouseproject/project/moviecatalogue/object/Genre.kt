@@ -1,20 +1,19 @@
 package com.danshouseproject.project.moviecatalogue.`object`
 
 import com.danshouseproject.project.moviecatalogue.R
+import com.danshouseproject.project.moviecatalogue.`object`.test.RemoteMovies
+import com.danshouseproject.project.moviecatalogue.`object`.test.RemoteTvShows
 import com.danshouseproject.project.moviecatalogue.helper.ConvertTypeHelper.convertListIntToListString
 import com.danshouseproject.project.moviecatalogue.model.FilmGenre
+import com.danshouseproject.project.moviecatalogue.model.GenreConverter
 
 object Genre {
 
-    private val moviesId: List<Int> = listOf(
-        R.integer.zero_value, R.integer.int_1, R.integer.int_2,
-        R.integer.int_3, R.integer.int_4, R.integer.int_5,
-        R.integer.int_6, R.integer.int_7, R.integer.int_8,
-        R.integer.int_9, R.integer.optimal_max_thickness_ratio_size, R.integer.int_11,
-        R.integer.int_12, R.integer.int_13, R.integer.int_14,
-        R.integer.int_15, R.integer.int_16, R.integer.int_17,
-        R.integer.int_18
-    )
+    private val moviesId: List<Int>
+        get() = RemoteMovies.responseMoviesId
+
+    private val tvId: List<Int>
+        get() = RemoteTvShows.responseTvShowsId
 
     private val moviesGenreList: List<List<String>> = listOf(
         convertListIntToListString(
@@ -191,26 +190,47 @@ object Genre {
         val listGenre = ArrayList<FilmGenre>()
         listGenre.clear()
 
+        var counterId = 0
         for (index in moviesGenreList.indices) {
-            val filmGenre = FilmGenre()
-            // filmGenre.genre = moviesGenreList[index]
-            filmGenre.filmId = moviesId[index]
+            val listGenreConverter = ArrayList<GenreConverter>()
+            for (idxGenre in moviesGenreList[index].indices) {
+                listGenreConverter.add(GenreConverter(counterId, moviesId[index], moviesGenreList[index][idxGenre]))
+                counterId++
+            }
+
+            val filmGenre = FilmGenre(
+                id = index,
+                filmId = moviesId[index],
+                genre = listGenreConverter,
+                isMovies = true
+            )
+
             listGenre.add(filmGenre)
         }
         return listGenre
     }
+
 
     fun generateTvShowsGenre(): List<FilmGenre> {
         val listGenre = ArrayList<FilmGenre>()
         listGenre.clear()
 
+        var counterId = 0
         for (index in tvShowsGenreList.indices) {
-            val filmGenre = FilmGenre()
-            // filmGenre.genre = tvShowsGenreList[index]
-            filmGenre.filmId = moviesId[index]
+            val listGenreConverter = ArrayList<GenreConverter>()
+            for (idxGenre in tvShowsGenreList[index].indices) {
+                listGenreConverter.add(GenreConverter(counterId, tvId[index], tvShowsGenreList[index][idxGenre]))
+                counterId++
+            }
+
+            val filmGenre = FilmGenre(
+                id = index,
+                filmId = tvId[index],
+                genre = listGenreConverter,
+            )
+
             listGenre.add(filmGenre)
         }
         return listGenre
     }
-
 }

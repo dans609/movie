@@ -1,10 +1,14 @@
 package com.danshouseproject.project.moviecatalogue.`object`
 
 import com.danshouseproject.project.moviecatalogue.R
+import com.danshouseproject.project.moviecatalogue.`object`.test.RemoteMovies
 import com.danshouseproject.project.moviecatalogue.helper.ConvertTypeHelper.convertListIntToListString
 import com.danshouseproject.project.moviecatalogue.model.ListFilm
 
 object Movies {
+
+    private val moviesId: List<Int>
+        get() = RemoteMovies.responseMoviesId
 
     private val moviesImage: List<String> = convertListIntToListString(
         R.drawable.poster_a_start_is_born, R.drawable.poster_alita, R.drawable.poster_aquaman,
@@ -39,16 +43,16 @@ object Movies {
         R.string.movies_name19
     )
 
-    private val moviesRating: List<String> = convertListIntToListString(
+    val moviesRating: List<String> = convertListIntToListString(
         R.string.mpaa_restricted,
         R.string.mpaa_parents_strongly_cautioned_under_13,
         R.string.mpaa_parents_strongly_cautioned_under_13,
         R.string.mpaa_parents_strongly_cautioned_under_13,
-        R.string.mpaa_restricted,
         R.string.mpaa_parents_strongly_cautioned_under_13,
         R.string.mpaa_parents_strongly_cautioned_under_13,
         R.string.mpaa_parents_strongly_cautioned_under_13,
-        R.string.film_rate_semua_umur,
+        R.string.mpaa_parents_strongly_cautioned_under_13,
+        R.string.mpaa_parents_strongly_cautioned_under_13,
         R.string.mpaa_parents_strongly_cautioned_under_13,
         R.string.mpaa_restricted,
         R.string.mpaa_parents_strongly_cautioned_under_13,
@@ -83,14 +87,14 @@ object Movies {
         R.string.two_hours_nineteen_minutes
     )
 
-    private val moviesCountryCode: List<String> = convertListIntToListString(
+    val moviesCountryCode: List<String> = convertListIntToListString(
         R.string.iso_alpha2_us, R.string.iso_alpha2_us, R.string.iso_alpha2_us,
         R.string.iso_alpha2_us, R.string.iso_alpha2_us, R.string.iso_alpha2_us,
-        R.string.iso_alpha2_us, R.string.iso_alpha2_us, R.string.iso_alpha2_id,
-        R.string.iso_alpha2_us, R.string.iso_alpha2_us, R.string.iso_alpha2_tw,
         R.string.iso_alpha2_us, R.string.iso_alpha2_us, R.string.iso_alpha2_us,
         R.string.iso_alpha2_us, R.string.iso_alpha2_us, R.string.iso_alpha2_us,
-        R.string.iso_alpha2_ru
+        R.string.iso_alpha2_us, R.string.iso_alpha2_us, R.string.iso_alpha2_us,
+        R.string.iso_alpha2_us, R.string.iso_alpha2_us, R.string.iso_alpha2_us,
+        R.string.iso_alpha2_cn
     )
 
     private val moviesReleaseDate: List<String> = convertListIntToListString(
@@ -129,6 +133,7 @@ object Movies {
         for (index in moviesName.indices) {
             val movies = ListFilm()
             with(movies) {
+                filmId = moviesId[index]
                 filmName = moviesName[index]
                 filmRatingSymbol = moviesRating[index]
                 filmDuration = moviesDuration[index]
@@ -137,6 +142,7 @@ object Movies {
                 filmOverview = moviesDescription[index]
                 filmImage = moviesImage[index]
                 filmScore = moviesScore[index]
+                isMovies = true
                 list.add(movies)
             }
         }

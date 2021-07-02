@@ -81,12 +81,12 @@ object RemoteMovies {
             "T-34"
         )
 
-    private val responseMoviesScore: List<Double> = listOf(
+    val responseMoviesScore: List<Double> = listOf(
         7.5, 7.2, 6.9, 8.0,
         5.7, 6.9, 6.9, 6.7,
         7.8, 8.3, 6.6, 6.0,
         6.1, 6.7, 7.2, 5.9,
-        5.4, 8.4, 7.0
+        5.4, 8.4, 6.9
     )
 
 

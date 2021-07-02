@@ -2,6 +2,7 @@ package com.danshouseproject.project.moviecatalogue.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import androidx.paging.PagedList
 import com.danshouseproject.project.moviecatalogue.data.MovieCatalogueRepository
 import com.danshouseproject.project.moviecatalogue.model.FavoriteFilm
 import com.danshouseproject.project.moviecatalogue.model.FilmInfo
@@ -17,7 +18,10 @@ class AdditionalDataViewModel(private val mMovieCatalogueRepository: MovieCatalo
     fun getTvAdditionalData(filmId: Int): LiveData<Resource<FilmInfo>> =
         mMovieCatalogueRepository.getTvMoreInfo(filmId)
 
-    fun getFavoriteFilm(isMovies: Boolean): LiveData<List<FavoriteFilm>> =
+    fun getOrderedFilm(sort: String): LiveData<PagedList<FavoriteFilm>> =
+        mMovieCatalogueRepository.getOrderedFilm(sort)
+
+    fun getFavoriteFilm(isMovies: Boolean): LiveData<PagedList<FavoriteFilm>> =
         mMovieCatalogueRepository.getAllFavoriteFilm(isMovies)
 
     fun addToFavorite(film: ListFilm) {

@@ -1,14 +1,19 @@
 package com.danshouseproject.project.moviecatalogue.view.activity
 
 import android.os.Bundle
+import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import com.danshouseproject.project.moviecatalogue.R
 import com.danshouseproject.project.moviecatalogue.databinding.ActivityFilmFavoriteBinding
 import com.danshouseproject.project.moviecatalogue.databinding.ActivityHomeBinding
+import com.danshouseproject.project.moviecatalogue.view.fragment.dialog.SortDialogFragment
 import com.danshouseproject.project.moviecatalogue.view.fragment.viewpager.FavoriteViewPager
 
-class FilmFavoriteActivity : AppCompatActivity() {
+
+class FilmFavoriteActivity : AppCompatActivity(), SortDialogFragment.OnOptionDialogListener {
     private var _binding: ActivityFilmFavoriteBinding? = null
     private val binding
         get() = _binding
@@ -45,9 +50,28 @@ class FilmFavoriteActivity : AppCompatActivity() {
             actBar.setDisplayHomeAsUpEnabled(true)
         }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.favorite_menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.filter -> {
+                val dialog = SortDialogFragment()
+                dialog.show(supportFragmentManager, SortDialogFragment.TAG)
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return super.onSupportNavigateUp()
+    }
+
+    override fun onOptionChosen(text: String?) {
+        Log.d("FilmFavoriteActivity", text.toString())
     }
 
     override fun onDestroy() {

@@ -56,12 +56,12 @@ object RemoteTvShows {
         1622, 456, 75006
     )
 
-    private val responseTvShowsScore: List<Double> = listOf(
-        6.6, 7.6, 8.1, 7.8,
+    val responseTvShowsScore: List<Double> = listOf(
+        6.6, 7.6, 8.1, 7.6,
         7.0, 7.4, 8.4, 7.5,
         8.2, 7.5, 6.6, 8.6,
-        7.5, 8.6, 7.6, 7.3,
-        8.2, 7.9, 8.7
+        7.4, 8.6, 7.6, 7.3,
+        8.2, 7.8, 8.7
     )
 
     private val responseTvShowsTitle: List<String> = listOf(
@@ -89,9 +89,9 @@ object RemoteTvShows {
 
     private val responseTvShowsGenre: List<List<FetchFilmGenres>> =
         listOf(
-            convListGenres(genre[0], genre[1], genre[4]),
+            convListGenres(genre[0], genre[1], genre[4], genre[7]),
             convListGenres(genre[6], genre[2], genre[1]),
-            convListGenres(genre[4], genre[7], genre[6]),
+            convListGenres(genre[3], genre[7], genre[6]),
             convListGenres(genre[7], genre[3], genre[2], genre[6], genre[4]),
             convListGenres(genre[3], genre[2]),
             convListGenres(genre[7], genre[0], genre[1], genre[6]),
@@ -106,7 +106,7 @@ object RemoteTvShows {
             convListGenres(genre[2], genre[1]),
             convListGenres(genre[1], genre[6], genre[7]),
             convListGenres(genre[1], genre[4], genre[6]),
-            convListGenres(genre[5], genre[3], genre[2], genre[1], genre[8]),
+            convListGenres(genre[5], genre[3], genre[2], genre[1]),
             convListGenres(genre[7], genre[6], genre[1])
         )
 
@@ -120,7 +120,6 @@ object RemoteTvShows {
             instanciateResponse.tvPosterPath = responseTvShowsImage[index]
             instanciateResponse.tvGenres = responseTvShowsGenre[index]
             instanciateResponse.tvScore = responseTvShowsScore[index]
-
             listTv.add(instanciateResponse)
         }
         return listTv
