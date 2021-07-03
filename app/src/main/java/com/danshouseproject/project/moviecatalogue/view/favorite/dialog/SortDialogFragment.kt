@@ -45,7 +45,7 @@ class SortDialogFragment : DialogFragment(), View.OnClickListener {
         try {
             _optionDialog = activity as OnOptionDialogListener?
         } catch (e: ClassCastException) {
-            Log.e(TAG, "onAttach: " + e.message)
+            Log.e(TAG, "$ON_ATTACH: " + e.message)
         }
     }
 
@@ -61,6 +61,7 @@ class SortDialogFragment : DialogFragment(), View.OnClickListener {
             val checkedRadioId = it.rgOptions.checkedRadioButtonId
             if (checkedRadioId != -1) {
                 val sort: String? = when (checkedRadioId) {
+                    R.id.rb_sort_random -> SortUtils.RANDOM
                     R.id.rb_sort_id_asc -> SortUtils.SORT_ID_ASC
                     R.id.rb_sort_id_desc -> SortUtils.SORT_ID_DES
                     R.id.rb_sort_high_score -> SortUtils.HIGH_RANK
@@ -86,6 +87,7 @@ class SortDialogFragment : DialogFragment(), View.OnClickListener {
     }
 
     companion object {
-        val TAG = SortDialogFragment::class.java.simpleName
+        val TAG = SortDialogFragment::class.java.simpleName.toString()
+        private const val ON_ATTACH = "onAttach"
     }
 }

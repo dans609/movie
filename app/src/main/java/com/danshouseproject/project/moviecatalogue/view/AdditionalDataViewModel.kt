@@ -7,7 +7,7 @@ import com.danshouseproject.project.moviecatalogue.core.components.data.MovieCat
 import com.danshouseproject.project.moviecatalogue.core.components.domain.model.FavoriteFilm
 import com.danshouseproject.project.moviecatalogue.core.components.domain.model.FilmInfo
 import com.danshouseproject.project.moviecatalogue.core.components.domain.model.ListFilm
-import com.danshouseproject.project.moviecatalogue.core.components.data.vo.Resource
+import com.danshouseproject.project.moviecatalogue.core.components.data.Resource
 
 class AdditionalDataViewModel(private val mMovieCatalogueRepository: MovieCatalogueRepository) :
     ViewModel() {

@@ -3,16 +3,14 @@ package com.danshouseproject.project.moviecatalogue.core.components.data
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import com.danshouseproject.project.moviecatalogue.core.components.data.remote.status.ApiResponse
-import com.danshouseproject.project.moviecatalogue.core.components.data.remote.status.ResponseStatus
 import com.danshouseproject.project.moviecatalogue.core.utils.AppExecutors
-import com.danshouseproject.project.moviecatalogue.core.components.data.vo.Resource
 
 abstract class NetworkBoundResource<ResultType, RequestType>(private val mExecutors: AppExecutors) {
 
     private val result = MediatorLiveData<Resource<ResultType>>()
 
     init {
-        result.value = Resource.loading(null)
+        result.value = Resource.Loading(null)
 
         @Suppress("LeakingThis")
         val dbSource = loadFromDB()
@@ -20,18 +18,15 @@ abstract class NetworkBoundResource<ResultType, RequestType>(private val mExecut
         result.addSource(dbSource) { data ->
             result.removeSource(dbSource)
 
-            if (shouldFetch(data))
-                fetchFromNetwork(dbSource)
-            else {
-                result.addSource(dbSource) { newData ->
-                    result.value = Resource.success(newData)
-                }
+            if (shouldFetch(data)) fetchFromNetwork(dbSource)
+            else result.addSource(dbSource) { newData ->
+                result.value = Resource.Success(newData)
             }
         }
     }
 
 
-    protected fun onFetchFailed() {}
+    protected open fun onFetchFailed() {}
 
     protected abstract fun loadFromDB(): LiveData<ResultType>
 
@@ -45,33 +40,29 @@ abstract class NetworkBoundResource<ResultType, RequestType>(private val mExecut
     private fun fetchFromNetwork(dbSource: LiveData<ResultType>) {
         val apiResponse = createCall()
 
-        result.addSource(dbSource) { newData ->
-            result.value = Resource.loading(newData)
-        }
-
+        result.addSource(dbSource) { newData -> result.value = Resource.Loading(newData) }
         result.addSource(apiResponse) { response ->
             result.removeSource(apiResponse)
             result.removeSource(dbSource)
-
-            when (response.status) {
-                ResponseStatus.SUCCESS ->
+            when (response) {
+                is ApiResponse.Success ->
                     mExecutors.diskIO.execute {
-                        saveCallResult(response.body as RequestType)
+                        saveCallResult(response.body)
                         mExecutors.mainThread.execute {
                             result.addSource(loadFromDB()) { newData ->
-                                result.value = Resource.success(newData)
+                                result.value = Resource.Success(newData)
                             }
                         }
                     }
-                ResponseStatus.EMPTY -> mExecutors.mainThread.execute {
+                is ApiResponse.Empty -> mExecutors.mainThread.execute {
                     result.addSource(loadFromDB()) { newData ->
-                        result.value = Resource.success(newData)
+                        result.value = Resource.Success(newData)
                     }
                 }
-                ResponseStatus.ERROR -> {
+                is ApiResponse.Error -> {
                     onFetchFailed()
                     result.addSource(dbSource) { newData ->
-                        result.value = Resource.error(newData, response.message.toString())
+                        result.value = Resource.Error(newData, response.msg)
                     }
                 }
             }
@@ -80,5 +71,4 @@ abstract class NetworkBoundResource<ResultType, RequestType>(private val mExecut
 
     val asLiveData: LiveData<Resource<ResultType>>
         get() = result
-
 }

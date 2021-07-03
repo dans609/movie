@@ -9,7 +9,6 @@ import com.danshouseproject.project.moviecatalogue.databinding.ActivitySplashScr
 import com.danshouseproject.project.moviecatalogue.view.home.HomeActivity
 
 class SplashScreenActivity : AppCompatActivity() {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = ActivitySplashScreenBinding.inflate(layoutInflater)
@@ -19,7 +18,7 @@ class SplashScreenActivity : AppCompatActivity() {
     }
 
     private fun runThread(context: Context) {
-        val thread: Thread = object : Thread() {
+        val thread = object : Thread() {
             override fun run() {
                 super.run()
                 try {

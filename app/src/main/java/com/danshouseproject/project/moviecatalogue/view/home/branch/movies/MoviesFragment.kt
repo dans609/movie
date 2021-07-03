@@ -20,8 +20,7 @@ import com.danshouseproject.project.moviecatalogue.view.OnItemClickCallback
 import com.danshouseproject.project.moviecatalogue.view.detail.DetailFilmActivity
 import com.danshouseproject.project.moviecatalogue.core.components.presentation.adapter.MoviesAdapter
 import com.danshouseproject.project.moviecatalogue.core.components.presentation.factory.ViewModelFactory
-import com.danshouseproject.project.moviecatalogue.core.components.data.vo.Resource
-import com.danshouseproject.project.moviecatalogue.core.components.data.vo.Status
+import com.danshouseproject.project.moviecatalogue.core.components.data.Resource
 
 class MoviesFragment : Fragment(), OnItemClickCallback {
 
@@ -68,18 +67,18 @@ class MoviesFragment : Fragment(), OnItemClickCallback {
     private val LiveData<Resource<ListFilm>>.observeMovies
         get() = this.observe(viewLifecycleOwner, { movies ->
             if (movies != null)
-                when (movies.status) {
-                    Status.LOADING -> showProgressBar(true)
-                    Status.SUCCESS -> {
+                when (movies) {
+                    is Resource.Loading -> showProgressBar(true)
+                    is Resource.Success -> {
                         showProgressBar(false)
                         adapter.setList(movies.data ?: return@observe)
                         adapter.notifyDataSetChanged()
                     }
-                    Status.ERROR -> {
+                    is Resource.Error -> {
                         showProgressBar(false)
                         Toast.makeText(
                             context,
-                            "There is something error",
+                            getString(R.string.error_text),
                             Toast.LENGTH_SHORT
                         ).show()
                     }

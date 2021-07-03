@@ -10,7 +10,7 @@ import com.danshouseproject.project.moviecatalogue.core.components.data.MovieCat
 import com.danshouseproject.project.moviecatalogue.core.components.domain.model.ListFilm
 import com.danshouseproject.project.moviecatalogue.viewmodel.MoviesViewModelTest.Companion.expextedFilmSize
 import com.danshouseproject.project.moviecatalogue.viewmodel.MoviesViewModelTest.Companion.teenVal
-import com.danshouseproject.project.moviecatalogue.core.components.data.vo.Resource
+import com.danshouseproject.project.moviecatalogue.core.components.data.Resource
 import com.danshouseproject.project.moviecatalogue.view.home.branch.tv.TvShowsViewModel
 import com.nhaarman.mockitokotlin2.verify
 import org.junit.Assert.*

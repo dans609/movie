@@ -19,7 +19,6 @@ import com.danshouseproject.project.moviecatalogue.core.components.domain.model.
 import com.danshouseproject.project.moviecatalogue.core.components.domain.model.FilmGenre
 import com.danshouseproject.project.moviecatalogue.core.components.domain.model.FilmInfo
 import com.danshouseproject.project.moviecatalogue.core.components.domain.model.ListFilm
-import com.danshouseproject.project.moviecatalogue.core.components.data.vo.Resource
 import org.junit.Assert.*
 import org.junit.Rule
 import org.junit.Test

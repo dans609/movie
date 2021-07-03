@@ -10,7 +10,6 @@ import com.danshouseproject.project.moviecatalogue.core.components.data.remote.*
 import com.danshouseproject.project.moviecatalogue.core.components.data.remote.response.*
 import com.danshouseproject.project.moviecatalogue.core.components.data.remote.status.ApiResponse
 import com.danshouseproject.project.moviecatalogue.core.utils.AppExecutors
-import com.danshouseproject.project.moviecatalogue.core.components.data.vo.Resource
 import com.danshouseproject.project.moviecatalogue.core.components.domain.model.*
 import com.danshouseproject.project.moviecatalogue.core.components.domain.repository.FilmDataSource
 

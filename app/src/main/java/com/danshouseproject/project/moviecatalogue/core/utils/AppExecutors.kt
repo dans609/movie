@@ -28,14 +28,13 @@ class AppExecutors @VisibleForTesting constructor(
         get() = _mainThread
 
 
-    class MainThreadExecutor : Executor {
+    internal class MainThreadExecutor : Executor {
         private val mainThreadHandler = Handler(Looper.getMainLooper())
 
         override fun execute(cmd: Runnable) {
             mainThreadHandler.post(cmd)
         }
     }
-
 
     companion object {
         private const val THREAD_COUNT = 3

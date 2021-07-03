@@ -15,17 +15,16 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.danshouseproject.project.moviecatalogue.R
-import com.danshouseproject.project.moviecatalogue.databinding.ActivityDetailFilmBinding
-import com.danshouseproject.project.moviecatalogue.databinding.DisplayDetailUserInterfaceBinding
-import com.danshouseproject.project.moviecatalogue.utils.EspressoIdlingResource
+import com.danshouseproject.project.moviecatalogue.core.components.data.Resource
 import com.danshouseproject.project.moviecatalogue.core.components.domain.model.FilmGenre
 import com.danshouseproject.project.moviecatalogue.core.components.domain.model.FilmInfo
 import com.danshouseproject.project.moviecatalogue.core.components.domain.model.ListFilm
 import com.danshouseproject.project.moviecatalogue.core.components.presentation.adapter.GenreAdapter
-import com.danshouseproject.project.moviecatalogue.view.AdditionalDataViewModel
 import com.danshouseproject.project.moviecatalogue.core.components.presentation.factory.ViewModelFactory
-import com.danshouseproject.project.moviecatalogue.core.components.data.vo.Resource
-import com.danshouseproject.project.moviecatalogue.core.components.data.vo.Status
+import com.danshouseproject.project.moviecatalogue.databinding.ActivityDetailFilmBinding
+import com.danshouseproject.project.moviecatalogue.databinding.DisplayDetailUserInterfaceBinding
+import com.danshouseproject.project.moviecatalogue.utils.EspressoIdlingResource
+import com.danshouseproject.project.moviecatalogue.view.AdditionalDataViewModel
 import kotlinx.android.synthetic.main.activity_detail_film.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -135,31 +134,30 @@ class DetailFilmActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-
     private fun showProgressBar(state: Boolean) =
         binding?.progressBar?.let {
             if (state) it.visibility = View.VISIBLE
             else it.visibility = View.GONE
         }
 
-
     private val LiveData<Resource<FilmGenre>>.observeGenres
         get() = this.observe(context, { listGenre ->
             if (listGenre != null) {
-                when (listGenre.status) {
-                    Status.LOADING -> showProgressBar(true)
-                    Status.SUCCESS -> {
+                when (listGenre) {
+                    is Resource.Loading -> showProgressBar(true)
+                    is Resource.Success -> {
                         showProgressBar(false)
                         val listFilmGenre = ArrayList<String>()
                         for (index in listGenre.data?.genre?.indices ?: return@observe) {
-                            if (listGenre.data.genre!![index].filmId == filmId) {
-                                listFilmGenre.add(listGenre.data.genre?.get(index)?.genre.toString())
+                            val objGenre = listGenre.data.genre?.get(index)
+                            if (objGenre?.filmId == filmId) {
+                                listFilmGenre.add(objGenre.genre)
                                 continue
                             }
                         }
                         genreAdapter.setListGenre(listFilmGenre)
                     }
-                    Status.ERROR -> {
+                    is Resource.Error -> {
                         showProgressBar(false)
                         getString(R.string.error_text).callToast
                     }
@@ -168,20 +166,20 @@ class DetailFilmActivity : AppCompatActivity(), View.OnClickListener {
         })
 
     private val LiveData<Resource<FilmInfo>>.observeFilmMoreInfo
-        get() = this.observe(context, {
-            if (it != null) {
-                when (it.status) {
-                    Status.LOADING -> showProgressBar(true)
-                    Status.SUCCESS -> {
+        get() = this.observe(context, { additionalData ->
+            if (additionalData != null) {
+                when (additionalData) {
+                    is Resource.Loading -> showProgressBar(true)
+                    is Resource.Success -> {
                         showProgressBar(false)
                         with(bindingDisplay) {
-                            if (filmId == it.data?.filmId) {
-                                filmCountryCode.text = it.data.isoCode
-                                filmRating.text = it.data.filmRating
+                            if (filmId == additionalData.data?.filmId) {
+                                filmCountryCode.text = additionalData.data.isoCode
+                                filmRating.text = additionalData.data.filmRating
                             }
                         }
                     }
-                    Status.ERROR -> {
+                    is Resource.Error -> {
                         showProgressBar(false)
                         getString(R.string.error_text).callToast
                     }
@@ -189,10 +187,8 @@ class DetailFilmActivity : AppCompatActivity(), View.OnClickListener {
             } else return@observe
         })
 
-
     private val String.callToast
         get() = Toast.makeText(context, this, Toast.LENGTH_SHORT).show()
-
 
     private fun progressBarAnimation(scores: Int) =
         bindingDisplay.let {
@@ -224,7 +220,7 @@ class DetailFilmActivity : AppCompatActivity(), View.OnClickListener {
                     }
                     if (breakTheLoops) break
                 }
-            EspressoIdlingResource.decrement()
+                EspressoIdlingResource.decrement()
             }
         }
 

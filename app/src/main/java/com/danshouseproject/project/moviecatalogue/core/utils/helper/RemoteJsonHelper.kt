@@ -29,8 +29,8 @@ class RemoteJsonHelper {
         callback: R,
         objectCallback: R.(ApiResponse<T>) -> Unit
     ) {
-        if (isSuccess) callback.objectCallback(ApiResponse.success(this))
-        else callback.objectCallback(ApiResponse.empty(this, message.toString()))
+        if (isSuccess) callback.objectCallback(ApiResponse.Success(this))
+        else callback.objectCallback(ApiResponse.Empty(message.toString()))
     }
 
     private fun failResMessage(respThrow: Throwable) =
@@ -63,7 +63,7 @@ class RemoteJsonHelper {
 
                 override fun onFailure(call: Call<ResponseMoviesCertification>, t: Throwable) {
                     failResMessage(t)
-                    ApiResponse.error<ResponseMoviesCertification>(t.message.toString())
+                    ApiResponse.Error(t.message.toString())
                 }
             })
     }
@@ -90,7 +90,7 @@ class RemoteJsonHelper {
 
                 override fun onFailure(call: Call<ResponseTvCertification>, t: Throwable) {
                     failResMessage(t)
-                    ApiResponse.error<ResponseTvCertification>(t.message.toString())
+                    ApiResponse.Error(t.message.toString())
                 }
             })
     }
@@ -115,7 +115,7 @@ class RemoteJsonHelper {
 
                 override fun onFailure(call: Call<ResponseMovies?>, t: Throwable) {
                     failResMessage(t)
-                    ApiResponse.error<ResponseMovies>(t.message.toString())
+                    ApiResponse.Error(t.message.toString())
                 }
             })
     }
@@ -140,7 +140,7 @@ class RemoteJsonHelper {
 
                 override fun onFailure(call: Call<ResponseTvShows?>, t: Throwable) {
                     failResMessage(t)
-                    ApiResponse.error<ResponseTvShows>(t.message.toString())
+                    ApiResponse.Error(t.message.toString())
                 }
             })
     }

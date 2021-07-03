@@ -13,7 +13,7 @@ import com.danshouseproject.project.moviecatalogue.core.components.domain.model.
 import com.danshouseproject.project.moviecatalogue.core.components.domain.model.FilmInfo
 import com.danshouseproject.project.moviecatalogue.viewmodel.MoviesViewModelTest.Companion.listMoviesId
 import com.danshouseproject.project.moviecatalogue.viewmodel.TvShowsViewModelTest.Companion.listTvId
-import com.danshouseproject.project.moviecatalogue.core.components.data.vo.Resource
+import com.danshouseproject.project.moviecatalogue.core.components.data.Resource
 import com.danshouseproject.project.moviecatalogue.view.AdditionalDataViewModel
 import com.nhaarman.mockitokotlin2.verify
 import org.junit.Assert.*

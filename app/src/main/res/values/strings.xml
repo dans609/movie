@@ -233,7 +233,7 @@
     <string name="entry_not_found">Entry not found</string>
 
     <string name="loading_text">Wait, loading…</string>
-    <string name="error_text">There is something error</string>
+    <string name="error_text">Oops.. something went wrong</string>
     <string name="cd_poster_favorite">poster film favorite</string>
     <string name="film_rating">Rating: 70</string>
     <string name="film_rating_responsive">Rating: %d</string>
@@ -258,4 +258,7 @@
     <string name="duration_label">Based on duration</string>
     <string name="score_label">Based on score</string>
     <string name="sort_film_title">Sort Film</string>
+
+    <string name="accept_text">Yes</string>
+    <string name="delete_text_statement">Are you sure, want to remove this?</string>
 </resources>

@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.danshouseproject.project.moviecatalogue.R
+import com.danshouseproject.project.moviecatalogue.core.components.data.Resource
 import com.danshouseproject.project.moviecatalogue.utils.json.GetFilmId
 import com.danshouseproject.project.moviecatalogue.databinding.FragmentListsFilmBinding
 import com.danshouseproject.project.moviecatalogue.core.components.domain.model.ListFilm
@@ -18,7 +19,6 @@ import com.danshouseproject.project.moviecatalogue.view.OnItemClickCallback
 import com.danshouseproject.project.moviecatalogue.view.detail.DetailFilmActivity
 import com.danshouseproject.project.moviecatalogue.core.components.presentation.adapter.MoviesAdapter
 import com.danshouseproject.project.moviecatalogue.core.components.presentation.factory.ViewModelFactory
-import com.danshouseproject.project.moviecatalogue.core.components.data.vo.Status
 
 class TvShowsFragment : Fragment(), OnItemClickCallback {
 
@@ -51,18 +51,18 @@ class TvShowsFragment : Fragment(), OnItemClickCallback {
             for (idxId in id.indices) {
                 viewModel.getTvShows(id[idxId]).observe(viewLifecycleOwner, { tv ->
                     if (tv != null)
-                        when (tv.status) {
-                            Status.LOADING -> showProgressBar(true)
-                            Status.SUCCESS -> {
+                        when (tv) {
+                            is Resource.Loading -> showProgressBar(true)
+                            is Resource.Success -> {
                                 showProgressBar(false)
                                 adapter.setList(tv.data ?: return@observe)
                                 adapter.notifyDataSetChanged()
                             }
-                            Status.ERROR -> {
+                            is Resource.Error -> {
                                 showProgressBar(false)
                                 Toast.makeText(
                                     context,
-                                    "There is something error",
+                                    getString(R.string.error_text),
                                     Toast.LENGTH_SHORT
                                 ).show()
                             }
@@ -73,11 +73,11 @@ class TvShowsFragment : Fragment(), OnItemClickCallback {
             }
 
             binding?.let {
+                val size = resources.getInteger(R.integer.int_2)
+                val orientation = StaggeredGridLayoutManager.VERTICAL
+
                 it.rvFilm.setHasFixedSize(true)
-                it.rvFilm.layoutManager = StaggeredGridLayoutManager(
-                    resources.getInteger(R.integer.int_2),
-                    StaggeredGridLayoutManager.VERTICAL
-                )
+                it.rvFilm.layoutManager = StaggeredGridLayoutManager(size, orientation)
                 it.rvFilm.adapter = adapter
                 adapter.notifyDataSetChanged()
             }

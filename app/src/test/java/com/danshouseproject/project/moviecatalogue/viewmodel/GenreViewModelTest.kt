@@ -6,7 +6,7 @@ import androidx.lifecycle.Observer
 import com.danshouseproject.project.moviecatalogue.utils.`object`.Genre
 import com.danshouseproject.project.moviecatalogue.core.components.data.MovieCatalogueRepository
 import com.danshouseproject.project.moviecatalogue.core.components.domain.model.FilmGenre
-import com.danshouseproject.project.moviecatalogue.core.components.data.vo.Resource
+import com.danshouseproject.project.moviecatalogue.core.components.data.Resource
 import com.danshouseproject.project.moviecatalogue.view.detail.GenreViewModel
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull

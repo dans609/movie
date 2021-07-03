@@ -232,7 +232,7 @@
     <string name="entry_not_found">Entri tidak ditemukan</string>
 
     <string name="loading_text">Tunggu sebentar, sedang di proses</string>
-    <string name="error_text">Terjadi kesalahan</string>
+    <string name="error_text">Upps.. Terjadi suatu kesalahan</string>
     <string name="cd_poster_favorite">poster film favorit</string>
     <string name="film_rating">Skor: 70</string>
     <string name="film_rating_responsive">Skor: %d</string>
@@ -257,4 +257,7 @@
     <string name="duration_label">Berdasarkan durasi</string>
     <string name="score_label">Berdasarkan skor</string>
     <string name="sort_film_title">Urutkan Film</string>
+
+    <string name="accept_text">Ya</string>
+    <string name="delete_text_statement">Apakah Anda yakin, untuk menghapus item ini?</string>
 </resources>

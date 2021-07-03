@@ -87,11 +87,15 @@ class FavoriteTvFragment : Fragment(), OnFavoriteItemClicked {
     override fun onFavoriteItemClick(data: FavoriteFilm, viewId: Int) {
         when (viewId) {
             R.id.btn_favorite -> {
-                Snackbar.make(binding?.root as View, "Are you sure want to remove this?", Snackbar.LENGTH_LONG)
-                    .setAction("Yes") { viewModel?.removeFromFavorite(data.filmId) }
-                    .setBackgroundTint(ContextCompat.getColor(requireActivity(), R.color.colorYellow))
-                    .setActionTextColor(ContextCompat.getColor(requireActivity(), R.color.colorRed))
-                    .setTextColor(ContextCompat.getColor(requireActivity(), R.color.colorAestheticBlack))
+                val snackbarText = getString(R.string.delete_text_statement)
+                val action = getString(R.string.accept_text)
+                val duration = Snackbar.LENGTH_LONG
+                val view = binding?.root as View
+                Snackbar.make(view, snackbarText, duration)
+                    .setAction(action) { viewModel?.removeFromFavorite(data.filmId) }
+                    .setBackgroundTint(getColor(R.color.colorYellow))
+                    .setActionTextColor(getColor(R.color.colorRed))
+                    .setTextColor(getColor(R.color.colorAestheticBlack))
                     .show()
             }
             R.id.btn_detail -> {
@@ -113,6 +117,9 @@ class FavoriteTvFragment : Fragment(), OnFavoriteItemClicked {
             }
         }
     }
+
+    private fun getColor(colorId: Int) =
+        ContextCompat.getColor(requireActivity(), colorId)
 
     override fun onDestroyView() {
         super.onDestroyView()

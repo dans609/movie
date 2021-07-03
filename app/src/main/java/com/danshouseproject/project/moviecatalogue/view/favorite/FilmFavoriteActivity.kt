@@ -71,11 +71,15 @@ class FilmFavoriteActivity : AppCompatActivity(), SortDialogFragment.OnOptionDia
     }
 
     override fun onOptionChosen(text: String?) {
-        Log.d("FilmFavoriteActivity", text.toString())
+        Log.d(TAG, text.toString())
     }
 
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+    }
+
+    companion object {
+        private val TAG = FilmFavoriteActivity::class.java.simpleName
     }
 }

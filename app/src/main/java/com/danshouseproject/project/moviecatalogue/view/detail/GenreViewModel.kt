@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.danshouseproject.project.moviecatalogue.core.components.data.MovieCatalogueRepository
 import com.danshouseproject.project.moviecatalogue.core.components.domain.model.FilmGenre
-import com.danshouseproject.project.moviecatalogue.core.components.data.vo.Resource
+import com.danshouseproject.project.moviecatalogue.core.components.data.Resource
 
 class GenreViewModel(private val movieCatalogueRepository: MovieCatalogueRepository) : ViewModel() {
 

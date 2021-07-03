@@ -8,7 +8,7 @@ import com.danshouseproject.project.moviecatalogue.utils.`object`.test.RemoteMov
 import com.danshouseproject.project.moviecatalogue.utils.`object`.test.constant.Constant
 import com.danshouseproject.project.moviecatalogue.core.components.data.MovieCatalogueRepository
 import com.danshouseproject.project.moviecatalogue.core.components.domain.model.ListFilm
-import com.danshouseproject.project.moviecatalogue.core.components.data.vo.Resource
+import com.danshouseproject.project.moviecatalogue.core.components.data.Resource
 import com.danshouseproject.project.moviecatalogue.view.home.branch.movies.MoviesViewModel
 import com.nhaarman.mockitokotlin2.verify
 import org.junit.Assert.*

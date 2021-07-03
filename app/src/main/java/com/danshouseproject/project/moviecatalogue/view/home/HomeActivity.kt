@@ -27,11 +27,8 @@ class HomeActivity : AppCompatActivity() {
 
         SectionsViewPager(this, supportFragmentManager).let { sectionViewPager ->
             with(binding as ActivityHomeBinding) {
-                val viewPager = viewPager
                 viewPager.adapter = sectionViewPager
-
-                val tabs = tabLayout
-                tabs.setupWithViewPager(viewPager)
+                tabLayout.setupWithViewPager(viewPager)
             }
         }
     }
@@ -66,5 +63,4 @@ class HomeActivity : AppCompatActivity() {
         super.onDestroy()
         _binding = null
     }
-
 }
