@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/AllMatch"
-    tools:context=".view.fragment.MoviesFragment">
+    tools:context=".view.home.branch.movies.MoviesFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_film"

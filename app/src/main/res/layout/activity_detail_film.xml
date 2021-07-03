@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/AllMatch"
     android:background="@android:color/white"
-    tools:context=".view.activity.DetailFilmActivity">
+    tools:context=".view.detail.DetailFilmActivity">
 
     <androidx.core.widget.NestedScrollView
         style="@style/AllMatch"

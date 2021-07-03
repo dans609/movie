@@ -14,17 +14,17 @@
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup">
         <activity
-            android:name=".view.activity.SplashScreenActivity"
-            android:parentActivityName=".view.activity.HomeActivity"
+            android:name=".view.splash.SplashScreenActivity"
+            android:parentActivityName=".view.home.HomeActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.activity.DetailFilmActivity" />
-        <activity android:name=".view.activity.HomeActivity" />
-        <activity android:name=".view.activity.FilmFavoriteActivity" />
+        <activity android:name=".view.detail.DetailFilmActivity" />
+        <activity android:name=".view.home.HomeActivity" />
+        <activity android:name=".view.favorite.FilmFavoriteActivity" />
     </application>
 
 </manifest>

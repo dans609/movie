@@ -2,7 +2,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/AllMatch"
-    tools:context=".view.fragment.dialog.SortDialogFragment">
+    tools:context=".view.favorite.dialog.SortDialogFragment">
 
     <androidx.core.widget.NestedScrollView
         style="@style/AllMatch"

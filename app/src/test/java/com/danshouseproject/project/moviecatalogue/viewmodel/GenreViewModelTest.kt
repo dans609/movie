@@ -3,10 +3,11 @@ package com.danshouseproject.project.moviecatalogue.viewmodel
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
-import com.danshouseproject.project.moviecatalogue.`object`.Genre
-import com.danshouseproject.project.moviecatalogue.data.MovieCatalogueRepository
-import com.danshouseproject.project.moviecatalogue.model.FilmGenre
-import com.danshouseproject.project.moviecatalogue.vo.Resource
+import com.danshouseproject.project.moviecatalogue.utils.`object`.Genre
+import com.danshouseproject.project.moviecatalogue.core.components.data.MovieCatalogueRepository
+import com.danshouseproject.project.moviecatalogue.core.components.domain.model.FilmGenre
+import com.danshouseproject.project.moviecatalogue.core.components.data.vo.Resource
+import com.danshouseproject.project.moviecatalogue.view.detail.GenreViewModel
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Before

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/AllMatch"
-    tools:context=".view.fragment.favfrag.FavoriteMoviesFragment">
+    tools:context=".view.favorite.branch.movies.FavoriteMoviesFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_favorite_film"

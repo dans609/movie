@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/AllMatch.WhiteBackground"
-    tools:context=".view.activity.FilmFavoriteActivity">
+    tools:context=".view.favorite.FilmFavoriteActivity">
 
     <include
         android:id="@+id/favorite_film_layout"
