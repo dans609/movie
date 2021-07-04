@@ -34,6 +34,7 @@
     <string name="mpaa_parental_guidance_suggested">PG</string>
     <string name="mpaa_parents_strongly_cautioned_under_13">PG-13</string>
     <string name="mpaa_restricted">R</string>
+    <string name="film_rate_12_only">12</string>
     <string name="film_rate_12_only_age_or_older">12+</string>
     <string name="film_rate_semua_umur">SU</string>
     <string name="tv_rate_canada_teens_certificate">TV-14</string>

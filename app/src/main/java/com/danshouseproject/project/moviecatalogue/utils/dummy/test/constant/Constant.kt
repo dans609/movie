@@ -1,24 +1,26 @@
 package com.danshouseproject.project.moviecatalogue.utils.dummy.test.constant
 
+import com.danshouseproject.project.moviecatalogue.R
+
 object Constant {
-    private const val GENRE_DRAMA_ID = 2131755115
-    private const val GENRE_ROMANCE_ID = 2131755123
-    private const val GENRE_MUSIC_ID = 2131755121
-    private const val GENRE_ACTION_ID = 2131755109
-    private const val GENRE_ACTION_ADVENTURE_ID = 2131755110
-    private const val GENRE_SCIFI_ID = 2131755124
-    private const val GENRE_SCIFI_FANTASY_ID = 2131755125
-    private const val GENRE_ADVENTURE_ID = 2131755111
-    private const val GENRE_FANTASY_ID = 2131755117
-    private const val GENRE_HISTORY_ID = 2131755119
-    private const val GENRE_CRIME_ID = 2131755114
-    private const val GENRE_THRILLER_ID = 2131755126
-    private const val GENRE_ANIMATION_ID = 2131755112
-    private const val GENRE_FAMILY_ID = 2131755116
-    private const val GENRE_HORROR_ID = 2131755120
-    private const val GENRE_WAR_ID = 2131755127
-    private const val GENRE_COMEDY_ID = 2131755113
-    private const val GENRE_MYSTERY_ID = 2131755122
+    private const val GENRE_DRAMA_ID = R.string.film_genre_drama
+    private const val GENRE_ROMANCE_ID = R.string.film_genre_romance
+    private const val GENRE_MUSIC_ID = R.string.film_genre_music
+    private const val GENRE_ACTION_ID = R.string.film_genre_action
+    private const val GENRE_ACTION_ADVENTURE_ID = R.string.film_genre_action_adventure
+    private const val GENRE_SCIFI_ID = R.string.film_genre_scific
+    private const val GENRE_SCIFI_FANTASY_ID = R.string.film_genre_scific_fantasy
+    private const val GENRE_ADVENTURE_ID = R.string.film_genre_adventure
+    private const val GENRE_FANTASY_ID = R.string.film_genre_fantasy
+    private const val GENRE_HISTORY_ID = R.string.film_genre_history
+    private const val GENRE_CRIME_ID = R.string.film_genre_crime
+    private const val GENRE_THRILLER_ID = R.string.film_genre_thriller
+    private const val GENRE_ANIMATION_ID = R.string.film_genre_animation
+    private const val GENRE_FAMILY_ID = R.string.film_genre_family
+    private const val GENRE_HORROR_ID = R.string.film_genre_horror
+    private const val GENRE_WAR_ID = R.string.film_genre_war
+    private const val GENRE_COMEDY_ID = R.string.film_genre_comedy
+    private const val GENRE_MYSTERY_ID = R.string.film_genre_mystery
 
     private const val GENRE_DRAMA = "Drama"
     private const val GENRE_ACTION = "Action"
@@ -103,19 +105,19 @@ object Constant {
     private const val THE_SIMPSONS_ID = 456
     private const val THE_UMBRELLA_ID = 75006
 
-    private const val CERTIFICATE_R_ID = 2131755219
-    private const val CERTIFICATE_PG13_ID = 2131755218
-    private const val CERTIFICATE_PG_ID = 2131755217
-    private const val CERTIFICATE_12P_ID = 2131755131
-    private const val CERTIFICATE_12_ID = 2131755131
-    private const val CERTIFICATE_15_ID = 2131755277
-    private const val CERTIFICATE_16_ID = 2131755278
-    private const val CERTIFICATE_18_ID = 2131755279
-    private const val CERTIFICATE_TVMA_ID = 2131755280
-    private const val CERTIFICATE_TVPG_ID = 2131755281
-    private const val CERTIFICATE_TV14_ID = 2131755282
-    private const val CERTIFICATE_SU_ID = 2131755132
-    private const val CERTIFICATE_GU_ID = 2131755216
+    private const val CERTIFICATE_R_ID = R.string.mpaa_restricted
+    private const val CERTIFICATE_PG13_ID = R.string.mpaa_parents_strongly_cautioned_under_13
+    private const val CERTIFICATE_PG_ID = R.string.mpaa_parental_guidance_suggested
+    private const val CERTIFICATE_12P_ID = R.string.film_rate_12_only_age_or_older
+    private const val CERTIFICATE_12_ID = R.string.film_rate_12_only
+    private const val CERTIFICATE_15_ID = R.string.tv_rate_15_old_and_over
+    private const val CERTIFICATE_16_ID = R.string.tv_rate_16_old_and_over
+    private const val CERTIFICATE_18_ID = R.string.tv_rate_18_old_and_over
+    private const val CERTIFICATE_TVMA_ID = R.string.tv_rate_canada_adult_certificate
+    private const val CERTIFICATE_TVPG_ID = R.string.tv_rate_canada_kids_certificate
+    private const val CERTIFICATE_TV14_ID = R.string.tv_rate_canada_teens_certificate
+    private const val CERTIFICATE_SU_ID = R.string.film_rate_semua_umur
+    private const val CERTIFICATE_GU_ID = R.string.mpaa_general_audiences
     const val R_MOVIE_CERTIFICATE = "R"
     const val PG13_MOVIE_CERTIFICATE = "PG-13"
     const val PG_MOVIE_CERTIFICATE = "PG"
@@ -130,16 +132,16 @@ object Constant {
     private const val SEMUA_UMUR_CERTIFICATE = "SU"
     private const val GENERAL_AUD_CERTIFICATE = "G"
 
-    private const val ISO_ALPHA_US_ID = 2131755158
-    private const val ISO_ALPHA_CN_ID = 2131755149
-    private const val ISO_ALPHA_DE_ID = 2131755150
-    private const val ISO_ALPHA_GB_ID = 2131755152
-    private const val ISO_ALPHA_RU_ID = 2131755155
-    private const val ISO_ALPHA_ID_ID = 2131755153
-    private const val ISO_ALPHA_TW_ID = 2131755156
-    private const val ISO_ALPHA_JP_ID = 2131755154
-    private const val ISO_ALPHA_UK_ID = 2131755157
-    private const val ISO_ALPHA_FR_ID = 2131755151
+    private const val ISO_ALPHA_US_ID = R.string.iso_alpha2_us
+    private const val ISO_ALPHA_CN_ID = R.string.iso_alpha2_cn
+    private const val ISO_ALPHA_DE_ID = R.string.iso_alpha2_de
+    private const val ISO_ALPHA_GB_ID = R.string.iso_alpha2_gb
+    private const val ISO_ALPHA_RU_ID = R.string.iso_alpha2_ru
+    private const val ISO_ALPHA_ID_ID = R.string.iso_alpha2_id
+    private const val ISO_ALPHA_TW_ID = R.string.iso_alpha2_tw
+    private const val ISO_ALPHA_JP_ID = R.string.iso_alpha2_jp
+    private const val ISO_ALPHA_UK_ID = R.string.iso_alpha2_uk
+    private const val ISO_ALPHA_FR_ID = R.string.iso_alpha2_fr
     const val US_ISO_CODE = "US"
     const val CN_ISO_CODE = "CN"
     const val DE_ISO_CODE = "DE"
@@ -151,28 +153,28 @@ object Constant {
     private const val UK_ISO_CODE = "UK"
     private const val FR_ISO_CODE = "FR"
 
-    private const val SCORE_ID54 = 2131361855
-    private const val SCORE_ID57 = 2131361856
-    private const val SCORE_ID59 = 2131361857
-    private const val SCORE_ID61 = 2131361859
-    private const val SCORE_ID60 = 2131361858
-    private const val SCORE_ID66 = 2131361860
-    private const val SCORE_ID67 = 2131361861
-    private const val SCORE_ID69 = 2131361862
-    private const val SCORE_ID70 = 2131361863
-    private const val SCORE_ID72 = 2131361864
-    private const val SCORE_ID73 = 2131361865
-    private const val SCORE_ID74 = 2131361866
-    private const val SCORE_ID75 = 2131361867
-    private const val SCORE_ID76 = 2131361868
-    private const val SCORE_ID78 = 2131361869
-    private const val SCORE_ID80 = 2131361870
-    private const val SCORE_ID81 = 2131361871
-    private const val SCORE_ID82 = 2131361872
-    private const val SCORE_ID83 = 2131361873
-    private const val SCORE_ID84 = 2131361874
-    private const val SCORE_ID86 = 2131361875
-    private const val SCORE_ID87 = 2131361876
+    private const val SCORE_ID54 = R.integer.score_value54
+    private const val SCORE_ID57 = R.integer.score_value57
+    private const val SCORE_ID59 = R.integer.score_value59
+    private const val SCORE_ID60 = R.integer.score_value60
+    private const val SCORE_ID61 = R.integer.score_value61
+    private const val SCORE_ID66 = R.integer.score_value66
+    private const val SCORE_ID67 = R.integer.score_value67
+    private const val SCORE_ID69 = R.integer.score_value69
+    private const val SCORE_ID70 = R.integer.score_value70
+    private const val SCORE_ID72 = R.integer.score_value72
+    private const val SCORE_ID73 = R.integer.score_value73
+    private const val SCORE_ID74 = R.integer.score_value74
+    private const val SCORE_ID75 = R.integer.score_value75
+    private const val SCORE_ID76 = R.integer.score_value76
+    private const val SCORE_ID78 = R.integer.score_value78
+    private const val SCORE_ID80 = R.integer.score_value80
+    private const val SCORE_ID81 = R.integer.score_value81
+    private const val SCORE_ID82 = R.integer.score_value82
+    private const val SCORE_ID83 = R.integer.score_value83
+    private const val SCORE_ID84 = R.integer.score_value84
+    private const val SCORE_ID86 = R.integer.score_value86
+    private const val SCORE_ID87 = R.integer.score_value87
 
 
     val getMoviesId: List<Int> = listOf(

@@ -135,10 +135,8 @@ object Movies {
             with(movies) {
                 filmId = moviesId[index]
                 filmName = moviesName[index]
-                filmRatingSymbol = moviesRating[index]
                 filmDuration = moviesDuration[index]
                 filmReleaseDate = moviesReleaseDate[index]
-                filmCountryCode = moviesCountryCode[index]
                 filmOverview = moviesDescription[index]
                 filmImage = moviesImage[index]
                 filmScore = moviesScore[index]

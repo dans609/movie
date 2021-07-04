@@ -122,10 +122,8 @@ object TvShows {
             with(tvShows) {
                 filmId = tvsId[index]
                 filmName = tvShowsName[index]
-                filmRatingSymbol = tvShowsRating[index]
                 filmDuration = tvShowsDuration[index]
                 filmReleaseDate = tvShowsReleaseDate[index]
-                filmCountryCode = tvShowsCountryCode[index]
                 filmOverview = tvShowsDescription[index]
                 filmImage = tvShowsImage[index]
                 filmScore = tvShowsScore[index]

@@ -25,12 +25,6 @@ data class ListFilm(
     @ColumnInfo(name = "filmReleaseDate")
     var filmReleaseDate: String = "",
 
-    @ColumnInfo(name = "filmRatingSymbol")
-    var filmRatingSymbol: String? = null,
-
-    @ColumnInfo(name = "filmCountryCode")
-    var filmCountryCode: String? = null,
-
     @ColumnInfo(name = "filmOverview")
     var filmOverview: String = "",
 
