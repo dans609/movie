@@ -4,10 +4,10 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.paging.PagedList
-import com.danshouseproject.project.moviecatalogue.utils.`object`.Info
-import com.danshouseproject.project.moviecatalogue.utils.`object`.Movies
-import com.danshouseproject.project.moviecatalogue.utils.`object`.TvShows
-import com.danshouseproject.project.moviecatalogue.utils.`object`.test.constant.Constant
+import com.danshouseproject.project.moviecatalogue.utils.dummy.Info
+import com.danshouseproject.project.moviecatalogue.utils.dummy.Movies
+import com.danshouseproject.project.moviecatalogue.utils.dummy.TvShows
+import com.danshouseproject.project.moviecatalogue.utils.dummy.test.constant.Constant
 import com.danshouseproject.project.moviecatalogue.core.components.data.MovieCatalogueRepository
 import com.danshouseproject.project.moviecatalogue.core.components.domain.model.FavoriteFilm
 import com.danshouseproject.project.moviecatalogue.core.components.domain.model.FilmInfo

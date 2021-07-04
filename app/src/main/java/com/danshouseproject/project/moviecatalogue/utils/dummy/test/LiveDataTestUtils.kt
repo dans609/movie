@@ -1,4 +1,4 @@
-package com.danshouseproject.project.moviecatalogue.utils.`object`.test
+package com.danshouseproject.project.moviecatalogue.utils.dummy.test
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer

@@ -1,22 +1,22 @@
-package com.danshouseproject.project.moviecatalogue.utils.`object`.test
+package com.danshouseproject.project.moviecatalogue.utils.dummy.test
 
-import com.danshouseproject.project.moviecatalogue.utils.`object`.test.RemoteMovies.responseMoviesId
-import com.danshouseproject.project.moviecatalogue.utils.`object`.test.RemoteTvShows.responseTvShowsId
-import com.danshouseproject.project.moviecatalogue.utils.`object`.test.constant.Constant.CN_ISO_CODE
-import com.danshouseproject.project.moviecatalogue.utils.`object`.test.constant.Constant.DE_ISO_CODE
-import com.danshouseproject.project.moviecatalogue.utils.`object`.test.constant.Constant.EQUALS_OR_OLDER_T12
-import com.danshouseproject.project.moviecatalogue.utils.`object`.test.constant.Constant.EQUALS_OR_OLDER_T16
-import com.danshouseproject.project.moviecatalogue.utils.`object`.test.constant.Constant.EQUALS_OR_OLDER_T18
-import com.danshouseproject.project.moviecatalogue.utils.`object`.test.constant.Constant.EQUALS_OT_OLDER_T15
-import com.danshouseproject.project.moviecatalogue.utils.`object`.test.constant.Constant.GB_ISO_CODE
-import com.danshouseproject.project.moviecatalogue.utils.`object`.test.constant.Constant.MORE_THAN_TWELVE
-import com.danshouseproject.project.moviecatalogue.utils.`object`.test.constant.Constant.PG13_MOVIE_CERTIFICATE
-import com.danshouseproject.project.moviecatalogue.utils.`object`.test.constant.Constant.PG_MOVIE_CERTIFICATE
-import com.danshouseproject.project.moviecatalogue.utils.`object`.test.constant.Constant.R_MOVIE_CERTIFICATE
-import com.danshouseproject.project.moviecatalogue.utils.`object`.test.constant.Constant.TV14_TV_CERTIFICATE
-import com.danshouseproject.project.moviecatalogue.utils.`object`.test.constant.Constant.TVMA_TV_CERTIFICATE
-import com.danshouseproject.project.moviecatalogue.utils.`object`.test.constant.Constant.TVPG_TV_CERTIFICATE
-import com.danshouseproject.project.moviecatalogue.utils.`object`.test.constant.Constant.US_ISO_CODE
+import com.danshouseproject.project.moviecatalogue.utils.dummy.test.RemoteMovies.responseMoviesId
+import com.danshouseproject.project.moviecatalogue.utils.dummy.test.RemoteTvShows.responseTvShowsId
+import com.danshouseproject.project.moviecatalogue.utils.dummy.test.constant.Constant.CN_ISO_CODE
+import com.danshouseproject.project.moviecatalogue.utils.dummy.test.constant.Constant.DE_ISO_CODE
+import com.danshouseproject.project.moviecatalogue.utils.dummy.test.constant.Constant.EQUALS_OR_OLDER_T12
+import com.danshouseproject.project.moviecatalogue.utils.dummy.test.constant.Constant.EQUALS_OR_OLDER_T16
+import com.danshouseproject.project.moviecatalogue.utils.dummy.test.constant.Constant.EQUALS_OR_OLDER_T18
+import com.danshouseproject.project.moviecatalogue.utils.dummy.test.constant.Constant.EQUALS_OT_OLDER_T15
+import com.danshouseproject.project.moviecatalogue.utils.dummy.test.constant.Constant.GB_ISO_CODE
+import com.danshouseproject.project.moviecatalogue.utils.dummy.test.constant.Constant.MORE_THAN_TWELVE
+import com.danshouseproject.project.moviecatalogue.utils.dummy.test.constant.Constant.PG13_MOVIE_CERTIFICATE
+import com.danshouseproject.project.moviecatalogue.utils.dummy.test.constant.Constant.PG_MOVIE_CERTIFICATE
+import com.danshouseproject.project.moviecatalogue.utils.dummy.test.constant.Constant.R_MOVIE_CERTIFICATE
+import com.danshouseproject.project.moviecatalogue.utils.dummy.test.constant.Constant.TV14_TV_CERTIFICATE
+import com.danshouseproject.project.moviecatalogue.utils.dummy.test.constant.Constant.TVMA_TV_CERTIFICATE
+import com.danshouseproject.project.moviecatalogue.utils.dummy.test.constant.Constant.TVPG_TV_CERTIFICATE
+import com.danshouseproject.project.moviecatalogue.utils.dummy.test.constant.Constant.US_ISO_CODE
 import com.danshouseproject.project.moviecatalogue.core.components.data.remote.response.*
 
 object RemoteAdditionalData {

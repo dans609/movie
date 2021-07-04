@@ -16,7 +16,7 @@ object Injection {
                 LocalDataSource.getLocalInstance(db.movieDao()).let { localData ->
                     AppExecutors().let { executors ->
                         with(MovieCatalogueRepository) {
-                            getInstance(remote, context, executors, localData)
+                            getInstance(remote, executors, localData)
                         }
                     }
                 }

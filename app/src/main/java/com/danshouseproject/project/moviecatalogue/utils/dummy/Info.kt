@@ -1,11 +1,11 @@
-package com.danshouseproject.project.moviecatalogue.utils.`object`
+package com.danshouseproject.project.moviecatalogue.utils.dummy
 
-import com.danshouseproject.project.moviecatalogue.utils.`object`.Movies.moviesCountryCode
-import com.danshouseproject.project.moviecatalogue.utils.`object`.Movies.moviesRating
-import com.danshouseproject.project.moviecatalogue.utils.`object`.TvShows.tvShowsCountryCode
-import com.danshouseproject.project.moviecatalogue.utils.`object`.TvShows.tvShowsRating
-import com.danshouseproject.project.moviecatalogue.utils.`object`.test.RemoteMovies.responseMoviesId
-import com.danshouseproject.project.moviecatalogue.utils.`object`.test.RemoteTvShows.responseTvShowsId
+import com.danshouseproject.project.moviecatalogue.utils.dummy.Movies.moviesCountryCode
+import com.danshouseproject.project.moviecatalogue.utils.dummy.Movies.moviesRating
+import com.danshouseproject.project.moviecatalogue.utils.dummy.TvShows.tvShowsCountryCode
+import com.danshouseproject.project.moviecatalogue.utils.dummy.TvShows.tvShowsRating
+import com.danshouseproject.project.moviecatalogue.utils.dummy.test.RemoteMovies.responseMoviesId
+import com.danshouseproject.project.moviecatalogue.utils.dummy.test.RemoteTvShows.responseTvShowsId
 import com.danshouseproject.project.moviecatalogue.core.components.domain.model.FilmInfo
 
 object Info {

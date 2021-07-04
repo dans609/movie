@@ -3,9 +3,9 @@ package com.danshouseproject.project.moviecatalogue.viewmodel
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
-import com.danshouseproject.project.moviecatalogue.utils.`object`.TvShows
-import com.danshouseproject.project.moviecatalogue.utils.`object`.test.RemoteTvShows
-import com.danshouseproject.project.moviecatalogue.utils.`object`.test.constant.Constant
+import com.danshouseproject.project.moviecatalogue.utils.dummy.TvShows
+import com.danshouseproject.project.moviecatalogue.utils.dummy.test.RemoteTvShows
+import com.danshouseproject.project.moviecatalogue.utils.dummy.test.constant.Constant
 import com.danshouseproject.project.moviecatalogue.core.components.data.MovieCatalogueRepository
 import com.danshouseproject.project.moviecatalogue.core.components.domain.model.ListFilm
 import com.danshouseproject.project.moviecatalogue.viewmodel.MoviesViewModelTest.Companion.expextedFilmSize

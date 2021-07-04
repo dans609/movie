@@ -1,7 +1,7 @@
-package com.danshouseproject.project.moviecatalogue.utils.`object`
+package com.danshouseproject.project.moviecatalogue.utils.dummy
 
 import com.danshouseproject.project.moviecatalogue.R
-import com.danshouseproject.project.moviecatalogue.utils.`object`.test.RemoteMovies
+import com.danshouseproject.project.moviecatalogue.utils.dummy.test.RemoteMovies
 import com.danshouseproject.project.moviecatalogue.utils.helper.ConvertTypeHelper.convertListIntToListString
 import com.danshouseproject.project.moviecatalogue.core.components.domain.model.ListFilm
 

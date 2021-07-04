@@ -1,4 +1,4 @@
-package com.danshouseproject.project.moviecatalogue.utils.`object`.test.constant
+package com.danshouseproject.project.moviecatalogue.utils.dummy.test.constant
 
 object Constant {
     private const val GENRE_DRAMA_ID = 2131755115

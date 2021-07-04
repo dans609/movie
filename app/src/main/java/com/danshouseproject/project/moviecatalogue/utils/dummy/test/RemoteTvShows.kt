@@ -1,6 +1,6 @@
-package com.danshouseproject.project.moviecatalogue.utils.`object`.test
+package com.danshouseproject.project.moviecatalogue.utils.dummy.test
 
-import com.danshouseproject.project.moviecatalogue.utils.`object`.test.constant.Constant
+import com.danshouseproject.project.moviecatalogue.utils.dummy.test.constant.Constant
 import com.danshouseproject.project.moviecatalogue.core.components.data.remote.response.FetchFilmGenres
 import com.danshouseproject.project.moviecatalogue.core.components.data.remote.response.ResponseTvShows
 

@@ -16,9 +16,9 @@ import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.platform.app.InstrumentationRegistry
 import com.danshouseproject.project.moviecatalogue.R
-import com.danshouseproject.project.moviecatalogue.utils.`object`.test.RemoteAdditionalData
-import com.danshouseproject.project.moviecatalogue.utils.`object`.test.RemoteMovies
-import com.danshouseproject.project.moviecatalogue.utils.`object`.test.RemoteTvShows
+import com.danshouseproject.project.moviecatalogue.utils.dummy.test.RemoteAdditionalData
+import com.danshouseproject.project.moviecatalogue.utils.dummy.test.RemoteMovies
+import com.danshouseproject.project.moviecatalogue.utils.dummy.test.RemoteTvShows
 import com.danshouseproject.project.moviecatalogue.utils.EspressoIdlingResource
 import com.danshouseproject.project.moviecatalogue.view.home.HomeActivity
 import org.hamcrest.Description
